@@ -30,9 +30,7 @@ app.use((req, res, next) => {
 });
 
 app.use(express.static(path.join(__dirname, '../', 'client', 'build')));
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../', 'client', 'build', 'index.html'));
-});
+
 
 // load mongodb - START
 const mongoConnection = new MongoConnection('mongodb+srv://group6:nhom6@cluster0.urxyw.mongodb.net/myDatabase?retryWrites=true&w=majority');
@@ -53,5 +51,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public'), { maxAge: 31557600000 }));
 app.use('/api', routes);
 app.use(GlobalExceptionHandler.exceptionHandle);
+
+app.get('/*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../', 'client', 'build', 'index.html'));
+});
 
 export default app;
