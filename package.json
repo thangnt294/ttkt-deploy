@@ -43,6 +43,7 @@
     "pusher": "^4.0.2",
     "serverless-http": "^2.6.0",
     "swagger-ui-express": "4.1.4",
+    "ts-node": "^9.1.1",
     "tsc-watch": "^4.2.9",
     "uuid": "^8.3.2",
     "winston": "3.3.3",

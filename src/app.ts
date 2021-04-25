@@ -4,9 +4,9 @@ import path from 'path';
 import express from 'express';
 import axios from 'axios';
 import dotenv from 'dotenv';
-import routes from './src/routes';
-import { GlobalExceptionHandler } from './src/middleware/global-exception-handler';
-import MongoConnection from './src/mongo-connection';
+import routes from './routes';
+import { GlobalExceptionHandler } from './middleware/global-exception-handler';
+import MongoConnection from './mongo-connection';
 
 // global configuration axios
 axios.defaults.timeout = 30 * 1000;

@@ -3,7 +3,7 @@ import { APIGatewayProxyEvent, Context } from 'aws-lambda';
 import { performance } from 'perf_hooks';
 import logger from './logger';
 import MongoConnection from './mongo-connection';
-import app from '../app';
+import app from './app';
 import { getJsonSecret } from './utils/secretsUtil';
 
 if (process.env.MODE === 'SLS-AWS') {
