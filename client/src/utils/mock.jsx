@@ -139,18 +139,6 @@ export const notifications = [
 ]
 export const userOptions = [
     {
-        key: 1,
-        value: 'Organizations',
-        path: ORGANIZATIONS_URL,
-        icon: 'icon-organization',
-    },
-    {
-        key: 2,
-        value: 'Templates',
-        path: TEMPLATES_URL,
-        icon: 'icon-file'
-    },
-    {
         key: 3,
         value: 'Personal settings',
         path: PERSONAL_SETTINGS_URL,

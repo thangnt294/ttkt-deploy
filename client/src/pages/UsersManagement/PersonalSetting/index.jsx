@@ -40,23 +40,24 @@ const PersonalSetting = () => {
 
     const { handleSubmit, register, errors, reset } = useForm();
     const [isEdit, setIsEdit] = useState(false);
-    const [tempMember, setTempMember] = useState();
+    const [tempMember, setTempMember] = useState(member);
     const [tempPayload, setTempPayload] = useState();
     const [current, setCurrent] = useState();
     const [avatar, setAvatar] = useState(null);
 
     /*eslint-disable */
     useEffect(() => {
-        if (member) {
-            setTempMember(member);
-        }
-    }, [member])
-
-    useEffect(() => {
+        // if (member) {
+        //     setTempMember(member);
+        // }
         if ((userInfo && !member) || (userInfo && member && member._id !== userInfo._id)) {
             const { _id } = userInfo;
             doGetMember(_id);
         }
+    }, [])
+
+    useEffect(() => {
+        
     }, [userInfo, member])
 
     useEffect(() => {
@@ -196,7 +197,7 @@ const PersonalSetting = () => {
                         setIsEdit={setIsEdit}
                         register={register}
                         errors={errors}
-                        member={tempMember}
+                        member={userInfo}
                         setMember={setTempMember}
                         setAvatar={setAvatar}
                     />
