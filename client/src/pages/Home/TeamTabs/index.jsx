@@ -86,7 +86,7 @@ const TeamTab = () => {
     doGetTeams({
       page: 0,
       limit: TEAM_PAGE_SIZE,
-      memberId: userInfo._id,
+      memberId: userInfo?._id,
       isSearching: true
     });
   }, [])

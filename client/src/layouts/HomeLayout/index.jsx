@@ -42,7 +42,7 @@ const HomeLayout = () => {
     }, [location]);
 
     useEffect(() => {
-        if (!userInfo) doGetUserInfo(null, location.pathname.indexOf(`${VESSEL_SCHEDULE_BASE_URL}/`) < 0 && location.pathname.indexOf(BOOKING_REQUEST_URL) < 0);
+        if (!userInfo) doGetUserInfo(null);
     }, [userInfo])
 
     const checkBreadcrumAvailable = () => {
