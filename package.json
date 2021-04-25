@@ -17,7 +17,7 @@
     "lint": "eslint src --ext .ts",
     "dev": "concurrently \"tsc-watch\" \"nodemon dist/app.js\"",
     "dev-srvr": "tsc-watch",
-    "start": "concurrently \"tsc\" \"node dist/app.js\"",
+    "start": "tsc && node dist/app.js",
     "dev-sls": "concurrently \"tsc-watch\" \"sls offline -s dev -r ap-southeast-1 --useChildProcesses\"",
     "test": "yarn build && echo 'tests failing'",
     "fix-lint": "eslint src --ext .ts --fix",
