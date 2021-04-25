@@ -1,27 +1,32 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import {useParams} from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 import './index.scss';
 import defaultAvatar from 'assets/images/avatar.png';
-import {DetailsTableHeader, Table, TableFooter} from 'components';
-import {HomeContext, MemberContext, ModalContext, TeamContext} from 'contexts';
-import {MEMBER, MEMBER_PAGE_SIZE} from 'actions';
-import {getRole} from 'utils';
-import {Brand} from '../../../../../pages/Teams/Brand';
+import { DetailsTableHeader, Table, TableFooter } from 'components';
+import { HomeContext, MemberContext, ModalContext, TeamContext } from 'contexts';
+import { MEMBER, MEMBER_PAGE_SIZE } from 'actions';
+import { getRole } from 'utils';
+import { Brand } from '../../../../../pages/Teams/Brand';
 
 export const MembersList = ({
-                              of,
-                              backUrl = () => {
-                              },
-                              onAddNewClick,
-                              selectedMembers = [],
-                              setSelectedMembers = () => {
-                              }
-                            }) => {
-  const {orgId, teamId} = useParams();
-  const {searchMessage} = useContext(HomeContext);
-  const {setMemberSettings, setRemoveMembers} = useContext(ModalContext);
+  of,
+  backUrl = () => {
+  },
+  onAddNewClick,
+  selectedMembers = [],
+  setSelectedMembers = () => {
+  }
+}) => {
+  const {
+    teamId
+  } = useParams();
+  const { searchMessage } = useContext(HomeContext);
+  const {
+    setMemberSettings,
+    setRemoveMembers
+  } = useContext(ModalContext);
   const {
     currentPage,
     totalPages,
@@ -31,7 +36,10 @@ export const MembersList = ({
     members,
     totalMembers
   } = useContext(MemberContext);
-  const {team, userTeamRole} = useContext(TeamContext);
+  const {
+    team,
+    userTeamRole
+  } = useContext(TeamContext);
 
   const [searchValue, setSearchValue] = useState();
   const [searchLoading, setSearchLoading] = useState(false);
@@ -44,7 +52,7 @@ export const MembersList = ({
         brand={{
           _id,
           logo: avatar ? avatar : defaultAvatar,
-          name: base?.delete ? "deleted_" + _id : name
+          name: base?.delete ? 'deleted_' + _id : name
         }}
         isSelectable={true}
         disabled={!hasPermission(_id) || isMember()}
@@ -54,29 +62,12 @@ export const MembersList = ({
     },
     {
       dataIndex: 'email',
-      render: email => <h6 className="h6" title={email}>{email}</h6>
-    },
-    {
-      dataIndex: 'primaryContactNumber',
-      render: primaryContactNumber => <h6 className="h6" title={primaryContactNumber}>{primaryContactNumber}</h6>
-    },
-    {
-      dataIndex: 'status',
-      render: status => {
-        const formattedStatus = status ? status.toString().toLowerCase() : '';
-        return <h6 className={`tr__tag h6 ${formattedStatus}`}>
-          {formattedStatus}
-        </h6>
-      }
+      render: email => <h6 className='h6' title={email}>{email}</h6>
     },
     {
       dataIndex: 'role',
-      render: role => <h6 className="h6 text-capitalize">{(role || '').toLowerCase()}</h6>
-    },
-    {
-      dataIndex: 'numberTeams',
-      render: numberTeams => numberTeams ? <h6 className="h6">{numberTeams} team{numberTeams > 1 ? 's' : ''}</h6> : ''
-    },
+      render: role => <h6 className='h6 text-capitalize'>{(role || '').toLowerCase()}</h6>
+    }
   ];
 
   useEffect(() => {
@@ -86,14 +77,14 @@ export const MembersList = ({
         page: 0,
         limit: MEMBER_PAGE_SIZE,
         isSearching: true
-      })
+      });
     }
-  }, [teamId, team])
+  }, [teamId, team]);
 
   useEffect(() => {
     const filteredMembers = members.filter(m => hasPermission(m._id)) || [];
-    setSelectedMembers(() => selectAll ? filteredMembers.map(m => m._id) : [])
-  }, [selectAll])
+    setSelectedMembers(() => selectAll ? filteredMembers.map(m => m._id) : []);
+  }, [selectAll]);
 
   const hasPermission = id => {
     if (!members || (members && members.length === 0)) return false;
@@ -101,23 +92,9 @@ export const MembersList = ({
     const selectedMemberRole = selectedMember ? selectedMember.role : false;
 
     return false;
-  }
+  };
 
   const handlePageChange = page => {
-    if (orgId) {
-      const params = {
-        orgId,
-        page,
-        limit: MEMBER_PAGE_SIZE
-      };
-
-      if (searchValue) {
-        params.name = searchValue;
-      }
-
-      doGetOrgMembers(params);
-    }
-
     if (teamId) {
       const params = {
         teamId,
@@ -126,12 +103,12 @@ export const MembersList = ({
       };
 
       if (searchValue) {
-        params.name = searchValue;
+        params.term = searchValue;
       }
 
       doGetTeamMembers(params);
     }
-  }
+  };
 
   const onMemberSearch = value => {
     let newParams = {
@@ -139,20 +116,8 @@ export const MembersList = ({
       limit: MEMBER_PAGE_SIZE,
       isSearching: true
     };
-    if (value) newParams.name = value.trim();
+    if (value) newParams.term = value.trim();
     setSearchValue(value);
-
-    if (orgId) {
-      newParams = {
-        ...newParams,
-        orgId
-      };
-      setSearchLoading(true);
-
-      doGetOrgMembers(newParams, () => {
-        setSearchLoading(false);
-      }, false);
-    }
 
     if (teamId) {
       newParams = {
@@ -165,31 +130,31 @@ export const MembersList = ({
         setSearchLoading(false);
       }, false);
     }
-  }
+  };
 
   const getMemberSettings = data => {
-    const {_id} = data;
+    const { _id } = data;
     doGetMember(_id, () => {
       setMemberSettings(true);
     });
-  }
+  };
 
   const setSelectAllMembers = isAll => {
     const filteredMembers = members.filter(m => hasPermission(m._id)) || [];
     setSelectAll(isAll && filteredMembers.length > 0);
-  }
+  };
 
   const isMember = () => (getRole(userTeamRole) === MEMBER && team);
 
   return (
     <>
-      <div className="tr__organization-members d-flex flex-column">
-        <div className="wrapper">
+      <div className='tr__organization-members d-flex flex-column'>
+        <div className='wrapper'>
           <Table
             renderHeader={() =>
               <DetailsTableHeader
                 label={`${totalMembers} member${totalMembers > 1 ? 's' : ''} are under current ${of}`}
-                title="Member List"
+                title='Member List'
                 labelButton='Add New Member'
                 buttonAdd={!isMember()}
                 onAddNewClick={onAddNewClick}
@@ -198,9 +163,9 @@ export const MembersList = ({
                 searchLoading={searchLoading}
               />
             }
-            className="members border"
+            className='members border'
             dataSource={members}
-            columns={orgId ? columns : columns.slice(0, columns.length - 1)}
+            columns={columns.slice(0, columns.length - 1)}
             onRowClick={getMemberSettings}
             emptyMessage={searchMessage ? searchMessage : 'No member found'}
           />
@@ -219,7 +184,7 @@ export const MembersList = ({
         </div>
       </div>
     </>
-  )
+  );
 };
 
 MembersList.propTypes = {

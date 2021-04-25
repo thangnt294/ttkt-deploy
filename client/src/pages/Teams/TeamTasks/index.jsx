@@ -200,7 +200,6 @@ export const TeamTasks = ({backUrl = ALL_TEAMS_URL}) => {
               )}
             </TabPane>
           ))}
-
         </Tab>
 
       </div>
