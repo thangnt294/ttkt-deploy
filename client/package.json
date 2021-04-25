@@ -49,5 +49,8 @@
     "@types/material-ui": "^0.21.8",
     "@types/react-router-dom": "^5.1.5",
     "prop-types": "^15.7.2"
+  },
+  "engines": {
+    "node": "14.x"
   }
 }
