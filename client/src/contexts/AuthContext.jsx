@@ -14,16 +14,15 @@ import {
     getMember,
     OPERATION_FAILED_MESSAGE,
     ACCESS_TOKEN,
-    OWNER,
+    REFRESH_TOKEN,
     ACCESS_TOKEN_EXPIRY,
+    REFRESH_TOKEN_EXPIRY,
     // getUploadedSignedFileUrl,
 } from 'actions';
 import { GET_FILE } from 'actions/constants';
 import { HomeContext } from './HomeContext';
 import { createCookie, dateTimestampConverter, getToken } from 'utils';
 import {UploadFileContextProvider} from "./UploadFileContext";
-import {TaskContextProvider} from "./TaskContext";
-
 export const AuthContext = createContext();
 
 export const AuthContextProvider = ({ children }) => {
@@ -37,10 +36,6 @@ export const AuthContextProvider = ({ children }) => {
         setLoggedInUser(getToken())
     }, [])
 
-    // useEffect(() => {
-    //     if (userInfo) setIsOwner(userInfo.orgTeams ? userInfo.orgTeams.some(org => (org.roleName || '').toLowerCase() === OWNER) : false)
-    //     else setIsOwner(false);
-    // }, [userInfo])
     /*eslint-enable */
 
     const handleException = error => {
@@ -57,16 +52,19 @@ export const AuthContextProvider = ({ children }) => {
             const { data, status } = response;
 
             if (status === 200) {
-                const { accessToken, accessTokenExpiration } = data;
+                const { accessToken, refreshToken, accessTokenExpiration } = data;
                 const duration = moment.duration(moment(new Date(accessTokenExpiration)).diff(new Date())).asMilliseconds();
                 const expiredDays = duration / dateTimestampConverter;
 
                 setLoggedInUser(accessToken);
                 if (rememberMe) {
                     createCookie(ACCESS_TOKEN, accessToken, expiredDays);
+                    createCookie(REFRESH_TOKEN, refreshToken, 30);
                 } else {
+                    sessionStorage.setItem(REFRESH_TOKEN_EXPIRY, new Date().getTime() + (30 * dateTimestampConverter));
                     sessionStorage.setItem(ACCESS_TOKEN_EXPIRY, accessTokenExpiration);
                     sessionStorage.setItem(ACCESS_TOKEN, accessToken);
+                    sessionStorage.setItem(REFRESH_TOKEN, refreshToken);
                 }
 
                 if (callback) callback();
@@ -153,10 +151,28 @@ export const AuthContextProvider = ({ children }) => {
 
             const response = await getUserInfo(loggedInUser);
             const { data, status } = response;
-            
+
             if (status === 200) {
+                const { _id } = data;
+
                 setUserInfo(data);
-                if (callback) callback();
+
+                if (_id) {
+                    const res = await getMember(_id, loggedInUser);
+                    if (res.status === 200) {
+                        setUserInfo(res.data);
+                        if (callback) callback();
+
+                        if (res.data.avatar) {
+                            // let singedAvatar = await getUploadedSignedFileUrl(res.data.avatar, loggedInUser);
+                            res.data.avatar = GET_FILE + res.data.avatar;
+                            setUserInfo(null);
+                            setUserInfo(res.data);
+                        }
+                    }
+                } else {
+                    if (callback) callback();
+                }
             }
 
             if (hasLoading) setLoading(false);
@@ -183,15 +199,13 @@ export const AuthContextProvider = ({ children }) => {
             }}
         >
             <UploadFileContextProvider>
-              <TaskContextProvider>
-                    <TeamContextProvider>
-                        <MemberContextProvider>
-                            <ModalContextProvider>
-                                { children }
-                            </ModalContextProvider>
-                        </MemberContextProvider>
-                    </TeamContextProvider>
-              </TaskContextProvider>
+                            <TeamContextProvider>
+                             <MemberContextProvider>
+                                    <ModalContextProvider>
+                                     { children }
+                                    </ModalContextProvider>
+                              </MemberContextProvider>
+                            </TeamContextProvider>
             </UploadFileContextProvider>
         </AuthContext.Provider>
     );

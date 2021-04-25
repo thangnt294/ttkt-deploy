@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
 
 import './index.scss';
@@ -12,20 +12,29 @@ import {
   TableFooter, TableHeader,
   TabPane,
   Tooltip,
-  TopHeader
+  TopHeader,
+  Tab
 } from 'components';
-import {ALL_TEAMS_URL, TASK_DETAILS, TASK_PAGE_SIZE} from 'actions';
+import {ALL_TEAMS_URL, MINE, TASK_DETAILS, TASK_PAGE_SIZE} from 'actions';
 import {useHistory} from "react-router-dom";
 import {TaskContext} from "../../../contexts/TaskContext";
-import {Tab} from "../../../components/common/Tab";
 import {tasksHeader} from "../../../utils";
 import {ModalContext} from "../../../contexts";
 
 export const TeamTasks = ({backUrl = ALL_TEAMS_URL}) => {
-  const tabs = ['My Tasks', 'All Tasks'];
+  const [tabs] = useState([ 
+    {
+    id: 'Mine',
+    name: 'My Task'
+  },
+  {
+    id: 'All',
+    name: 'All Task'
+  }]);
   const [isMyTasksTab, setIsMyTasksTab] = useState(true);
   const [searchValue, setSearchValue] = useState();
   const [searchLoading, setSearchLoading] = useState(false);
+  const [status, setStatus] = useState(MINE);
   const {
     doGetTeamTasks,
     doGetMyTasks,
@@ -112,6 +121,16 @@ export const TeamTasks = ({backUrl = ALL_TEAMS_URL}) => {
     }
   ];
 
+ 	/*eslint-disable */
+   useEffect(() => {
+    doGetMyTasks( {
+      page: 0,
+      limit: TASK_PAGE_SIZE,
+      tab: status
+    });
+	}, [status])
+  /*eslint-enable */
+
   const showTaskDetails = task => {
     history.push(TASK_DETAILS.replace(':taskId', task._id));
   }
@@ -132,6 +151,9 @@ export const TeamTasks = ({backUrl = ALL_TEAMS_URL}) => {
       doGetTeamTasks(params);
     }
   }
+
+  
+
 
   const onTaskSearch = value => {
     const newParams = {
@@ -156,7 +178,7 @@ export const TeamTasks = ({backUrl = ALL_TEAMS_URL}) => {
   };
 
   return (
-    <div className="tr__organizations box d-flex flex-column page-box">
+    <div className="tr__team--task box d-flex flex-column page-box">
       <TopHeader title="Tasks"/>
 
       <div className="wrapper">
@@ -164,15 +186,16 @@ export const TeamTasks = ({backUrl = ALL_TEAMS_URL}) => {
           className="minimal"
           initialTab={0}
           onTabClick={tab => {
-            setCurrentPage(0);
+            setStatus(tab.toUpperCase());
+						setCurrentPage(0);
           }}
           animated={false}
         >
           {tabs.map((tab, tabIndex) => (
             <TabPane
               key={tabIndex}
-              tabName={tab}
-              tabSlug={tab.toLowerCase().replace(' ', '')}
+              tabName={tab.name}
+              tabSlug={tab.id}
             >
               <Table
                 className="border organizations"

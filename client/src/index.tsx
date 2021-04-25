@@ -3,7 +3,7 @@ import 'react-app-polyfill/stable';
 
 import 'styles/index.scss';
 
-import React, { Suspense, useEffect, useState } from 'react';
+import React, { Suspense, useEffect, useState, useContext } from "react";
 import ReactDOM from 'react-dom';
 import { Router, withRouter, Switch, Route, Redirect } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
@@ -13,9 +13,12 @@ import * as serviceWorker from './serviceWorker';
 
 import { Spinner, Modals } from 'components';
 import {
-	HomeContextProvider
+    HomeContextProvider,
+    AuthContext
 } from 'contexts';
 import { ACCESS_TOKEN, CHANGE_PASSWORD_URL } from 'actions';
+
+declare var window: any;
 
 const HomeLayout = delayImport(import('layouts/HomeLayout'));
 const NotFound = delayImport(import('pages/NotFound'));
@@ -47,7 +50,6 @@ const LoggedInRoute = ({ component: Component, ...rest} : any) => (
 )
 
 const App = () => {
-	
 
 	return (
 		<>

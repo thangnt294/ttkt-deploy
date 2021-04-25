@@ -2,6 +2,9 @@ import React, { useState, createContext, useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import './index.scss'
+import { 
+    Tooltip
+} from 'components';
 
 const TabContext = createContext();
 const useTab = () => useContext(TabContext);
@@ -20,14 +23,19 @@ const TabNav = ({ childs, onTabClick }) => {
                 {
                     childs.map((tab, tabIndex) => {
                         const currentTab = childs[tabIndex];
-                        const { tabName, tabSlug } = currentTab.props;
+                        const { tabName, tabSlug, newOrg = false } = currentTab.props;
                         return (
                             <li
                                 className={activeTab === tabIndex ? 'active' : ''}
                                 key={tabIndex}
                                 onClick={() => handleTabClick(tabIndex, tabSlug)}
                             >
-                                {tabName}
+                                <div className="name-tab">
+                                    {tabName}
+                                    {newOrg && <Tooltip content={tabSlug === 'teams' ? "You have no teams set up. Click here to create a team." : "You have no members set up. Click here to add members." }>
+                                        <i className="icon-warning mlx1"></i>
+                                    </Tooltip>}
+                                </div>
                             </li>
                         )
                     })
