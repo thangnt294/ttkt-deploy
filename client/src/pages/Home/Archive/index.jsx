@@ -4,7 +4,7 @@ import './index.scss';
 import {Datepicker, Dropdown, Input, Pie, ShipmentTaskHeader, Tooltip} from 'components';
 import {statusOptions} from "../../../utils";
 import {HomeContext, ModalContext} from "../../../contexts";
-import {DONE, TASK_PAGE_SIZE, TEAM_PAGE_SIZE} from "../../../actions";
+import {DONE, MINE, TASK_PAGE_SIZE, TEAM_PAGE_SIZE} from "../../../actions";
 import {TaskContext} from "../../../contexts/TaskContext";
 import {Collaborators} from "../../../components/pages/TaskDetails/Collaborators";
 
@@ -71,13 +71,16 @@ const Archive = () => {
     }
   ]
 
+  /*eslint-disabled*/
   useEffect(() => {
     doGetMyTasks({
       page: 0,
       limit: TASK_PAGE_SIZE,
-      isSearching: true
+      isSearching: true,
+      tab: MINE
     });
   }, [])
+  /*eslint-enabled*/
 
   return (
     <div className="tr__all-issues page-box">
@@ -86,7 +89,7 @@ const Archive = () => {
         {/*<div className="tr__completed page-box">*/}
         <div className="tr__shipment-task-item--body">
           <ShipmentTaskHeader className="mbx1"/>
-          {truePayload.map(task => (
+          {tasks && tasks.length > 0 && tasks.map(task => (
             <div key={task._id}>
               <div className='tr__shipment-task-item--table'>
                 <div
