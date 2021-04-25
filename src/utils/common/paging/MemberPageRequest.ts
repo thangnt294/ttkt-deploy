@@ -38,6 +38,7 @@ class MemberPageRequest {
 
   public static getProjection(): any {
     return {
+      _id: 1,
       name: 1,
       email: 1,
       avatar: 1

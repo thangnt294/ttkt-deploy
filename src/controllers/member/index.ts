@@ -7,7 +7,6 @@ import { deleteAccount } from './delete';
 export const createMemberSchema = Joi.object().keys({
   name: Joi.string().required(),
   email: Joi.string().email().required(),
-  contactNumber: Joi.string().required(),
   avatar: Joi.string()
 });
 
