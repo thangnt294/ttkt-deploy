@@ -1,0 +1,8 @@
+@import 'styles/extends/_generics';
+
+.tr__add-team {
+    .tr__team-details {
+        border-bottom: 1px dashed $border-gray;
+        margin-bottom: 23px;
+    }
+}

@@ -1,0 +1,20 @@
+@import 'styles/extends/_generics';
+
+.tr__authentication--login {
+    &__body {
+        padding: 0 $modal-padding;
+    }
+
+    &__footer {
+        border-top: 1px dashed $breadcrum-gray;
+        @include flex(column, center, flex-start, nowrap);
+        div {
+            padding: $modal-padding;
+            width: 100%;
+        }
+    }
+
+    button {
+        padding: 15px 120px;
+    }
+}

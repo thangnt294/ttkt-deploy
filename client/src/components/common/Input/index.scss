@@ -1,0 +1,140 @@
+@import 'styles/extends/_generics';
+
+$image-icon-size: 20px;
+$btn-size: 22px;
+
+.tr__field {
+  position: relative;
+
+  > label {
+    font-size: $tiny-size;
+    margin-bottom: 8px;
+    display: block;
+    color: $label-gray;
+    @extend %f-medium;
+  }
+
+  &-input {
+    @extend %standard-input;
+  }
+
+  .label {
+    padding: 10px 0px;
+    line-height: 1.5;
+    word-break: break-all;
+  }
+
+  p.error {
+    font-size: $tiny-size;
+    margin-top: 3px;
+    position: absolute;
+    color: $error-red;
+    @extend %fade-in;
+  }
+
+  &--wrapper {
+    position: relative;
+
+    img {
+      max-width: $image-icon-size;
+      max-height: $image-icon-size;
+    }
+
+    i {
+      color: $label-gray;
+
+      &.icon-chevron-down {
+        font-size: $extra-tiny-size;
+      }
+
+      &.hoverable {
+        cursor: pointer;
+      }
+    }
+
+    .loading {
+      @extend %loading-icon;
+      @extend %fade-in;
+      position: absolute;
+      pointer-events: none;
+
+      &.active {
+        transform: translate(0, -50%);
+      }
+
+      &:after {
+        width: 10px;
+        height: 10px;
+      }
+    }
+  }
+
+  &.left {
+    i,
+    img {
+      @include centered-position(false, true);
+      left: 0;
+    }
+  }
+
+  &.right {
+    i,
+    img {
+      @include centered-position(false, true);
+      right: 0;
+    }
+  }
+
+  &.icon {
+    &.right {
+      .tr__field-input {
+        padding-right: 20px;
+      }
+    }
+
+    &.left {
+      .tr__field-input {
+        padding-left: 20px;
+      }
+    }
+  }
+
+  &.number {
+    position: relative;
+
+    .tr__field-input {
+      text-align: right;
+    }
+
+    .number-btns {
+      @include centered-position(false, true);
+      left: 0;
+      @include flex(row, center, center);
+
+      .tr__button {
+        width: $btn-size;
+        height: $btn-size;
+        padding: 0;
+        margin-right: 5px;
+
+        i {
+          font-size: $extra-tiny-size;
+        }
+
+        &:last-child {
+          margin: 0;
+        }
+      }
+    }
+  }
+
+  &.hidden {
+    @include opacity(0);
+  }
+}
+
+.tr__input-group {
+  > h5 {
+    color: $blue-gray;
+  }
+}

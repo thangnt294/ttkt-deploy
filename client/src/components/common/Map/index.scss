@@ -1,0 +1,67 @@
+@import 'styles/extends/_generics';
+
+.tr__map {
+    height: $content-height;
+    &--box {
+        height: 100%;
+        position: relative;
+
+        &:before {
+            content: '';
+            position: absolute;
+            width: 2px;
+            height: 100%;
+            background-color: $bg-grey;
+            top: 0;
+            left: 0;
+            z-index: 1;
+        }
+
+        // Hide all Google Map default labels
+        .gmnoprint,
+        [rel="noopener"],
+        .gm-fullscreen-control {
+            display: none !important;
+        }
+
+        .gm-style {
+            .gm-style-iw-a {
+                .gm-style-iw-t {
+                    &:after {
+                        display: none;
+                    }
+                    .gm-style-iw-c {
+                        padding: 10px 15px !important;
+                        box-shadow: none;
+                        background-color: rgba($base-text-color, 0.7);
+                        border-radius: 3px;
+                        margin-top: 8px;
+                        
+                        .customMarker {
+                            color: $white;
+                            text-transform: uppercase;
+                            @extend %f-medium;
+                            font-size: $small-size;
+                        }
+
+                        .gm-style-iw-d {
+                            overflow: hidden !important;
+                        }
+    
+                        > button {
+                            display: none !important;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    img[src$='.svg'] {
+        max-width: 100% !important;
+        max-height: 100% !important;
+        display: block;
+        background-color: white;
+        border-radius: 30px;
+    }
+}

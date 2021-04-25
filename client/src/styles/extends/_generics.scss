@@ -1,0 +1,524 @@
+@import 'styles/vendors/grid/_mixins';
+@import 'styles/helpers/_mixins';
+@import 'styles/extends/_fonts';
+
+$card-radius: 5px;
+$edge-radius: 5px;
+$edge-radius-form: 8px;
+$btn-min-width: 200px;
+$icon-size: 25px;
+$task-icon-size: 35px;
+$min-btn-width: 180px;
+$form-width : 550px;
+$edge-radius: 8px;
+
+%task-table-row {
+    padding-left: $task-icon-size !important;
+}
+
+%sticky-issue {
+    transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
+}
+
+%enable-transition {
+    transition: all 0.3s ease-in-out;
+}
+
+%fade-in {
+    @include opacity(0);
+    transform: translate(0, 10px);
+    @extend %enable-transition;
+
+    &.active {
+        @include opacity(1);
+        transform: translate(0, 0);
+    }
+}
+
+%ellipse-text {
+    max-width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+%box {
+    background-color: $white;
+    box-shadow: $wide-shadow;
+    border-radius: 3px;
+    padding: $modal-padding;
+}
+
+%tab-content-box {
+    min-height: calc(100vh - #{$header-height} - 250px);
+}
+
+%content-box {
+    min-height: calc(100vh - #{$header-height} - 145px);
+}
+
+%clickable {
+    @extend %enable-transition;
+    @include opacity(1);
+    cursor: pointer;
+
+    &:hover {
+        @include opacity(0.6);
+    }
+}
+
+%block-bottom-border {
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid $border-gray;
+}
+
+%modal-bottom-border {
+    margin-bottom: 20px;
+    border-bottom: 1px solid $border-gray;
+}
+
+%card-box {
+    background-color: $white;
+    border-radius: $card-radius;
+    box-shadow: $wide-shadow;
+    padding: $modal-padding;
+}
+
+%full-height {
+    flex-grow: 1;
+    @include flex(column);
+}
+
+%search-form-box {
+    .form-group {
+        padding: $content-padding;
+    }
+
+    .form-btns {
+        padding: $content-padding;
+        background-color: $button-hover-gray;
+        text-align: center;
+        border-bottom-left-radius: $card-radius;
+        border-bottom-right-radius: $card-radius;
+        overflow: hidden;
+
+        .tr__button {
+            min-width: $btn-min-width;
+        }
+    }
+}
+
+%big-label {
+    font-size: $h2;
+    @extend %f-medium;
+    margin-bottom: 15px;
+    display: block;
+}
+
+%large-label {
+    font-size: $h2;
+    @extend %f-medium;
+    margin-bottom: 15px;
+    display: block;
+}
+
+%close-icon {
+    @extend %clickable;
+    width: $icon-size;
+    height: $icon-size;
+    @include flex(row, center, center);
+    color: $white;
+    background-color: $bottom-border-gray;
+    border-radius: $icon-size;
+    font-size: $medium-size;
+}
+
+%border-double-line {
+    border-bottom: 1px solid $button-hover-gray;
+    position: relative;
+
+    &:after {
+        content: '';
+        width: 100%;
+        border-bottom: 1px solid $button-hover-gray;
+        position: absolute;
+        bottom: 2px;
+        left: 0;
+    }
+}
+
+%border-double-line-top {
+    border-top: 1px solid $button-hover-gray;
+    position: relative;
+
+    &:after {
+        content: '';
+        width: 100%;
+        border-bottom: 1px solid $button-hover-gray;
+        position: absolute;
+        top: 2px;
+        left: 0;
+    }
+}
+
+%top-right-tabs {
+    position: relative;
+    .tr__tabs--nav {
+        position: absolute;
+        right: 175px;
+        top: -58px;
+        width: $tabs-size / 1.2;
+
+        ul {
+            li {
+                width: 50%;
+                padding: 10px;
+                margin: 0;
+            }
+        }
+    }
+
+    .tr__tabs--content {
+        margin-top: 0;
+    }
+}
+
+%step-icon {
+    position: relative;
+    font-size: $h2;
+    width: $step-icon-size;
+    height: $step-icon-size;
+    background-color: $bottom-border-gray;
+    text-align: center;
+    color: $label-gray;
+    border-radius: $step-icon-size;
+    @include flex(row, center, center);
+    z-index: 1;
+
+    &.active {
+        background-color: $main-blue;
+        color: $white;
+    }
+}
+
+%section-header {
+    padding: $content-padding;
+    background-color: $black;
+
+    p {
+        color: $white;
+        font-size: $h4;
+    }
+}
+%section-footer {
+    padding: $content-padding;
+    background-color: $light-gray;
+    border-bottom-left-radius: $card-radius;
+    border-bottom-right-radius: $card-radius;
+
+    > p, .note {
+        flex: 1;
+        font-size: $small-size;
+        color: $label-gray;
+        line-height: 1.5;
+        
+    }
+
+    .tr__button {
+        min-width: $min-btn-width;
+    }
+}
+
+%view-only-input {
+    @include flex(row, center);
+    padding: 15px 0;
+    border-bottom: 1px dashed $border-gray;
+    margin: 0;
+    user-select: none;
+
+    > label {
+        min-width: 25%;
+        font-size: $base-size;
+        @extend %f-medium;
+    }
+    
+    .tr__dropdown__label {
+        border: 0;
+        width: 100%;
+        padding: 0;
+
+        i, img {
+            display: none;
+        }
+    }
+
+    .tr__field-input {
+        padding: 0;
+        border: 0;
+    }
+}
+
+%pin-icon {
+    display: inline-block;
+    border-radius: 50%;
+    background-color: $pink;
+    color: $white;
+    font-size: $medium-size;
+    @include flex(row, center, center, nowrap);
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    width: 30px;
+    height: 30px;
+}
+
+%file-upload-list {
+    li {
+        @include flex(row, center);
+        padding: 10px 0;
+        border-bottom: 1px solid $border-gray;
+
+        > i {
+            margin-right: 15px;
+            font-size: $h1;
+            color: $label-gray;
+
+            &.remove-icon {
+                @extend %close-icon;
+            }
+        }
+
+        .info {
+            width: calc(100% - 150px);
+            .h5 {
+                @extend %ellipse-text;
+            }
+
+            p {
+                font-size: $small-size;
+            }
+        }
+
+        .progress {
+            @include flex(row, flex-start, flex-end);
+            flex-grow: 1;
+        }
+
+        &:first-child {
+            padding-top: 5px;
+        }
+
+        &:last-child {
+            border-bottom: 0;
+        }
+    }
+
+    &.invoice {
+        border: 1px solid $bottom-border-gray;
+        border-radius: 5px;
+        margin-top: 15px;
+
+        li {
+            padding: 15px;
+            border-bottom-style: dashed;
+
+            .info {
+                .h5 {
+                    font-size: $h6;
+                    @extend %f-regular;
+                }
+            }
+        }
+    }
+}
+
+%tab-border-bottom {
+    .tr__tabs--nav {
+        ul {
+            border: none;
+            border-radius: 0;
+            border-bottom: 1px solid $border-gray;
+            position: relative;
+
+            &:after {
+                content: '';
+                position: absolute;
+                left: 0;
+                bottom: 1px;
+                width: 100%;
+                border-bottom: 1px solid $border-gray;
+            }
+
+            li {
+                border: none;
+                font-size: $h6;
+                border-bottom: 2px solid transparent;
+                background-color: transparent;
+                font-size: $small-size;
+                
+                &.active {
+                    color: $main-blue;
+                    background-color: $white;
+                    border-bottom-color: $main-blue;
+                    @extend %f-medium;
+                }
+            }
+        }
+    }
+}
+
+%status-color {
+    &.submitted {
+        background-color: $bonus-blue;
+    }
+
+    &.rejected {
+        background-color: $base-text-color;
+    }
+
+    &.confirmed {
+        background-color: $bonus-green;
+    }
+
+    &.cancelled {
+        background-color: $placeholder-gray;
+    }
+
+    &.draft {
+        background-color: $bonus-orange;
+    }
+
+    &.mark_as_active_shipment {
+        background-color: $main-green;
+    }
+}
+
+%shipment-status-color {
+    &.INPROGRESS { background: $bonus-green }
+    &.PENDING { background: $pending-status-yellow }
+    &.STUCK { background: $bonus-orange }
+    &.DONE { background: $bonus-blue }
+}
+
+%shipment-status-text-color {
+    &.INPROGRESS { color: $bonus-green }
+    &.PENDING { color: $pending-status-yellow }
+    &.STUCK { color: $bonus-orange }
+    &.DONE { color: $bonus-blue }
+}
+
+%authentication-form {
+    width: $form-width;
+    padding: $modal-padding;
+    border-radius: $edge-radius-form;
+    background-color: $white;
+    box-shadow: $authentication-form-shadow;
+}
+
+%loading-icon {
+    &:after {
+        content: '';
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        border: 4px solid $blue;
+        border-left-color: $button-hover-gray;
+        border-right-color: $button-hover-gray;
+        border-radius: 20px;
+        animation: loading 1.5s linear infinite;
+    }
+}
+
+%error-message {
+    color: $error-red;
+    border-color: $error-red;
+    background-color: $light-red;
+}
+
+%success-message {
+    color: $main-green;
+    border-color: $bonus-green;
+    background-color: $light-green;
+}
+
+%standard-input {
+    @extend %f-regular;
+    padding: 10px 0px;
+    border: none;
+    border-bottom: 1px solid $bottom-border-gray;
+    color: $base-text-color;
+    width: 100%;
+    @extend %enable-transition;
+    resize: vertical;
+    background-color: $white;
+
+    @include placeholder() {
+        color: $placeholder-gray;
+    }
+    
+    &:focus {
+        outline: none;
+    }
+
+    &.error {
+        border-color: $error-red;
+    }
+}
+
+%multiselect-filter {
+    > label {
+        color: $label-gray;
+        margin: 0;
+        span {
+            font-size: $tiny-size;
+        }
+    }
+
+    .tr__dropdown {
+        &__label {
+            padding: 0;
+            border: 0;
+            font-size: $base-size;
+            border-radius: 0;
+
+            .tr__selected-values {
+                margin: 0;
+
+                &--item {
+                    .h6 {
+                        font-size: $tiny-size;
+                        @extend %ellipse-text;
+                        width: 130px;
+                    }
+                }
+            }
+
+            .tr__field {
+                padding: 0;
+                &--wrapper {
+                    input {
+                        padding-right: 15px !important;
+                    }
+
+                    > i {
+                        font-size: $extra-tiny-size;
+                        margin: 0;
+                    }
+                }
+            }
+        }
+
+        &__items {
+            .tr__selected-values--item {
+                .info {
+                    p {
+                        color: $base-text-color;
+                        font-size: $small-size;
+                    }
+                }
+            }
+        }
+    }
+}

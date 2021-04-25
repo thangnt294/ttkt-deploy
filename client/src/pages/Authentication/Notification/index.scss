@@ -1,0 +1,32 @@
+@import 'styles/extends/_generics';
+
+$size-content: 25px;
+
+.tr__auth-notification {
+    @extend %authentication-form;
+    @include centered-position(true, true);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    h3 {
+        font-size: $medium-size;
+        color: $main-blue;
+
+        &.big-content {
+            font-size: $size-content;
+            color: $base-text-color;
+        }
+    }
+
+    p {
+        padding: $modal-padding;
+        text-align: center;
+        font-size: $small-size;
+        line-height: 23px;
+    }
+
+    button {
+        padding: 15px 93px;
+    }
+}

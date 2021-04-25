@@ -1,0 +1,9 @@
+@import 'styles/extends/_generics';
+@import 'styles/helpers/_variables';
+
+.tr__activities-log {
+    background-color: $white;
+    .wrapper {
+        @extend %tab-content-box;
+    }
+}

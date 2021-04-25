@@ -1,0 +1,38 @@
+@import 'styles/extends/_generics';
+
+.tr__tab {
+    font-size: $h5;
+    font-weight: bold;
+    position: relative;
+    &__button {
+        cursor: pointer;
+        padding: 6px $spacing-3;
+        border: 2px solid $grey;
+        z-index: 1;
+        display: inline-block;
+
+        &.active {
+            background: $blue-gray;
+            color: $white;
+            border-color: $blue-gray;
+            transition: .3s all;
+            z-index: 2;
+        }
+        &:first-child {
+            border-radius: 4px 0 0 4px;
+        }
+        &:last-child {
+            border-radius: 0 4px 4px 0;
+            position: relative;
+            right: 2px;
+        }
+        &:nth-child(3) {
+            position: relative;
+            right: 4px;
+        }
+        &:nth-child(2) {
+            position: relative;
+            right: 2px;
+        }
+    }
+}

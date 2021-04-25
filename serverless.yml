@@ -1,0 +1,137 @@
+service: lando
+# app and org for use with dashboard.serverless.com
+app: lando
+org: tramessaas
+
+
+plugins:
+  - serverless-offline
+  - serverless-domain-manager
+  - serverless-prune-plugin
+  # - serverless-plugin-scripts
+
+package:
+  excludeDevDependencies: true
+  exclude:
+    - .github/**
+    - .byc_output/**
+    - .vsscode/**
+    - charts/**
+    - devops/**
+    - patches/**
+    - src/**
+    - tests/**
+    - tracker/**
+    - .cfignore
+    - .editorconfig
+    - .env
+    - .env1
+    - .gitignore
+    - debug.log
+    - jest.config.js
+    - README.md
+    - test.env
+    - tsconfig.json
+    - tslint.json
+    - tsoa.json
+
+custom:
+  s3BucketMain: lando-${opt:stage}-s3bucket
+  prune:
+    automatic: true
+    number: 3
+  # scripts:
+  #   hooks:
+  #     ‘before:deploy:deploy': sls-prep
+  customDomain:
+    domainName: lando.${opt:stage}.trames.org
+    stage: ${opt:stage}
+    basePath: ""
+    certificateName: "staging.trames.org"
+    createRoute53Record: true
+    endpointType: regional
+    securityPolicy: tls_1_2
+  secrets: ${ssm:/aws/reference/secretsmanager/${opt:stage}/lando/main~true}
+
+resources:
+  Resources:
+    PrimaryS3Bucket:
+      Type: 'AWS::S3::Bucket'
+      Properties:
+        BucketName: ${self:custom.s3BucketMain}
+        PublicAccessBlockConfiguration:
+          BlockPublicAcls: true
+          BlockPublicPolicy: true
+          IgnorePublicAcls: true
+          RestrictPublicBuckets: true
+        VersioningConfiguration:
+          Status: Enabled
+
+provider:
+  name: aws
+  memorySize: 512 # optional, in MB, default is 1024
+  timeout: 20 # optional, in seconds, default is 6
+  deploymentBucket:
+    blockPublicAccess: true
+  runtime: nodejs12.x
+  environment:
+    STAGE: ${opt:stage}
+    MODE: SLS-AWS
+    NODE_ENV: development
+    PORT: 8082
+    KEY: 89ae2719-1bae-4d03-8b95-5dc0523EYe1ab3
+    LOGGY_CUSTOMER_TOKEN: 9138b902-111d-4899-8d0c-74efeea42f61
+    BUCKET_NAME: ${self:custom.s3BucketMain}
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - secretsmanager:GetResourcePolicy
+        - secretsmanager:GetSecretValue
+        - secretsmanager:DescribeSecret
+        - secretsmanager:ListSecretVersionIds
+      Resource:
+        - arn:aws:secretsmanager:ap-southeast-1:031690849216:secret:${opt:stage}/lando/main-*
+    - Effect: Allow
+      Action:
+        - s3:PutObject
+        - s3:GetObject
+      Resource:
+        Fn::Join:
+          - ''
+          - - Fn::GetAtt:
+                - "PrimaryS3Bucket"
+                - "Arn"
+            - "/*"
+    - Effect: Allow
+      Action:
+        - cognito-idp:AdminGetUser
+        - cognito-idp:ListUsers
+        - cognito-idp:AdminSetUserPassword
+        - cognito-idp:AdminCreateUser
+        - cognito-idp:AdminUpdateUserAttributes
+      Resource:
+        - arn:aws:cognito-idp:ap-southeast-1:031690849216:userpool/${self:custom.secrets.USER_POOL_ID}
+
+
+
+functions:
+  app:
+    handler: dist/serverless.handler
+    events:
+      - http: ANY /
+      - http: "ANY {proxy+}"
+  cronjob:
+    handler: dist/controllers/cronjob/daily-cronjob.dailyCronjob
+    events:
+      - schedule:
+          rate: rate(10 minutes)
+          # rate: cron(0 12 * * ? *)
+          enabled: true
+          input:
+            type: BOOKING_REQUEST
+      - schedule:
+          rate: rate(10 minutes)
+          # rate: cron(0 12 * * ? *)
+          enabled: true
+          input:
+            type: ACTIVE_SHIPMENT

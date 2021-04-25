@@ -1,0 +1,24 @@
+@import 'styles/extends/_generics';
+
+.tr-personal-setting {
+    &__card {
+        overflow: hidden;
+        @extend %box;
+        border-top-left-radius: 0;
+        padding: 0;
+        height: 100%;
+        
+        .user-details-form {
+            width: $content-width;
+            margin: 0 auto;
+
+            .contact-number {
+                .tr__field {
+                    &--wrapper {
+                        padding-right: 8px;
+                    }
+                }
+            }
+        }
+    }
+}

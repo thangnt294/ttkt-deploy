@@ -1,0 +1,147 @@
+@import 'styles/extends/_generics';
+
+$icon-size: 22px;
+$dot-size: 8px;
+
+.tr__form-radio {
+    position: relative;
+
+    > span {
+        padding: 11px 15px;
+        cursor: pointer;
+        user-select: none;
+        display: block;
+        position: relative;
+        font-size: $small-size;
+        @extend %enable-transition;
+        position: relative;
+        text-align: center;
+        color: $label-gray;
+
+        i {
+            font-size: $h2;
+            @include centered-position(false, true);
+            left: 15px;
+            color: $base-text-color;
+            @extend %enable-transition;
+        }
+
+    }
+
+    input {
+        position: absolute;
+        @include opacity(0);
+        visibility: hidden;
+
+        &:checked + span {
+            background-color: $main-blue;
+            color: $white;
+            @extend %f-medium;
+
+            &:before {
+                border-color: $main-blue;
+            }
+
+            &:after {
+                @include opacity(1);
+                visibility: visible;
+                background-color: $white;
+            }
+
+            i {
+                color: $white;
+            }
+        }
+    }
+
+    &.button-mode {
+        > span {
+            border-radius: 3px;
+            border: 1px solid $bottom-border-gray;
+        }
+
+        input {
+            &:checked + span {
+                border-color: $main-blue;
+            }
+        }
+    }
+
+    &.choices {
+        span {
+            background-color: transparent;
+            color: $grey;
+
+            &:before {
+                border-color: $grey;
+            }
+
+            &:after {
+                background-color: $grey;
+            }
+        }
+
+        input {
+            &:checked + span {
+                background-color: transparent;
+                color: $main-blue;
+
+                &:before {
+                    border-color: $main-blue;
+                }
+
+                &:after {
+                    background-color: $main-blue;
+                }
+            }
+        }
+    }
+
+    &.default {
+        > span {
+            background-color: transparent;
+            color: $base-text-color;
+            font-size: $base-size;
+            padding: 0 0 0 $icon-size + 10px;
+            position: relative;
+            text-align: left;
+
+            &:before, &:after {
+                content: '';
+                border-radius: $icon-size;
+                @include centered-position(false, true);
+                left: 0;
+                background-color: $checkbox-radio-gray;
+                @extend %enable-transition;
+            }
+
+            &:before {
+                width: $icon-size;
+                height: $icon-size;
+            }
+
+            &:after {
+                left: $icon-size / 2 - $dot-size / 2;
+                width: $dot-size;
+                height: $dot-size;
+                background-color: $white;
+                @include opacity(0);
+            }
+        }
+
+        input {
+            &:checked + span {
+                background-color: transparent;
+                color: $base-text-color;
+
+                &:before {
+                    background-color: $main-blue;
+                }
+
+                &:after {
+                    @include opacity(1);
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,21 @@
+@import 'styles/extends/_generics';
+
+.tr__member-settings {
+    .tr__member-details {
+        border-bottom: 1px dashed $border-gray;
+        padding: $modal-padding;
+    }
+
+    .tr__role-list {
+        border-bottom: 1px dashed $border-gray;
+        padding: $modal-padding;
+
+        &--items {
+            .tr__item-card {
+                &:last-child {
+                    border: 0;
+                }
+            }
+        }
+    }
+}

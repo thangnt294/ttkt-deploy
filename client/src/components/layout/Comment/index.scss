@@ -1,0 +1,34 @@
+@import 'src/styles/extends/generics';
+@import 'src/styles/helpers/variables';
+
+.tr__comment {
+    padding: 20px;
+    border: 2px solid $bottom-border-gray;
+    border-radius: 5px;
+
+    .user-avatar {
+        > img {
+            width: $avatar-size;
+            height: $avatar-size;
+            border-radius: 50%;
+            display: inline-block;
+            overflow: hidden;
+        }
+    }
+
+    .content {
+        width: 100%;
+        .comment-textarea {
+            width: 100%;
+            textarea {
+                display: flex;
+                flex-grow: 1;
+                resize: none;
+
+            }
+            i {
+                right: -20px;
+            }
+        }
+    }
+}

@@ -1,0 +1,13 @@
+@import 'styles/extends/_generics';
+
+.tr__home-layout {
+    .box {
+        min-height: $content-height;
+    }
+
+    &.having-breadcrum {
+        .box {
+            min-height: $content-breadcrum-height;
+        }
+    }
+}

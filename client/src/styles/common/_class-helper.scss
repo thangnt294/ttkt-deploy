@@ -1,0 +1,278 @@
+@import 'styles/extends/_generics';
+
+.text-right {
+	text-align: right;
+}
+
+.text-left {
+	text-align: left;
+}
+
+.text-center {
+	text-align: center;
+}
+
+.flex {
+	display: flex;
+}
+
+.flex-center {
+	align-items: center;
+	justify-content: center;
+}
+
+.relative {
+	position: relative;
+}
+
+.text-uppercase {
+	text-transform: uppercase;
+}
+
+.text-capitalize {
+	text-transform: capitalize;
+}
+
+.w-100 {
+	width: 100%;
+}
+
+.position-relative {
+	position: relative;
+}
+
+.page-box {
+	padding: $content-padding;
+}
+
+.tr__link {
+	@extend %f-medium;
+	color: $main-pink;
+	@extend %enable-transition;
+	@extend %clickable;
+	font-size: $small-size;
+	user-select: none;
+	display: inline-block;
+
+	> i {
+		margin-right: 5px;
+		display: inline-block;
+	}
+
+	&.secondary {
+		color: $grey;
+	}
+
+	&.icon {
+		@include flex(row, center, center);
+		color: $main-pink;
+
+		i {
+			@include flex(row, center, center);
+			width: $organization-avatar-size;
+			height: $organization-avatar-size;
+			border-radius: $organization-avatar-size;
+			background-color: $white;
+			padding: 0;
+			border: 2px solid $main-pink;
+			font-size: $small-size;
+		}
+	}
+
+	&.tag {
+		font-size: $tiny-size;
+		padding: 5px 10px;
+		background-color: $collapse-blue;
+		color: $light-blue;
+		@extend %f-regular;
+		border-radius: 3px;
+
+		i {
+			font-size: $extra-tiny-size;
+		}
+
+		&.dark {
+			background-color: $back-blue;
+		}
+	}
+
+	&.info {
+		color: $main-blue;
+	}
+}
+
+.task-status {
+	color: $white;
+	
+	&.default {
+		background-color: $bg-grey;
+		color: $base-text-color;
+		padding: 5px 10px;
+		border-radius: 10px;
+		font-size: $tiny-size;
+		right: auto;
+		margin-bottom: 6px;
+	}
+
+	&.inprogress {
+		background-color: $bonus-green;
+	}
+
+	&.pending {
+		background-color: $bonus-yellow;
+	}
+
+	&.stuck {
+		background-color: $bonus-orange;
+	}
+
+	&.done {
+		background-color: $bonus-blue;
+	}
+
+	&.bar {
+		&.inprogress {
+			color: $bonus-green;
+		}
+
+		&.pending {
+			color: $bonus-yellow;
+		}
+
+		&.stuck {
+			color: $bonus-orange;
+		}
+
+		&.done {
+			color: $bonus-blue;
+		}
+	}
+}
+
+.full-height {
+	@extend %full-height;
+}
+
+.box-header {
+	padding: 15px 24px;
+	background-color: $black;
+	font-size: $h4;
+	color: $white;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+}
+
+.table-header {
+	width: 100%;
+	border-radius: 5px;
+	overflow: hidden;
+	
+	.column {
+		@include flex(row, center, space-between);
+		padding: 12px 20px;
+		background-color: $light-gray;
+		flex: 0 0 13%;
+		border-right: 1px solid $bottom-border-gray;
+		font-size: $small-size;
+
+		p {
+			color: $label-gray;
+		}
+
+		i {
+			font-size: $tiny-size;
+			color: $label-gray;
+		}
+
+		&:last-child {
+			border-right: 0;
+		}
+	}
+}
+
+.table-body {
+	.column {
+		border-right: 1px solid $button-hover-gray;
+		flex: 0 0 15%;
+		@include flex(true, center, space-between);
+		border-bottom: 1px solid $button-hover-gray;
+
+		&:last-child {
+			border-right: 0;
+		}
+	}
+}
+
+.wrapper {
+	@extend %box;
+	padding: 0;
+}
+
+.details-heading {
+    @extend %border-double-line;
+    padding-bottom: $modal-padding;
+    margin: $modal-padding -#{$modal-padding};
+}
+
+.tr__tag {
+	@extend %f-medium;
+	text-transform: capitalize;
+
+	&.invited {
+		color: $bonus-blue;
+	}
+
+	&.active {
+		color: $bonus-green;
+	}
+
+	&.pending {
+		color: $bonus-orange;
+	}
+}
+
+@keyframes loading {
+    0% { transform: rotate(0deg); }
+    50% { transform: rotate(180deg); opacity: 0.5 }
+    100% { transform: rotate(360deg); }
+}
+
+.tr__message {
+	font-size: $small-size;
+	color: $base-text-color;
+	padding: $content-padding;
+	border-radius: 5px;
+	border: 1px solid $label-gray;
+	background-color: rgba($label-gray, 0.08);
+	@extend %enable-transition;
+	@include opacity(0);
+	visibility: hidden;
+	transform: translate(0, -10px);
+	
+	&.error {
+		@extend %error-message;
+	}
+
+	&.success {
+		@extend %success-message;
+	}
+
+	&.active {
+		@include opacity(1);
+		visibility: visible;
+		transform: translate(0, 0);
+	}
+}
+
+.disabled {
+	pointer-events: none;
+	@include opacity(0.5);
+}
+
+.has-tooltip {
+	@extend %ellipse-text;
+}
+
+.text-error {
+	color: $error-red;
+}

@@ -1,0 +1,11 @@
+@import 'styles/extends/_generics';
+
+$requireSize: 14px;
+
+.tr__authentication--signup {
+    padding: 0 $modal-padding;
+    
+    button {
+        padding: 15px 120px;
+    }
+}

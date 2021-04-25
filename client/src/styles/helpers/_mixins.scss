@@ -1,0 +1,54 @@
+@import 'styles/helpers/_variables';
+
+@mixin placeholder {
+    $placeholders: ":-webkit-input" ":-moz" "-moz" "-ms-input";
+    @each $placeholder in $placeholders {
+      &:#{$placeholder}-placeholder {
+        @content;
+      }
+    }
+}
+
+@mixin opacity($level) {
+	filter: alpha(opacity = $level * 100);
+	opacity: $level;
+}
+
+@mixin flex($direction: row, $align: inherit, $justify: inherit, $wrap: nowrap) {
+    display: flex;
+    flex-direction: $direction;
+    flex-wrap: $wrap;
+    align-items: $align;
+    justify-content: $justify;
+}
+
+@mixin centered-position($horizontal, $vertical) {
+    position: absolute;
+    @if ($horizontal) {
+        left: 50%;
+
+        @if ($vertical) {
+            top: 50%;
+            transform: translate(-50%, -50%);
+        } @else {
+            transform: translateX(-50%);
+        }
+    } @else {
+        @if ($vertical) {
+            top: 50%;
+            transform: translateY(-50%);
+        }
+    }
+}
+
+@mixin mq($width, $type: min) {
+    @if map_has_key($breakpoints, $width) {
+        $width: map_get($breakpoints, $width);
+        @if $type == max {
+            $width: $width - 1px;
+        }
+        @media only screen and (#{$type}-width: $width) {
+            @content;
+        }
+    }
+}

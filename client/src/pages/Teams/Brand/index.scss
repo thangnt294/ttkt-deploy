@@ -1,0 +1,28 @@
+@import 'styles/extends/_generics';
+
+.tr__organization-brand {
+    .tr__form-checkbox {
+        margin-right: 20px;
+        > span {
+            padding: 10px;
+        }
+
+        &.disabled {
+            @include opacity(0);
+            visibility: hidden;
+        }
+    }
+
+    img {
+        width: $organization-avatar-size;
+        border: 1px solid $border-gray;
+        border-radius: 5px;
+        padding: 5px;
+    }
+
+    .h3 {
+        color: $main-blue;
+        margin-left: 15px;
+        @extend %ellipse-text;
+    }
+}

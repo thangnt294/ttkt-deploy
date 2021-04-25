@@ -1,0 +1,276 @@
+$path: '../../assets/fonts/iconmoon';
+
+@font-face {
+    font-family: 'icomoon';
+    src: url($path + '/icomoon.eot?izzx91');
+    src: url($path + '/icomoon.eot?izzx91#iefix') format('embedded-opentype'),
+        url($path + '/icomoon.ttf?izzx91') format('truetype'),
+        url($path + '/icomoon.woff?izzx91') format('woff'),
+        url($path + '/icomoon.svg?izzx91#icomoon') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    font-display: block;
+}
+
+[class^="icon-"],
+[class*=" icon-"] {
+    /* use !important to prevent issues with browser extensions that change fonts */
+    font-family: 'icomoon' !important;
+    speak: never;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-eye:before {
+    content: "\e900";
+}
+
+.icon-eye-slash:before {
+    content: "\e901";
+}
+
+.icon-padlock:before {
+    content: "\e902";
+}
+
+.icon-add-user:before {
+    content: "\e903";
+}
+
+.icon-anchor:before {
+    content: "\e904";
+}
+
+.icon-arrow-left:before {
+    content: "\e905";
+}
+
+.icon-bell:before {
+    content: "\e906";
+}
+
+.icon-box-export:before {
+    content: "\e907";
+}
+
+.icon-box-import:before {
+    content: "\e908";
+}
+
+.icon-calendar:before {
+    content: "\e909";
+}
+
+.icon-check:before {
+    content: "\e90a";
+}
+
+.icon-chevron-double-left:before {
+    content: "\e90b";
+}
+
+.icon-chevron-double-right:before {
+    content: "\e90c";
+}
+
+.icon-chevron-down:before {
+    content: "\e90d";
+}
+
+.icon-chevron-left:before {
+    content: "\e90e";
+}
+
+.icon-chevron-right:before {
+    content: "\e90f";
+}
+
+.icon-chevron-up:before {
+    content: "\e910";
+}
+
+.icon-city:before {
+    content: "\e911";
+}
+
+// .icon-consignee:before {
+//     content: "\e912";
+// }
+
+.icon-container:before {
+    content: "\e913";
+}
+
+.icon-containers:before {
+    content: "\e914";
+}
+
+.icon-credit-cards:before {
+    content: "\e915";
+}
+
+.icon-download:before {
+    content: "\e916";
+}
+
+.icon-envelop:before {
+    content: "\e917";
+}
+
+.icon-export:before {
+    content: "\e918";
+}
+
+.icon-file:before {
+    content: "\e919";
+}
+
+.icon-filter:before {
+    content: "\e91a";
+}
+
+.icon-import:before {
+    content: "\e91b";
+}
+
+.icon-loading:before {
+    content: "\e91c";
+}
+
+.icon-location:before {
+    content: "\e91d";
+}
+
+.icon-minus:before {
+    content: "\e91e";
+}
+
+.icon-paperclip:before {
+    content: "\e91f";
+}
+
+.icon-pencil:before {
+    content: "\e920";
+}
+
+.icon-phone:before {
+    content: "\e921";
+}
+
+.icon-plus:before {
+    content: "\e922";
+}
+
+.icon-search:before {
+    content: "\e923";
+}
+
+.icon-shield:before {
+    content: "\e924";
+}
+
+.icon-ship:before {
+    content: "\e925";
+}
+
+.icon-shipper:before {
+    content: "\e926";
+}
+
+.icon-store:before {
+    content: "\e927";
+}
+
+.icon-times:before {
+    content: "\e928";
+}
+
+.icon-trader:before {
+    content: "\e929";
+}
+
+.icon-truck:before {
+    content: "\e92a";
+}
+
+.icon-upload:before {
+    content: "\e92b";
+}
+
+.icon-users:before {
+    content: "\e92c";
+}
+
+.icon-warehouse:before {
+    content: "\e92d";
+}
+
+.icon-warning:before {
+    content: "\e92e";
+}
+
+.icon-boxes-solid:before {
+    content: "\e92f";
+}
+
+.icon-container-solid:before {
+    content: "\e930";
+}
+
+.icon-arrow-down:before {
+    content: "\e931";
+}
+
+.icon-arrow-up:before {
+    content: "\e932";
+}
+
+.icon-dots:before {
+    content: "\e933";
+}
+
+.icon-logout:before {
+    content: "\e934";
+}
+
+.icon-help:before {
+    content: "\e935";
+}
+
+.icon-reload:before {
+    content: "\e936";
+}
+
+.icon-organization:before {
+    content: "\e937";
+}
+
+.icon-user-settings:before {
+    content: "\e938";
+}
+
+.icon-box:before {
+    content: "\e939";
+}
+
+.icon-chain:before {
+    content: "\e93a";
+}
+
+.icon-web:before {
+    content: "\e93b";
+}
+
+.icon-pin:before {
+    content: "\e93c";
+}
+
+.icon-notes:before {
+    content: "\e93d";
+}

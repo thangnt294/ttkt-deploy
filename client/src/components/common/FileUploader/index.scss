@@ -1,0 +1,212 @@
+@import 'styles/extends/_generics';
+
+$drag-zone-size: 242px;
+$avatar-zone-size: 200px;
+$upload-icon-size: 55px;
+
+.tr__file-uploader {
+    width: 100%;
+    position: relative;
+
+    > label {
+        @extend %f-medium;
+        font-size: $h4;
+        margin-bottom: 20px;
+        display: block;
+    }
+
+    > input {
+        pointer-events: none;
+        position: absolute;
+        @include opacity(0);
+        z-index: -1;
+    }
+
+    &--zone {
+        height: $drag-zone-size;
+        border: 1px dashed $bottom-border-gray;
+        background-color: $upload-zone-gray;
+        border-radius: 5px;
+        padding: $modal-padding;
+        @include flex(row, center, space-between);
+        cursor: pointer;
+        position: relative;
+        @extend %enable-transition;
+        width: 100%;
+
+        .message {
+            color: $placeholder-gray;
+            > i {
+                font-size: $upload-icon-size;
+            }
+        }
+        
+        &.dragging {
+            background-color: $white;
+        }
+
+        ul {
+            @include flex(column, flex-start, center, wrap);
+            list-style-type: decimal;
+            margin-left: 20px;
+            li {
+                line-height: 1.4;
+                flex: 0 0 33.33%;
+            }
+
+            p {
+                font-size: $tiny-size;
+            }
+        }
+        .tr-link-upload {
+            position: absolute;
+            bottom: 0;
+            .tr__button {
+                width: 100%;
+                border-radius: 0;
+                color: $pink;
+                background-color: $bg-grey;
+            }
+        }
+        &.avatar {
+            padding: 0;
+            border: none;
+            position: relative;
+            @extend %enable-transition;
+            @include flex(column, center);
+            width: $avatar-zone-size;
+            background-color: transparent;
+            height: initial;
+
+            
+            .img-wrapper {
+                height: $avatar-zone-size;
+                width: 100%;
+                background-color: $upload-zone-gray;
+                border-radius: $avatar-zone-size;
+                border: 1px solid transparent;
+                overflow: hidden;
+                @extend %enable-transition;
+
+                img {
+                    max-height: 100%;
+                    min-width: 100%;
+                    max-width: 100%;
+                    min-height: 100%;
+                    display: block;
+                    margin: 0 auto;
+                }
+
+                &.error {
+                    border-color: $error-red;
+                }
+            }
+
+            > .tr__button {
+                padding: 10px 15px;
+                width: 100%;
+            }
+        }
+    }
+
+    p.error {
+        font-size: $tiny-size;
+        margin-top: 3px;
+        position: absolute;
+        color: $error-red;
+        @extend %fade-in;
+        top: 100%;
+    }
+
+    &--wrapper {
+        align-items: flex-start;
+    }
+
+    .tr__file-list {
+        li {
+            @include flex(row, center);
+            padding: 10px 0;
+            border-bottom: 1px solid $border-gray;
+
+            > i {
+                margin-right: 15px;
+                font-size: $h1;
+                color: $label-gray;
+
+                &.remove-icon {
+                    @extend %close-icon;
+                }
+            }
+
+            .info {
+                width: calc(100% - 150px);
+                .h5 {
+                    @extend %ellipse-text;
+                }
+
+                p {
+                    font-size: $small-size;
+                }
+            }
+
+            .progress {
+                @include flex(row, flex-start, flex-end);
+                flex-grow: 1;
+            }
+
+            &:first-child {
+                padding-top: 5px;
+            }
+
+            &:last-child {
+                border-bottom: 0;
+            }
+        }
+
+        &.invoice {
+            border: 1px solid $bottom-border-gray;
+            border-radius: 5px;
+            margin-top: 15px;
+
+            li {
+                padding: 15px;
+                border-bottom-style: dashed;
+
+                .info {
+                    .h5 {
+                        font-size: $h6;
+                        @extend %f-regular;
+
+                        .label {
+                            
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    &.list {
+        .tr__file-uploader--zone {
+            justify-content: center;
+        }
+    }
+
+    &.big-label {
+        label {
+            @extend %big-label;
+        }
+    }
+
+    &.disabled {
+        cursor: default;
+        pointer-events: none;
+        user-select: none;
+
+        .tr__file-uploader--zone {
+            > .tr__button {
+                display: none;
+            }
+        }
+    }
+}

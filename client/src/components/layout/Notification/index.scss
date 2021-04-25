@@ -1,0 +1,43 @@
+@import 'styles/extends/_generics';
+
+$notification-width: 400px;
+
+.tr__notification {
+    pointer-events: none;
+    z-index: 1200;
+    .tr__modal--wrapper {
+        .tr__modal--content {
+            padding: $modal-padding;
+            padding-right: $modal-padding * 2.5;
+            line-height: 1.5;
+            width: $notification-width;
+            box-shadow: $wide-shadow;
+            pointer-events: all;
+            border: 1px solid transparent;
+            p {
+                display: inline-block;
+                line-break: anywhere;
+            }
+
+            strong {
+                @extend %f-medium;
+            }
+        }
+    }
+
+    &.error {
+		.tr__modal--wrapper {
+            .tr__modal--content {
+                @extend %error-message;
+            }
+        }
+	}
+
+	&.success {
+		.tr__modal--wrapper {
+            .tr__modal--content {
+                @extend %success-message;
+            }
+        }
+	}
+}

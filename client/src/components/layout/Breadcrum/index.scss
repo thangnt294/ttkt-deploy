@@ -1,0 +1,28 @@
+@import 'styles/extends/_generics';
+
+.tr__breadcrum {
+    padding: 12px $modal-padding;
+    background-color: $breadcrum-gray;
+    li {
+        font-size: $small-size;
+        color: $label-gray;
+        @extend %clickable;
+
+        a {
+            color: $label-gray;
+        }
+
+        i {
+            font-size: $extra-tiny-size;
+        }
+
+        &.active {
+            color: $base-text-color;
+            pointer-events: none;
+
+            a {
+                color: $base-text-color;
+            }
+        }
+    }
+}

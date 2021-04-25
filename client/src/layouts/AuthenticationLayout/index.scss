@@ -1,0 +1,13 @@
+@import 'styles/extends/_generics';
+
+$layout-height: 100vh;
+
+.tr__authentication-layout {
+    width: 100%;
+    min-height: $layout-height;
+    position: relative;
+    background-color: $authentication-layout-blue;
+    background-repeat: no-repeat;
+    background-position: bottom -420px left -260px;
+    background-size: 80%;
+}

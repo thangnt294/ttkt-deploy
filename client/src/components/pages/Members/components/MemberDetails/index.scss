@@ -1,0 +1,33 @@
+@import 'styles/extends/_generics';
+
+.tr__member-details {
+    &--info {
+        &__item {
+            @extend %block-bottom-border;
+            label {
+                font-size: $tiny-size;
+                color: $grey;
+                margin-top: 2px;
+                display: block;
+            }
+
+            p {
+                font-size: $h6;
+            }
+
+            &:last-child {
+                border-bottom: none;
+                padding-bottom: 0;
+            }
+
+            .item-value {
+                word-break: break-all;
+            }
+        }
+
+        .tr__tag {
+            padding: 0;
+            @extend %f-regular;
+        }
+    }
+}

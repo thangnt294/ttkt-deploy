@@ -1,0 +1,112 @@
+@import 'styles/extends/_generics';
+
+$space: 20px;
+$box-radius: 5px;
+$search-input-width: 300px;
+
+.tr__all-issues {
+    &__card {
+        @extend %card-box;
+        .tr__tabs {
+            position: relative;
+            margin-top: -$space;
+            &--nav {
+                position: absolute;
+                left: $space;
+                top: -55px;
+                width: $tabs-size;
+                z-index: 1;
+    
+                ul {
+                    li {
+                        width: 50%;
+                        padding: 8px 10px;
+                        margin: 0;
+                        background-color: $white;
+    
+                        &:last-child {
+                            border-right: 0;
+                        }
+    
+                        &.active {
+                            background-color: $main-blue;
+                            border-right-color: $main-blue;
+                        }
+                    }
+                }
+            }
+        } 
+        .tr__issues-header {
+            &--action {
+                .tr__dropdown {
+                    min-width: $search-input-width;
+                    &__label {
+                        .tr__field--wrapper {
+                            .tr__field-input {
+                                border-bottom: 1px solid $border-gray;
+                                padding: 10px 0;
+                                width: 300px;
+                            }
+                            i {
+                                font-size: $large-size;
+                                color: $pink ;
+                                right: 5px;
+                            }
+                        }
+                    }
+                }
+             
+            }
+        }
+        .tr__table {
+            margin-top: 5px;
+            box-shadow: none;
+            background: transparent;
+            &--row { 
+                &__column {
+                    padding: 15px;
+                    flex: 0 0 10%;
+                    width: auto !important;
+                    min-width: auto !important;
+                    border-right: 1px solid $multiselect-gray;
+    
+                    &:first-child {
+                        flex: 0 0 20%;
+                        padding-left: 0;
+                    }
+    
+                    &:nth-child(2) {
+                        flex: 0 0 50%;
+                        padding-right: 0;
+                    }
+
+                    &:nth-child(3) {
+                        flex: 0 0 20%;
+                        .tr__organization-members-avatar {
+                            float: left;
+                        }
+                    }
+                }
+                .issue-activity {
+                    i {
+                        @include flex(row, center, center);
+                        width: $icon-size;
+                        height: $icon-size;
+                        border-radius: $icon-size;
+                        background-color: $main-blue;
+                        color: $white;
+                        font-size: $tiny-size;
+                        position: relative;
+                        z-index: 1;
+                    }
+                    &-info {
+                        p {
+                            font-size: $tiny-size;
+                            color: $label-gray;
+                        }
+                    }
+                }
+            }
+        }   
+    }
+}

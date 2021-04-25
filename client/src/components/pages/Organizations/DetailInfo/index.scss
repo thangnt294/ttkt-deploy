@@ -1,0 +1,16 @@
+@import 'styles/extends/_generics';
+
+.tr__organization-detail-info {
+    > i {
+        font-size: $large-size;
+    }
+
+    &--main {
+        max-width: 100%;
+        .description {
+            // @extend %ellipse-text;
+            font-size: $small-size;
+            color: $label-gray;
+        }
+    }
+}

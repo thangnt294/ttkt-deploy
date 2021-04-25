@@ -1,0 +1,11 @@
+@import 'styles/extends/_generics';
+
+.tr__teams {
+    margin-top: 25px;
+
+    .tr__table {
+        padding: $modal-padding;
+        @extend %border-double-line;
+        padding-bottom: $modal-padding * 4;
+    }
+}

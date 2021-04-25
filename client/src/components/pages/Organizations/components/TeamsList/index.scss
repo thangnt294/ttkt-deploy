@@ -1,0 +1,11 @@
+@import 'styles/extends/_generics';
+
+.tr__organization-teams {
+    background-color: $white;
+    .wrapper {
+        @extend %tab-content-box;
+        .tr__table {
+            padding: 0 $modal-padding $modal-padding * 4 $modal-padding;
+        }
+    }
+}

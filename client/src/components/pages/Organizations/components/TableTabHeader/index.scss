@@ -1,0 +1,65 @@
+@import 'styles/extends/_generics';
+
+$search-input-width: 300px;
+$button-width : 200px;
+$header-height: 45px;
+
+.tr__table-header {
+    min-height: $header-height;
+    padding-bottom: 20px;
+    @extend %border-double-line;
+    
+    &__large-text {
+        font-size: $medium-size;
+    }
+    &--quantity {
+        p {
+            margin-right: 3px;
+        }
+    }
+    > p {
+        span {
+            &:first-child {
+                margin-right: 3px;
+            }
+        }
+    }
+
+    .tr__tabs--nav ul li {
+        width: 90px;
+        padding: 10px;
+        margin: 0;
+    }
+
+    &--filter {
+        .tr__field {
+            min-width: $search-input-width;
+            &--wrapper {
+                &-input {
+                    border-bottom: 1px solid $border-gray;
+                    padding: 10px 0;
+                    width: 300px;
+                }
+                i {
+                    font-size: $large-size;
+                    color: $pink ;
+                    right: 5px;
+                }
+            }
+        }
+        
+        .tr__button {
+            padding: 15px 17px;
+            width: $button-width;
+            margin-left: 30px;
+            span {
+                margin-left: 0;
+                font-size: $h6;
+                i {
+                    margin-right: 10px;
+                    font-size: 10px;
+                }
+            }
+        }
+    }
+}

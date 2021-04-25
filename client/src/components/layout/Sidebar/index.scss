@@ -1,0 +1,52 @@
+@import 'styles/extends/_generics';
+
+$item-desktop-width: 160px;
+$item-tablet-width: 120px;
+
+.tr__sidebar {
+    ul {
+        @include flex(row);
+        position: relative;
+        li {
+            &:last-child {
+                @include media-breakpoint-up(xxl) {
+                    border-right: 1px solid $border-gray;
+                }
+            }
+
+            .tr__sidebar__link {
+                height: $header-height;
+                display: block;
+                @extend %enable-transition;
+                border-left: 1px solid $border-gray;
+                width: $item-tablet-width;
+                text-align: center;
+                padding: 10px 20px;
+                @include flex(row, center, center);
+
+                @include media-breakpoint-up(xxl) {
+                    width: $item-desktop-width;
+                }
+
+                p {
+                    @include flex(row, center);
+                    > span {
+                        color: $label-gray;
+                        @extend %enable-transition;
+                    }
+                }
+
+                &.active, &:hover {
+                    background-color: $main-blue;
+                    span {
+                        color: $white;
+                    }
+                }
+
+                &.active {
+                    @extend %f-medium;
+                }
+            }
+        }
+    }
+}

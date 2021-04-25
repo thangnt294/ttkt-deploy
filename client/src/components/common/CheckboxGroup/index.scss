@@ -1,0 +1,44 @@
+@import 'styles/extends/_generics';
+
+.tr__checkbox-group--wrapper {
+
+    > label {
+        font-size: $small-size;
+        $color: $label-gray;
+    }
+
+    .tr__checkbox-group {
+        @include flex(column, flex-start, flex-start, wrap);
+
+        .tr__form-checkbox {
+            width: 100%;
+        }
+    
+        &.horizontal {
+            flex-direction: row;
+    
+            .tr__form-checkbox {
+                margin-right: 10px;
+                width: auto;
+    
+                &:last-child {
+                    margin-right: 0;
+                }
+            }
+        }
+    }
+
+    p.error {
+        font-size: $tiny-size;
+        margin-top: 5px;
+        position: absolute;
+        color: $error-red;
+        // @extend %fade-in;
+    }
+
+    &.big-label {
+        label {
+            @extend %big-label;
+        }
+    }
+}

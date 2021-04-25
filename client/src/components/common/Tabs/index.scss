@@ -1,0 +1,89 @@
+@import 'styles/extends/_generics';
+
+.tr__tabs {
+    &--nav {
+        z-index: 1;
+        ul {
+            @include flex(row, flex-start, flex-start);
+            border-radius: 3px;
+            overflow: hidden;
+            border: 1px solid $border-gray;
+            
+            li {
+                @extend %enable-transition;
+                padding: 12px;
+                color: $label-gray;
+                flex-grow: 1;
+                text-align: center;
+                cursor: pointer;
+                margin: 0 1px;
+                background-color: $white;
+                font-size: $small-size;
+                border-left: 1px solid $border-gray;
+                text-transform: capitalize;
+
+                &:first-child {
+                    margin-left: 0;
+                    border-left: 0;
+                }
+
+                &:last-child {
+                    border-right: 0;
+                }
+
+                &.active {
+                    background-color: $main-blue;
+                    color: $white;
+                    position: relative;
+                    z-index: 1;
+                }
+            }
+        }
+    }
+
+    &--content {
+        margin-top: 25px;
+        position: relative;
+        z-index: 1;
+        &__item {
+            //@extend %fade-in;
+        }
+    }
+
+    &.minimal {
+        > .tr__tabs--nav {
+            display: flex;
+            ul {
+                border: none;
+                li {
+                    font-size: $h6;
+                    padding: 0 15px;
+                    border-width: 1px;
+                    border-right-color: $border-gray;
+                    background: $border-gray;
+                    color: $active-tab-text;
+                    padding: 16px 0px;
+                    width: 200px;
+                    border-top-left-radius: 5px;
+                    border-top-right-radius: 5px;   
+                    margin-right: 0 2px;
+                    @extend %f-medium;
+
+                    &.active {
+                        background-color: $white;
+                        color: $black;
+                        position: relative;
+                        z-index: 2;
+                    }
+                }
+            }
+        }
+
+        > .tr__tabs--content {
+            margin-top: 0px;
+            .tr__details-form {
+                box-shadow: none;
+            }
+        }
+    }
+}

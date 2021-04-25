@@ -1,0 +1,18 @@
+@import 'styles/helpers/_variables';
+@import 'styles/extends/_generics';
+
+.tr__invite-members {
+    .tr__dropdown__label {
+        &.multiselect {
+            margin-top: 16px;
+        }
+    }
+    .tr__dropdown--list {
+        margin-top: 24px;
+        
+        .choose-option {
+            border-bottom: 1px dashed $bottom-border-gray;
+            padding-bottom: 25px;
+        }
+    }
+}

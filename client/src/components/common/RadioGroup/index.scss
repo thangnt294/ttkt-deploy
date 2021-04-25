@@ -1,0 +1,44 @@
+@import 'styles/extends/_generics';
+
+.tr__radio-group--wrapper {
+
+    > label {
+        font-size: $small-size;
+        color: $label-gray;
+    }
+
+    .tr__radio-group {
+        @include flex(column, flex-start, flex-start);
+
+        .tr__form-radio {
+            width: 100%;
+        }
+    
+        &.horizontal {
+            flex-direction: row;
+    
+            .tr__form-radio {
+                margin-right: 10px;
+                width: auto;
+    
+                &:last-child {
+                    margin-right: 0;
+                }
+            }
+        }
+    }
+
+    &.big-label {
+        label {
+            @extend %big-label;
+            color: $base-text-color;
+        }
+    }
+
+    &.large-label {
+        label {
+            @extend %large-label;
+            color: $base-text-color;
+        }
+    }
+}

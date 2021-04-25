@@ -1,0 +1,29 @@
+@import 'styles/extends/_generics';
+
+$requireSize: 14px;
+$label-width: 200px;
+
+.tr__description-input {
+
+    label {
+        display: flex;
+        width: 200px;
+        font-size: $tiny-size;
+        color: $label-gray;
+        @extend %f-medium;
+    }
+
+    .tr__input-group--fields {
+        .tr__tooltip {
+            width: $requireSize;  
+            li{
+               font-size: $small-size;
+               font-weight: normal;
+            }
+
+            i {
+                color: $main-pink;
+            }
+        }
+    }
+}

@@ -1,0 +1,37 @@
+@import 'styles/extends/_generics';
+
+.tr__organization-members {
+    @extend %tab-content-box;
+    
+    .tr__table--row__column {
+        &:first-child {
+            h6 {
+                display: inline-block;
+                width: 100%;
+                @extend %ellipse-text
+            }
+        }
+        &:nth-child(3) {
+            h6 {
+                display: inline-block;
+                width: 100%;
+                @extend %ellipse-text
+            }
+        }
+    }
+
+    .tr__organization-brand img {
+        overflow: hidden;
+    }
+
+    .members {
+        padding: $modal-padding;
+        padding-top: 0;
+        padding-bottom: $modal-padding * 4;
+        background-color: transparent;
+    }
+
+    .tr__members-footer {
+        @extend %border-double-line-top;
+    }
+}

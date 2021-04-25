@@ -1,0 +1,54 @@
+@import 'styles/extends/_generics';
+
+$dropdown-width: 180px;
+
+.tr__user-dropdown {
+    &--item {
+        padding: $content-padding;
+        border-bottom: 1px solid $light-gray;
+        @extend %clickable;
+        font-size: $base-size;
+
+        i {
+            font-size: $h2;
+            color: $label-gray;
+            flex-grow: 1;
+        }
+
+        p {
+            min-width: $dropdown-width;
+        }
+
+        &:nth-last-child(2) {
+            @extend %border-double-line;
+        }
+
+        &:last-child {
+            border: 0;
+            color: $error-red;
+            justify-content: space-between;
+            p {
+                min-width: auto;
+                order: 0;
+                @extend %f-medium;
+            }
+
+            i {
+                order: 1;
+                margin: 0;
+                color: $error-red;
+                text-align: right;
+            }
+        }
+
+        &:hover {
+            background-color: $light-pink;
+            color: $main-pink;
+            @include opacity(1);
+            
+            i {
+                color: $main-pink;
+            }
+        }
+    }
+}

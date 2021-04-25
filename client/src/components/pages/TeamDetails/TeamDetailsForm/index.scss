@@ -1,0 +1,24 @@
+@import 'styles/extends/_generics';
+
+.tr__team-details-form {
+    @extend %box;
+    padding: 0;
+
+    .tr__team-details__main-content {
+        @extend %tab-content-box;
+    }
+    
+    .tr__team-details--card {
+        width: $content-width;
+        margin: 0 auto;
+
+        .tr__field {
+            .label {
+                padding: 0;
+            }
+        }
+    }
+    .tr__team-details {
+        @extend %block-bottom-border;
+    }
+}

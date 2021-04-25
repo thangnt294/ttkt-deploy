@@ -1,0 +1,29 @@
+@import 'styles/extends/_generics';
+
+.tr__activities-header {
+    width: 100%;
+    border-radius: 5px;
+    overflow: hidden;
+    border-bottom: 1px solid $button-hover-gray;
+    
+    .column {
+        width: 15%;
+        @include flex(row, center, space-between);
+        padding: $content-padding;
+        background-color: $light-gray;
+        border-right: 1px solid $border-gray;
+        color: $grey;
+
+        &:nth-child(3) {
+           flex-grow: 1;
+        }
+
+        &:last-child {
+            border: 0;
+        }
+
+        * {
+            font-size: $small-size;
+        }
+    }
+}

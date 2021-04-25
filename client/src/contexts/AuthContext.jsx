@@ -1,0 +1,198 @@
+import React, { createContext, useContext, useEffect, useState } from 'react';
+import moment from 'moment';
+import { MemberContextProvider } from './MemberContext';
+import { ModalContextProvider } from './ModalContext';
+import { TeamContextProvider } from './TeamContext';
+
+import {
+    login,
+    register,
+    changePassword,
+    getUserInfo,
+    forgotPassword,
+    confirmForgotPassword,
+    getMember,
+    OPERATION_FAILED_MESSAGE,
+    ACCESS_TOKEN,
+    OWNER,
+    ACCESS_TOKEN_EXPIRY,
+    // getUploadedSignedFileUrl,
+} from 'actions';
+import { GET_FILE } from 'actions/constants';
+import { HomeContext } from './HomeContext';
+import { createCookie, dateTimestampConverter, getToken } from 'utils';
+import {UploadFileContextProvider} from "./UploadFileContext";
+import {TaskContextProvider} from "./TaskContext";
+
+export const AuthContext = createContext();
+
+export const AuthContextProvider = ({ children }) => {
+    const { setLoading, setAuthErrorMessage, setIsOwner } = useContext(HomeContext);
+    const [loggedInUser, setLoggedInUser] = useState();
+    const [userInfo, setUserInfo] = useState();
+    const [userOrg, setUserOrg] = useState();
+
+    /*eslint-disable */
+    useEffect(() => {
+        setLoggedInUser(getToken())
+    }, [])
+
+    // useEffect(() => {
+    //     if (userInfo) setIsOwner(userInfo.orgTeams ? userInfo.orgTeams.some(org => (org.roleName || '').toLowerCase() === OWNER) : false)
+    //     else setIsOwner(false);
+    // }, [userInfo])
+    /*eslint-enable */
+
+    const handleException = error => {
+        const { data } = error.response;
+        setLoading(false);
+        setAuthErrorMessage((data && (data.message || data.error)) || OPERATION_FAILED_MESSAGE);
+    }
+
+    const doLogin = async (payload, callback, rememberMe = false) => {
+        try {
+            setLoading(true);
+
+            const response = await login(payload);
+            const { data, status } = response;
+
+            if (status === 200) {
+                const { accessToken, accessTokenExpiration } = data;
+                const duration = moment.duration(moment(new Date(accessTokenExpiration)).diff(new Date())).asMilliseconds();
+                const expiredDays = duration / dateTimestampConverter;
+
+                setLoggedInUser(accessToken);
+                if (rememberMe) {
+                    createCookie(ACCESS_TOKEN, accessToken, expiredDays);
+                } else {
+                    sessionStorage.setItem(ACCESS_TOKEN_EXPIRY, accessTokenExpiration);
+                    sessionStorage.setItem(ACCESS_TOKEN, accessToken);
+                }
+
+                if (callback) callback();
+            }
+
+            setLoading(false);
+        } catch (error) {
+            handleException(error);
+        }
+    }
+
+    const doRegister = async (payload, callback) => {
+        try {
+            setLoading(true);
+
+            const response = await register(payload);
+            const { data, status } = response;
+
+            if (status === 200) {
+                setLoggedInUser(data);
+                if (callback) callback();
+            }
+
+            setLoading(false);
+        } catch (error) {
+            handleException(error);
+        }
+    }
+
+    const doVerifyUsername = async (userName, callback) => {
+        try {
+            setLoading(true);
+
+            const response = await forgotPassword(userName);
+            const { status } = response;
+
+            if (status === 200) {
+                if (callback) callback();
+            }
+
+            setLoading(false);
+        } catch (error) {
+            handleException(error);
+        }
+    }
+
+    const doConfirmForgotPassword = async (payload, callback) => {
+        try {
+            setLoading(true);
+
+            const response = await confirmForgotPassword(payload);
+            const { status } = response;
+
+            if (status === 200) {
+                if (callback) callback();
+            }
+
+            setLoading(false);
+        } catch (error) {
+            handleException(error);
+        }
+    }
+
+    const doChangePassword = async (payload, callback) => {
+        try {
+            setLoading(true);
+
+            const response = await changePassword(payload, loggedInUser);
+            const { status } = response;
+
+            if (status === 200) {
+                if (callback) callback();
+            }
+
+            setLoading(false);
+        } catch (error) {
+            handleException(error);
+        }
+    }
+
+    const doGetUserInfo = async (callback, hasLoading = true) => {
+        try {
+            if (hasLoading) setLoading(true);
+
+            const response = await getUserInfo(loggedInUser);
+            const { data, status } = response;
+            
+            if (status === 200) {
+                setUserInfo(data);
+                if (callback) callback();
+            }
+
+            if (hasLoading) setLoading(false);
+        } catch (error) {
+            handleException(error);
+        }
+    }
+
+    return(
+        <AuthContext.Provider
+            value={{
+                userInfo,
+                loggedInUser,
+                userOrg,
+                doLogin,
+                doRegister,
+                doVerifyUsername,
+                doConfirmForgotPassword,
+                doChangePassword,
+                doGetUserInfo,
+                setUserOrg,
+                setUserInfo,
+                setLoggedInUser
+            }}
+        >
+            <UploadFileContextProvider>
+              <TaskContextProvider>
+                    <TeamContextProvider>
+                        <MemberContextProvider>
+                            <ModalContextProvider>
+                                { children }
+                            </ModalContextProvider>
+                        </MemberContextProvider>
+                    </TeamContextProvider>
+              </TaskContextProvider>
+            </UploadFileContextProvider>
+        </AuthContext.Provider>
+    );
+};

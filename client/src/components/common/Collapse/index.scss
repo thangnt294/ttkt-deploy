@@ -1,0 +1,143 @@
+@import 'styles/extends/_generics';
+
+.tr__collapse {
+    background-color: $light-gray;
+    border-radius: 5px;
+
+    &--title {
+        padding: 10px 15px;
+        cursor: pointer;
+
+        > span {
+            @extend %f-medium;
+            i{
+                color: $placeholder-gray;  
+            }
+        }
+
+        .toggle-btn {
+            i {
+                @extend %enable-transition;
+                display: inline-block;
+                font-size: $extra-tiny-size;
+            }
+
+            > span {
+                margin-right: 10px;
+                &.hide {
+                    display: none;
+                }
+            }
+        }
+
+        .tr__link {
+            span {
+                display: none;
+
+                &.show {
+                    display: inline-block;
+                }
+            }
+        }
+    }
+
+    &--content {
+        max-height: 0;
+        padding: 0 15px;
+        overflow: hidden;
+        @extend %enable-transition;
+    }
+
+    &.active {
+        > .tr__collapse--title {
+            .toggle-btn {
+                > span {
+                    display: none;
+                    &.hide {
+                        display: inline-block;
+                    }
+                }
+
+                > i {
+                    transform: rotate(180deg);
+                }
+            }
+
+            .tr__link {
+                span {
+                    display: none;
+    
+                    &.hide {
+                        display: inline-block;
+                    }
+                }
+            }
+        }
+
+        > .tr__collapse--content {
+            max-height: 1000px;
+            padding: 10px 15px;
+            overflow: initial;
+        }
+    }
+
+    &.blue-bg {
+        @extend %enable-transition;
+        &--title {
+            padding: $modal-padding;
+            .toggle-btn {
+                span, i {
+                    color: $label-gray;
+                    @extend %enable-transition;
+                }
+
+                span {
+                    @extend %f-medium;
+                }
+            }
+        }
+
+        &.active {
+            background-color: $collapse-blue;
+            .tr__collapse--title {
+                .toggle-btn {
+                    span, i {
+                        color: $base-text-color;
+                    }
+                }
+            }
+        }
+    }
+
+    &.details {
+        background-color: $white;
+        border: 1px solid $bottom-border-gray;
+        border-radius: 5px;
+        overflow: hidden;
+        .tr__collapse--title {
+            background-color: $button-hover-gray;
+
+            > span {
+                font-size: $h3;
+                @extend %f-medium;
+            }
+        }
+
+        > .tr__collapse--content {
+            padding: 0 20px;
+        }
+
+        &.active {
+            > .tr__collapse--content {
+                padding: $modal-padding;
+                max-height: 50000px;
+            }
+        }
+    }
+
+    &.no-padding {
+        > .tr__collapse--content {
+            padding: 0 !important;
+        }
+    }
+}

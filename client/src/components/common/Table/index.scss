@@ -1,0 +1,173 @@
+@import 'styles/extends/_generics';
+
+$avatar-column-width: 20%;
+$brand-column-width: 20%;
+
+.tr__table {
+    overflow: hidden;
+    @extend %box;
+    border-top-left-radius: 0;
+    padding: 0;
+    
+    &--row {
+        position: relative;
+        border-bottom: 1px solid $multiselect-gray;
+
+        &__column {
+            padding: $content-padding;
+            line-break: anywhere;
+            min-width: 10%;
+            text-align: left;
+            cursor: pointer;
+            @extend %enable-transition;
+            @include flex(column, flex-start, center);
+
+            &:hover {
+                @include opacity(0.7);
+            }
+
+            &:first-child {
+                padding-left: 0;
+                text-align: left;
+            }
+            
+            &:last-child {
+                padding-right: 0;
+            }
+        }
+
+        &:last-child {
+            &:after {
+                display: none;
+            }
+        }
+    }
+
+    &.teams {
+        flex-grow: 1;
+        .tr__table--row {
+            &__column {
+                width: 120px;
+                min-width: auto;
+                p {
+                    font-size: $medium-size;
+                    line-height: 1.3;
+                    @extend %ellipse-text;
+                }
+
+                &:first-child {
+                    flex-grow: 1;
+                }
+
+                &:nth-child(2) {
+                    width: 250px;
+                    .tr__organization-brand {
+                        width: 100%;
+                        .h6 {
+                            @extend %ellipse-text;
+                        }
+                    }
+                }
+
+                &:nth-child(3) {
+                    width: 240px;
+                    .tr__organization-members-avatar {
+                        justify-content: center;
+                        width: 100%;
+                    }
+                }
+            }
+        }
+    }
+
+    &.members {
+        flex-grow: 1;
+        .tr__table--row {
+            &__column {
+                width: 120px;
+                text-align: left;
+                min-width: auto;
+                padding: $modal-padding;
+
+                p {
+                    font-size: $medium-size;
+                    @extend %ellipse-text;
+                }
+
+                &:first-child {
+                    flex-grow: 1;
+                }
+
+                &:nth-child(3) {
+                    width: 150px;
+                }
+
+                &:nth-child(5) {
+                    width: 150px;
+                }
+
+                &:nth-child(2) {
+                    width: 240px;
+
+                    .h6 {
+                        @extend %ellipse-text;
+                    }
+                }
+            }
+        }
+    }
+
+    &.templates {
+        flex-grow: 1;
+        .tr__table--row {
+            &__column {
+                width: 120px;
+                min-width: auto;
+                p {
+                    font-size: $medium-size;
+                    line-height: 1.3;
+                    @extend %ellipse-text;
+                }
+                
+                &:first-child {
+                    flex-grow: 1;
+                }
+
+                &:nth-child(2) {
+                    width: 200px;
+                }
+            }
+        }
+    }
+
+    &.border {
+        box-shadow: none;
+        .tr__table--row {
+            &__column {
+                border-right: 1px solid $multiselect-gray;
+
+                &:first-child {
+                    padding-left: 0;
+                }
+
+                &:last-child {
+                    padding-right: 0;
+                    border: 0;
+                }
+            }
+
+            &:nth-child(2) {
+                border-top: 1px solid $border-gray;
+                margin-top: 10px;
+            }
+
+            &:last-child {
+                border-bottom: 1px solid $border-gray;
+            }
+        }
+    }
+}
+
+.no-result {
+    padding: $modal-padding 0;
+}

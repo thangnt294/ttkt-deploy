@@ -1,0 +1,66 @@
+@import 'styles/extends/_generics';
+
+.tr__team-details {
+    padding-bottom: 0px !important;
+
+    .tr__details-table-header {
+        width: 100%;
+    }
+   
+    .titleCard {
+        padding-bottom: 0;
+        margin-bottom: 24px;
+    }
+
+    .tr__field {
+        margin-bottom: 30px;
+    }
+
+    .tr__dropdown {
+        margin-bottom: 30px;
+        .tr__field {
+            margin-bottom: 0;
+            .tr__field-input {
+                @include placeholder() {
+                    font-weight: normal;
+                }
+            }
+        }
+    } 
+
+    &.view-only {
+        label {
+            pointer-events: none;
+        }
+        
+        .tr__field, .tr__dropdown {
+            @extend %view-only-input;
+            &-input, &__label {
+                background-color: transparent;
+                pointer-events: none;
+            }
+
+            &-input {
+                @include placeholder() {
+                    color: transparent;
+                }
+            }
+
+            .tr__field {
+                border: 0;
+                padding: 0;
+
+                &--wrapper {
+                    flex-grow: 1;
+                }
+            }
+        }
+    }
+}
+.tr__dropdown--list {
+    .tr__item-card {
+        &:first-child {
+            border-top: none !important;
+        }
+    }
+}

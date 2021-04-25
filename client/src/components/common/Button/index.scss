@@ -1,0 +1,201 @@
+@import 'styles/extends/_generics';
+
+$border-btn-size: 30px;
+.tr__button {
+    @extend %f-medium;
+    @extend %enable-transition;
+    outline: none;
+    position: relative;
+    cursor: pointer;
+    background-color: $main-pink;
+    border: 1px solid $main-pink;
+    color: $white;
+    text-align: center;
+    border: none;
+    padding: 15px 20px;
+    border-radius: 5px;
+    @extend %clickable;
+
+    &:after {
+        position: absolute;
+        content: '';
+        width: 20px;
+        height: 20px;
+        border: 4px solid $main-pink;
+        border-left-color: $button-hover-gray;
+        border-right-color: $button-hover-gray;
+        border-radius: 20px;
+        animation: loading 1.5s linear infinite;
+        top: calc(50% - 14px);
+        left: calc(50% - 14px);
+        @include opacity(0);
+        visibility: hidden;
+        pointer-events: none;
+        @extend %enable-transition;
+    }
+
+    &:before {
+        position: absolute;
+        content: '';
+        top: 0;
+        left: 0;
+        background-color: $button-hover-gray;
+        border: 1px solid $main-pink;
+        border-radius: 5px;
+        width: 100%;
+        height: 100%;
+        @include opacity(0);
+        visibility: hidden;
+        pointer-events: none;
+        @extend %enable-transition;
+    }
+
+    &:hover {
+        box-shadow: 2px 2px 5px $black-01;
+    }
+
+    &.disabled {
+        @include opacity(0.5);
+        pointer-events: none;
+        user-select: none;
+        color: $blue-gray !important;
+        background-color: $border-gray;
+
+        &.outline {
+            border-color: $bottom-border-gray !important;
+
+            i {
+                color: $placeholder-gray !important;
+            }
+        }
+    }
+
+    &.loading {
+        pointer-events: none;
+
+        &:before, &:after {
+            @include opacity(1);
+            visibility: visible;
+            pointer-events: all;
+        }
+    }
+
+    > i {
+        font-size: $h4;
+        @include centered-position(false, true);
+        left: 15px;
+
+        * {
+            &:before {
+                color: $white !important;
+            }
+        }
+    }
+
+    &.icon {
+        @include flex(row, center, center);
+
+        i {
+            position: initial;
+            transform: none;
+            left: auto;
+            top: auto;
+        }
+
+        > span {
+            margin-left: 10px;
+        }
+    }
+
+    &.secondary {
+        background-color: $secondary-gray;
+        color: $blue;
+    }
+
+    &.danger {
+        background-color: $white;
+        color: $dark-red;
+        border: 1px solid $dark-red;
+    }
+
+    &.border-btn {
+        width: $border-btn-size;
+        height: $border-btn-size;
+        border: 1px solid $border-gray;
+        border-radius: $border-btn-size;
+        margin-left: 10px;
+        background-color: $white;
+        color: $grey;
+        padding: 0;
+
+        i {
+            position: initial;
+            transform: none;
+            top: auto;
+            left: auto;
+            margin: 0;
+            font-size: $small-size;
+        }
+    }
+
+    &.dashed {
+        border-style: dashed;
+    }
+
+    &.info {
+        background-color: $main-blue;
+    }
+
+    &.outline {
+        background-color: $white;
+        
+        &.primary {
+            border: 1px solid $main-pink;
+            color: $main-pink;
+        }
+
+        &.secondary {
+            border: 1px solid $main-blue;
+            color: $main-blue;
+        }
+    }
+
+    &.circle {
+        background-color: $button-hover-gray;
+        width: $pagination-btn-size;
+        height: $pagination-btn-size;
+        border-radius: $pagination-btn-size;
+        padding: 0;
+        @include flex(row, center, center);
+        color: $label-gray;
+
+        i {
+            font-size: $small-size;
+
+            &[class*="-left"] {
+                margin-right: 2px;
+            }
+
+            &[class*="-right"] {
+                margin-left: 2px;
+            }
+        }
+
+        &.active {
+            background-color: $main-blue;
+            color: $white;
+        }
+    }
+
+    &.small {
+        padding: 10px 15px;
+    }
+
+    &.label {
+        padding: 0;
+        background-color: transparent;
+        box-shadow: none;
+        color: $label-gray;
+        min-width: inherit !important;
+    }
+}

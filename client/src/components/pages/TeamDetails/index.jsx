@@ -1,0 +1,1 @@
+export { TeamDetailsForm } from 'components/pages/TeamDetails/TeamDetailsForm';

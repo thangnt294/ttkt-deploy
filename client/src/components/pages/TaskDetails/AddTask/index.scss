@@ -1,0 +1,22 @@
+@import 'styles/extends/_generics';
+
+.tr__add-task {
+    .tr__task-details,
+    .tr__add-due-date,
+    .tr__add-role {
+        padding: $modal-padding;
+    }
+
+    .tr__task-details,
+    .tr__add-due-date {
+        border-bottom: 1px solid $multiselect-gray;
+    }
+
+    .tr__dropdown__label {
+        span.selected {
+            display: inline-block;
+            width: 100%;
+            @extend %ellipse-text
+        }
+    }
+}

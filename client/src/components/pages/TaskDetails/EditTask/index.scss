@@ -1,0 +1,10 @@
+@import 'styles/extends/_generics';
+
+.tr__edit-task {
+    .tr__task-details,
+    .tr__add-role,
+    .tr__add-due-date {
+        @extend %modal-bottom-border;
+        padding-bottom: 20px;
+    }
+}

@@ -1,0 +1,65 @@
+@import 'styles/extends/_generics';
+
+$edge-radius: 8px;
+$logo-height: 85px;
+$right-position: 100px;
+$tab-size: 25px;
+$min-height-form: 600px;
+
+
+.tr__authentication-form {
+    @extend %authentication-form;
+    min-height: $min-height-form;
+    margin-right: $right-position;
+    padding: 0;
+    position: relative;
+
+    &--logo {
+        width: 100%;
+        background-size: auto;
+        background-position: 50% 80%;
+        background-repeat: no-repeat;
+        min-height: 200px;
+        border-top-left-radius: $edge-radius;
+        border-top-right-radius: $edge-radius;
+        img {
+            height: $logo-height;
+            margin-bottom: 15px;
+        }   
+    }
+
+    > .tr__message {
+        position: absolute;
+        bottom: 100%;
+        width: 100%;
+    }
+
+    &--content {
+        .tr__tabs--nav {
+            width: 250px;
+            padding: $modal-padding;
+            ul {
+                border: none;
+
+                li{
+                    @extend %f-regular;
+                    font-size: $tab-size;
+                    color: $placeholder-gray;
+
+                    &:first-child {
+                        padding-left: 0 !important;
+                    }
+
+                    &:last-child {
+                        border: none;
+                    }
+
+                    &.active {
+                        background-color: transparent;
+                        color: $main-blue;
+                    }
+                }
+            }
+        }
+    }
+}

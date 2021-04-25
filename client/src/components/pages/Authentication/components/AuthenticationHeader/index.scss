@@ -1,0 +1,16 @@
+@import 'styles/extends/_generics';
+
+$title-size : 25px;
+
+.tr__authentication {
+    &--header {
+        color: $base-text-color;
+        h3 {
+            font-size: $title-size;
+        }
+
+        p {
+            font-size: $small-size;
+        }
+    }
+}

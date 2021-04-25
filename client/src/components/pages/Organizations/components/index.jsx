@@ -1,0 +1,11 @@
+export { DetailsTableHeader } from 'components/pages/Organizations/components/DetailsTableHeader';
+export { DeleteBlock } from 'components/pages/Organizations/components/DeleteBlock';
+export { MembersList } from 'components/pages/Organizations/components/MembersList';
+export { TeamsList } from 'components/pages/Organizations/components/TeamsList';
+export { ItemCard } from 'components/pages/Organizations/components/ItemCard';
+export { TopHeader }  from 'components/pages/Organizations/components/TopHeader';
+export { ActivitiesLog } from 'components/pages/Organizations/components/ActivitiesLog';
+export { ActivitiesHeader } from 'components/pages/Organizations/components/ActivitiesHeader';
+export { LogItem } from 'components/pages/Organizations/components/LogItem';
+export { TableFooter } from 'components/pages/Organizations/components/TableFooter';
+export { TableTabHeader } from 'components/pages/Organizations/components/TableTabHeader';

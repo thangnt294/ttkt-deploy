@@ -1,0 +1,24 @@
+@import 'styles/extends/_generics';
+.tr__activities-log-item {
+    .table--body {
+        padding: 0;
+        margin-left: 0;
+        height: 100%;
+
+        &__column {
+            width: 15%;
+            padding: $content-padding;
+            border-right: 1px solid $button-hover-gray;
+            @include flex(true, center, space-between);
+            border-bottom: 1px solid $button-hover-gray;
+
+            &.activity {
+                flex-grow: 1;
+            }
+            
+            &:last-child {
+                border-right: none;
+            }
+        }
+    }
+}

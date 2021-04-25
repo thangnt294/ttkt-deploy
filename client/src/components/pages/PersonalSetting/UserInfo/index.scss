@@ -1,0 +1,77 @@
+@import 'styles/helpers/_variables';
+@import 'styles/extends/_generics';
+
+.tr__user-info-form {
+    @extend %border-double-line;
+
+    &__details {
+        .tr__field {
+            label {
+                font-size: $h6;
+                color: $label-gray;
+            }
+
+            .tr__field-input {
+                padding-left: 15px;
+            }
+
+            &.disabled {
+                .tr__field-input {
+                    border: none;
+                }
+            }
+        }
+
+        .organization-name {
+            width: 100%;
+            .tr__field-input, .label {
+                font-size: $large-size;
+                padding-left: 0;
+            }
+        }
+
+        .email-user {
+            border-bottom: 1px dashed $border-gray;
+
+            &.no-border {
+                border: 0;
+            }
+        }
+
+        .contact-number {
+            .phone-number {
+                &--field {
+                    position: relative;
+                    .tr__field {
+                        width: 85%;
+                        > label {
+                            margin-bottom: 5px;
+                        }
+                    }
+
+                    .right {
+                        @include centered-position(false, true);
+                        right: 0;
+                    }
+
+                    &:first-child {
+                        .right {
+                            margin-top: 10px;
+                        }
+                    }
+                }
+            }
+            .tr__button {
+                padding: 15px 50px;
+                &.none-outline {
+                    background-color: $white;
+                    color: $pink;
+                    padding: 15px 30px;
+                    i {
+                        font-size: $tiny-size;
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,35 @@
+@import 'styles/extends/_generics';
+
+$button-size: 200px;
+
+.tr__details-form__remove {
+    padding: $modal-padding;
+    background-color: $button-hover-gray ;
+    box-shadow: $component-shadow;
+    &--left {
+        .message {
+           color: $error-red;
+           @extend %f-medium;
+        }
+    }
+    &.column {
+        @include flex(true, center, space-between);
+        .row {
+            min-width: $button-size;
+            margin-top: 0;
+            [class^='col-'] {
+                width: 100%;
+            }
+        }
+    }
+    .tr__button {
+        width: $button-size;
+        &.cancel {
+            background-color: $bg-grey;
+            color: $grey;
+        }
+    }
+     > span {
+        margin-left: 0px;
+    }
+}

@@ -1,0 +1,20 @@
+@import 'styles/extends/_generics';
+
+.tr__members-footer {
+    padding: $modal-padding;
+
+    .remove-actions {
+        .tr__button {
+            padding: 10px 15px;
+        }
+    }
+
+    &.no-padding {
+        padding: 0;
+    }
+
+    .note {
+        color: $label-gray;
+        font-size: $small-size;
+    }
+}

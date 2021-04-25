@@ -1,0 +1,111 @@
+@import 'styles/extends/_generics';
+$space: 20px;
+.tr__organizations {
+    .tr__tabs.minimal > .tr__tabs--nav ul li {
+        @extend %f-medium;
+    }
+
+    .tr__tabs--content {
+        .tr__tabs {
+            position: relative;
+            margin-top: -$space;
+            &--nav {
+                position: absolute;
+                left: $space;
+                top: 25px;
+                width: $tabs-size;
+                z-index: 2;
+                ul {
+                    width: 100%;
+                    display: flex;
+                    flex-direction: row;
+                    flex-wrap: nowrap;
+                    align-items: flex-start;
+                    justify-content: flex-start;
+                    border-radius: 3px;
+                    overflow: hidden;
+                    border: 1px solid #D8D8D8 !important;
+                    li {
+                        width: 50%;
+                        padding: 8px 10px;
+                        margin: 0;
+                        background-color: $white;
+                        font-size: $small-size;
+                        font-weight: 300 !important;
+                        border-radius:0;
+
+                        &.active {
+                            background-color: $main-blue;
+                            border-right-color: $main-blue;
+                            color: $white;
+                        }
+                    }
+                }
+            }
+
+            &--content {
+                margin-top: $space;
+            }
+        }
+    }
+
+    .organizations {
+        flex-grow: 1;
+        padding: $modal-padding;
+        padding-bottom: $modal-padding * 4;
+
+        .tr__table-header {
+            &--quantity {
+                margin-left: $space * 10;
+            }
+        }
+        .tr__table--row {
+            &__column {
+                width: 130px;
+                min-width: inherit;
+                p {
+                    font-size: $medium-size;
+                    line-height: 1.3;
+                    @extend %ellipse-text;
+                }
+                
+                &:first-child {
+                    flex-grow: 1;
+                    line-break: anywhere;
+                }
+
+                &:nth-child(2) {
+                    width: 250px;
+
+                    .tr__organization-members-avatar {
+                        width: 100%;
+                        justify-content: center;
+                        margin-left: 0;
+                    }
+                }
+
+                .active {
+                    color: $bonus-green;
+                }
+                .pending {
+                    color: $bonus-orange;
+                }
+                .invited {
+                    color: $bonus-blue;
+                }
+                .removed {
+                    color: $error-red;
+                }
+            }
+        }
+    }
+    .tr__teams {
+        margin: 0;
+        padding: 0;
+        min-height: inherit;
+    }
+
+    .tr__members-footer {
+        @extend %border-double-line-top;
+    }
+}

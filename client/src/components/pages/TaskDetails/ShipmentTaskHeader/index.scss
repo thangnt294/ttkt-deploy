@@ -1,0 +1,26 @@
+@import 'styles/extends/_generics';
+
+.tr__shipment-task-header {
+    .column {
+        padding: $content-padding;
+        width: 200px;
+        flex: inherit;
+
+        &.assignee,
+        &.date {
+            width: 250px;
+        }
+
+        &.status {
+            width: 150px;
+        }
+
+        &.name {
+            flex-grow: 1;
+        }
+
+        &.actions {
+            width: 215px;
+        }
+    }
+}

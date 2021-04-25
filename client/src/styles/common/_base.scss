@@ -1,0 +1,54 @@
+@import 'styles/helpers/_variables';
+
+* {
+    font-size: $base-size;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    @extend %f-regular;
+    background-color: $bg-grey;
+    color: $base-text-color;
+    line-height: 1.2;
+    font-size: $base-size;
+
+    &.modal-open {
+        overflow: hidden;
+    }
+
+    #root {
+        min-height: 100vh;
+    }
+
+    .react-datepicker-popper {
+        z-index: 9999;
+    }
+}
+
+.row {
+    padding: 0 !important;
+    &.no-gutters {
+        margin-right: 0;
+        margin-left: 0;
+      
+        > .col,
+        > [class*="col-"] {
+          padding-right: 0;
+          padding-left: 0;
+        }
+    }
+
+    &.small-gutters {
+        margin-right: -6px;
+        margin-left: -6px;
+      
+        > .col,
+        > [class*="col-"] {
+          padding-right: 6px;
+          padding-left: 6px;
+        }
+    }
+}

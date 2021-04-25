@@ -1,0 +1,114 @@
+@import 'styles/extends/_generics';
+
+$avatar-size: 32px;
+$icon-size: 26px;
+$label-width: 200px;
+$select-width: 150px;
+$dropdown-width: 280px;
+
+.tr__item-card {
+    padding: 15px 0 20px 0;
+    border-bottom: 1px dashed $bottom-border-gray;
+
+    .left-column {
+        width: calc(100% - #{$dropdown-width});
+    }
+
+    .right-column {
+        width: $dropdown-width;
+    }
+
+    .add-team {
+        width: 100%;
+        padding-left: 77px;
+
+        > .tr__dropdown {
+            flex: 0 0 calc(50% - 10px);
+
+            &.selectTeam {
+                margin-right: 20px;
+            }
+        }
+    }
+
+    .info {
+        > i {
+            font-size: $h2;
+            width: $icon-size;
+            text-align: center;
+            color: $label-gray;
+        }
+
+        .remove-btn {
+            font-size: $base-size;
+            color: $white;
+            width: $icon-size;
+            height: $icon-size;
+            border-radius: $icon-size;
+            background-color: $border-gray;
+            @include flex(row, center, center);
+            @extend %enable-transition;
+            cursor: pointer;
+            margin-right: 10px;
+
+            &:hover {
+                background-color: $red;
+                color: $white;
+            }
+        }
+
+        .h6 {
+            width: $label-width;
+            @extend %ellipse-text;
+            font-size: $base-size;
+            color: $main-blue;
+        }
+
+        img {
+            width: $avatar-size;
+            height: $avatar-size;
+            border-radius: $avatar-size;
+            display: inline-block;
+            overflow: hidden;
+        }
+    }
+
+    .info-member {
+        flex: 1;
+        p {
+            font-size: $tiny-size;
+            margin-top: 6px;
+            color: $placeholder-gray;
+            word-break: break-all;
+        }
+        h6 {
+            line-break: anywhere;
+            width: $label-width;
+            @extend %ellipse-text;
+        }
+    }
+
+    > h6 {
+        flex: 2;
+        @extend %ellipse-text;
+    }
+
+    .tr__dropdown {
+       flex-grow: 1;
+    }
+
+    &.role {
+        .info {
+            .h6 {
+                margin: 0;
+                width: auto;
+                @extend %f-medium;
+            }
+
+            p {
+                margin-right: 20px;
+                @extend %f-medium;
+            }
+        }
+    }
+}

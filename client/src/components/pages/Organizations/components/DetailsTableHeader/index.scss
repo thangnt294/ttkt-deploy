@@ -1,0 +1,75 @@
+@import 'styles/extends/_generics';
+
+$search-input-width: 300px;
+$button-width: 200px;
+
+.tr__details-table-header {
+    @extend %box;
+    padding-left: 0;
+    padding-right: 0;
+    margin: 0 $modal-padding;
+    box-shadow: none;
+    position: relative;
+    @extend %border-double-line;
+
+    > p {
+        font-size: $medium-size;
+    }
+    
+    &__title {
+        flex-grow: 1;
+        p {
+            margin-right: 20px;
+        }
+        h2 {
+            margin-right: 12px;
+        }
+        h6 {
+            // display: inline-block;
+            // width: 100%;
+            // @extend %ellipse-text
+            line-break: anywhere;
+        }
+        .tr__link {
+            &.tag {
+                padding: 8px 0;
+                width: 80px;
+            }
+        }
+    }
+    .tr__dropdown {
+        min-width: $search-input-width;
+        &__label {
+            .tr__field--wrapper {
+                .tr__field-input {
+                    border-bottom: 1px solid $border-gray;
+                    padding: 10px 0;
+                    width: 300px;
+                }
+                i {
+                    font-size: $large-size;
+                    color: $pink ;
+                    right: 5px;
+                }
+            }
+        }
+    }
+    .tr__button {
+        padding: 15px 17px;
+        width: $button-width;
+        margin-left: 30px;
+        span {
+            margin-left: 0;
+            font-size: $h6;
+            i {
+                margin-right: 10px;
+                font-size: 10px;
+            }
+        }
+    }
+
+    .right-label {
+        font-size: $small-size;
+        color: $label-gray;
+    }
+}

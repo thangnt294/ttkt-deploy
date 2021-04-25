@@ -1,0 +1,81 @@
+@import 'styles/extends/_generics';
+
+.tr__notification-dropdown {
+    &__header {
+        padding: $content-padding;
+        @extend %block-bottom-border;
+        margin: 0;
+
+        .tr__link {
+            color: $placeholder-gray;
+            font-size: $small-size;
+        }
+    }
+    &__details {
+        border-bottom: 1px solid $bottom-border-gray;
+
+        &:last-child {
+            border: 0;
+        }
+        
+        .time {
+            color: $main-blue;
+            padding: $content-padding;
+            font-size: $small-size;
+            border-bottom: 1px dashed $bottom-border-gray;
+        }
+
+        &--items {
+            border-bottom: 1px dashed $bottom-border-gray;
+            padding: $content-padding;
+            cursor: pointer;
+
+            &:last-child {
+                border: 0;
+            }
+
+            &.unread {
+                background-color: $light-gray;
+            }
+
+            > i {
+                width: $icon-size;
+                height: $icon-size;
+                @include flex(row, center, center);
+                border-radius: $icon-size;
+                background-color: $main-blue;
+                color: $white;
+                font-size: $tiny-size;
+                position: relative;
+                z-index: 1;
+
+                &.danger {
+                    background-color: $main-pink;
+                }
+            }
+            .content {
+                flex-basis: 85%;
+                p {
+                    font-size: $small-size;
+                    margin-bottom: 6px;
+                    line-height: 23px;
+                }
+                span {
+                    font-size: $tiny-size;
+                    color: $label-gray;
+                }
+            }
+            .tr__dropdown__label {
+                i {
+                    font-size: $tiny-size;
+                }
+                padding: 0;
+            }
+            .tr__dropdown__items {
+                width: 170px;
+                top: 3px;
+                left: 0;
+            }
+        }
+    }
+}

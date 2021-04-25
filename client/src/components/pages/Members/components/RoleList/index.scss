@@ -1,0 +1,15 @@
+@import 'styles/extends/_generics';
+
+.tr__role-list {
+    > .h4 {
+        small {
+            font-size: $small-size;
+            color: $grey;
+            @extend %f-regular;
+        }
+    }
+
+    &--items {
+        margin-top: -10px;
+    }
+}

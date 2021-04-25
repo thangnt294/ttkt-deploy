@@ -1,0 +1,26 @@
+@import 'styles/extends/_generics';
+
+.tr__pie {
+    background-color: $main-blue;
+    position: relative;
+    overflow: hidden;
+
+    div {
+        position: absolute;
+        top: 0;
+        left: 0;
+        border: 1px solid $bottom-border-gray;
+
+        &.first {
+            border-top-color: transparent !important;
+            border-left-color: transparent !important;
+            transform: rotate(0);
+        }
+    
+        &.second {
+            border-bottom-color: transparent !important;
+            border-right-color: transparent !important;
+            transform: rotate(-45deg);
+        }
+    }
+}

@@ -1,0 +1,152 @@
+@import 'styles/extends/_generics';
+
+$cell-size: 40px;
+
+.tr__datepicker {
+    > label {
+        font-size: $small-size;
+        margin-bottom: 8px;
+        display: block;
+        color: $label-gray;
+        @extend %f-medium;
+    }
+
+    .react-datepicker-wrapper {
+        width: 100%;
+    }
+
+    .react-datepicker {
+        @extend %f-regular;
+        font-size: $small-size;
+        border: none;
+        box-shadow: $wide-shadow;
+
+        * {
+            color: $base-text-color;
+        }
+
+        .react-datepicker__triangle {
+            display: none;
+        }
+
+        .react-datepicker__day--keyboard-selected,
+        .react-datepicker__month-text--keyboard-selected,
+        .react-datepicker__quarter-text--keyboard-selected,
+        .react-datepicker__year-text--keyboard-selected {
+            background-color: $white;
+        }
+
+        .react-datepicker__triangle {
+            &:before {
+                border: 0;
+            }
+        }
+
+        .react-datepicker__header {
+            background-color: $bg-grey;
+            border-bottom-color: $grey;
+            padding-top: 15px;
+
+            .react-datepicker__current-month {
+                font-size: $h3;
+            }
+        }
+
+        .react-datepicker__navigation {
+            margin-top: 8px;
+            border-radius: 3px;
+            outline: none;
+            
+            &.react-datepicker__navigation--next {
+                border-left-color: $base-text-color;
+            }
+
+            &.react-datepicker__navigation--previous {
+                border-right-color: $base-text-color;
+            }
+        }
+
+        .react-datepicker__day,
+        .react-datepicker__month-text,
+        .react-datepicker__quarter-text,
+        .react-datepicker__year-text,
+        .react-datepicker__day-name,
+        .react-datepicker__day,
+        .react-datepicker__time-name {
+            width: $cell-size;
+            height: $cell-size;
+            line-height: $cell-size;
+            border: 0 !important;
+            outline: 0 !important;
+        }
+
+        .react-datepicker__day--selected,
+        .react-datepicker__day--in-selecting-range,
+        .react-datepicker__day--in-range,
+        .react-datepicker__month-text--selected,
+        .react-datepicker__month-text--in-selecting-range,
+        .react-datepicker__month-text--in-range,
+        .react-datepicker__quarter-text--selected,
+        .react-datepicker__quarter-text--in-selecting-range,
+        .react-datepicker__quarter-text--in-range,
+        .react-datepicker__year-text--selected,
+        .react-datepicker__year-text--in-selecting-range,
+        .react-datepicker__year-text--in-range {
+            background-color: $blue;
+            border-radius: 50px;
+            color: $white;
+            outline: none;
+            border: none;
+        }
+
+        .react-datepicker__day--disabled,
+        .react-datepicker__month-text--disabled,
+        .react-datepicker__quarter-text--disabled,
+        .react-datepicker__year-text--disabled,
+        .react-datepicker__month--disabled {
+            color: $grey;
+            @include opacity(0.3);
+        }
+
+        .react-datepicker__day--today,
+        .react-datepicker__month-text--today,
+        .react-datepicker__quarter-text--today,
+        .react-datepicker__year-text--today {
+            font-weight: normal;
+        }
+
+        .react-datepicker__day:hover,
+        .react-datepicker__month-text:hover,
+        .react-datepicker__quarter-text:hover,
+        .react-datepicker__year-text:hover,
+        .react-datepicker__month--selected {
+            border-radius: 50px;
+        }
+
+        .react-datepicker__month--selected {
+            color: $white;
+        }
+
+        .react-datepicker__month-container {
+            .react-datepicker__header {
+                padding: 15px 0;
+            }
+        }
+
+        .react-datepicker__month-wrapper {
+            @include flex(row);
+
+            .react-datepicker__month-text {
+                margin: 0 25px;
+            }
+        }
+    }
+
+    p.error {
+        font-size: $tiny-size;
+        margin-top: 3px;
+        position: absolute;
+        color: $error-red;
+        @extend %fade-in;
+    }
+}

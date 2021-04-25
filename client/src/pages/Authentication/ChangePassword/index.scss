@@ -1,0 +1,31 @@
+@import 'styles/extends/_generics';
+
+$title-size : 25px;
+
+.tr__change-password {
+    @extend %authentication-form;
+    
+    &--form {
+        position: relative;
+
+        > .tr__message {
+            position: absolute;
+            bottom: 100%;
+            width: 100%;
+        }
+    }
+    
+    &--header {
+        h3 {
+            font-size: $title-size;
+            color: $main-blue;
+        }
+    }
+
+    &--footer {
+        @include flex (row, center, space-between, nowrap);
+        button {
+            width: 48%;
+        }
+    }
+}

@@ -1,0 +1,42 @@
+$path: '../../assets/fonts/';
+$hRegular: $path + 'helvetica-neue/regular/HelveticaNeue';
+$hMedium: $path + 'helvetica-neue/medium/HelveticaNeue-Medium';
+
+@font-face {
+    font-family: 'HelveticaNeue';
+    src: url($hRegular + '.eot');
+    src: url($hRegular + '.eot?#iefix') format('embedded-opentype'),
+        url($hRegular + '.woff2') format('woff2'),
+        url($hRegular + '.woff') format('woff'),
+        url($hRegular + '.ttf') format('truetype'),
+        url($hRegular + '.svg#HelveticaNeue') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'HelveticaNeue';
+    src: url($hMedium + '.eot');
+    src: url($hMedium + '.eot?#iefix') format('embedded-opentype'),
+        url($hMedium + '.woff2') format('woff2'),
+        url($hMedium + '.woff') format('woff'),
+        url($hMedium + '.ttf') format('truetype'),
+        url($hMedium + '.svg#HelveticaNeue-Medium') format('svg');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+// Fonts classes
+.f-regular {
+    font-family: 'HelveticaNeue' !important;
+    font-weight: normal !important;
+    font-style: normal !important;
+}
+
+.f-medium {
+    font-family: 'HelveticaNeue' !important;
+    font-weight: 500 !important;
+    font-style: normal !important;
+}

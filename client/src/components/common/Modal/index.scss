@@ -1,0 +1,148 @@
+@import 'styles/extends/_generics';
+
+$modal-size: 700px;
+$icon-size: 26px;
+$edge-radius: 5px;
+$bg-icon: #4d4d4d;
+
+%full-width-modal {
+    height: 100vh;
+    width: 100%;
+    top: 0;
+    left: 0;
+}
+
+.tr__modal {
+    position: fixed;
+    z-index: 1097;
+    @extend %full-width-modal;
+    @extend %enable-transition;
+    @extend %sticky-issue;
+
+    &--wrapper {
+        position: relative;
+        height: 100vh;
+        overflow: hidden;
+        overflow-y: visible;
+        z-index: 2;
+    }
+    
+    &--mask {
+        background-color: $black-80;
+        position: absolute;
+        z-index: 1;
+        @extend %full-width-modal;
+    }
+
+    &--content {
+        background-color: $white;
+        position: relative;
+        width: $modal-size;
+        border-radius: $edge-radius;
+        padding: 30px;
+        margin: auto;
+        transform: translate(0, 100px) scale(1);
+        @extend %enable-transition;
+        @extend %sticky-issue;
+        pointer-events: all;
+
+        &--wrapper {
+            flex-grow: 1;
+            @include flex(column);
+
+            .delete-message {
+                * {
+                    line-height: 1.5;
+                }
+            }
+        }
+
+        &__title {
+            padding: $content-padding;
+            background-color: $black;
+            border-top-left-radius: $edge-radius;
+            border-top-right-radius: $edge-radius;
+            padding-right: 55px;
+            word-break: break-all;
+
+            p {
+                color: $white;
+                font-size: $h4;
+            }
+        }
+
+        &__footer {
+            @extend %section-footer;
+            
+            .tr__button {
+                margin-left: 15px;
+                min-width: 30%;
+
+                &:first-child {
+                    margin-left: 0;
+                }
+            }
+        }
+    }
+
+    &--close {
+        position: absolute;
+        top: 15px;
+        right: 20px;
+        height: 20px;
+        cursor: pointer;
+        width: $icon-size;
+        height: $icon-size;
+        border-radius: $icon-size;
+        @include flex(row, center, center);
+        @extend %enable-transition;
+        
+        i {
+            font-size: $large-size;
+            @extend %enable-transition;
+            color: $black;
+        }
+
+        &:hover {
+            background-color: $grey;
+
+            i {
+                color: $white;
+            }
+        }
+    }
+
+    &.hidden {
+        @include opacity(0);
+        visibility: hidden;
+        pointer-events: none;
+
+        .el__modal--content {
+            transform: translate(0, 0) scale(0.5);
+        }
+    }
+
+    &.has-title {
+        .tr__modal--content {
+            border-radius: $icon-size/4;
+            padding: 0;
+
+            &--wrapper {
+                padding: $modal-padding;
+            }
+        }
+
+        .tr__modal--close {
+            top: 10px;
+            background-color: $bg-icon;
+        }
+    }
+
+    &.no-padding {
+        .tr__modal--content {
+            &--wrapper {
+                padding: 0;
+            }
+        }
+    }
+}

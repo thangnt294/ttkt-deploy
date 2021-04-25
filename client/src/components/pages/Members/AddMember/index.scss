@@ -1,0 +1,19 @@
+@import 'styles/extends/_generics';
+
+$width-selected-item: 150px;
+
+.tr__add-member {
+    .tr__modal--content--wrapper {
+        .tr__multiselect--wrapper {
+            .tr__dropdown__label {
+                .tr__selected-values--item {
+                    max-width: $width-selected-item;
+                    > h6 {
+                        width: 75%;
+                        @extend %ellipse-text;
+                    }
+                }
+            }
+        }
+    }
+}

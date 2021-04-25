@@ -1,0 +1,163 @@
+@import 'styles/extends/_generics';
+
+$toggle-width: 30px;
+$checkbox-width: 22px;
+$toggle-height: $toggle-width / 2;
+$toggle-circle-size: $toggle-width / 2.5;
+
+.tr__form-checkbox {
+    position: relative;
+
+    > span {
+        padding: 10px 15px 10px $checkbox-width + 10px;
+        cursor: pointer;
+        user-select: none;
+        display: block;
+        position: relative;
+        color: $base-text-color;
+
+        i {
+            @extend %enable-transition;
+            @include centered-position(false, true);
+            left: 3px;
+            font-size: $h3;
+            @include opacity(0);
+            visibility: hidden;
+            color: $white;
+        }
+
+        &:before {
+            content: '';
+            border-radius: 2px;
+            @include centered-position(false, true);
+            left: 0;
+            width: $checkbox-width;
+            height: $checkbox-width;
+            background-color: $checkbox-radio-gray;
+            @extend %enable-transition;
+        }
+        
+        span {
+            color: $base-text-color;
+        }
+    }
+
+    input {
+        position: absolute;
+        @include opacity(0);
+        visibility: hidden;
+
+        &:checked + span {
+            i {
+                @include opacity(1);
+                visibility: visible;
+            }
+
+            &:before {
+                background-color: $main-blue;
+                border-color: $main-blue;
+            }
+        }
+    }
+
+    &.toggle {
+        display: inline-block;
+        > span {
+            padding: 0;
+            height: $toggle-height;
+            i {
+                display: none;
+            }
+
+            &:before {
+                width: $toggle-width;
+                height: 100%;
+                border-radius: $toggle-width;
+                background-color: $border-gray;
+                @include centered-position(false, true);
+                right: 0;
+                left: auto;
+            }
+
+            &:after {
+                content: '';
+                border-radius: $toggle-circle-size;
+                width: $toggle-circle-size;
+                height: $toggle-circle-size;
+                @include centered-position(false, true);
+                right: $toggle-height + 2px;
+                left: auto;
+                background-color: $white;
+                @extend %enable-transition;
+            }
+
+            span {
+                margin-right: $toggle-width * 1.2;
+                font-size: $small-size;
+                margin-top: -2px;
+                display: inline-block;
+            }
+        }
+
+        input {
+            &:checked + span {
+                &:before {
+                    background-color: $collapse-blue;
+                }
+
+                &:after {
+                    right: 2px;
+                    background-color: $main-blue;
+                }
+            }
+        }
+    }
+
+    &.button-mode {
+        > span {
+            @extend %f-medium;
+            padding: 11px 15px;
+            cursor: pointer;
+            color: $label-gray;
+            font-size: $small-size;
+            @extend %enable-transition;
+            border-radius: 3px;
+            border: 2px solid $bottom-border-gray;
+            text-align: center;
+
+            &:before, &:after {
+                display: none;
+            }
+
+            i {
+                @include opacity(1);
+                visibility: visible;
+                font-size: $h2;
+                @include centered-position(false, true);
+                left: 15px;
+                color: $base-text-color;
+                @extend %enable-transition;
+            }
+
+            span {
+                color: $label-gray;
+            }
+        }
+
+        input {
+            &:checked + span {
+                border-color: $main-blue;
+                background-color: $main-blue;
+                color: $white;
+
+                span {
+                    color: $white;
+                }
+
+                i {
+                    color: $white;
+                }
+            }
+        }
+    }
+}

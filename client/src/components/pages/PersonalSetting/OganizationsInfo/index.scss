@@ -1,0 +1,71 @@
+@import 'styles/helpers/_variables';
+@import 'styles/helpers/_mixins';
+.tr__organization-information {
+    margin-bottom: 50px;
+    .tr__task-header-organization {
+        width: 100%;
+        border-radius: 5px;
+        overflow: hidden;
+        border-bottom: 1px solid $button-hover-gray;
+        .column {
+            flex: 0 0 15%;
+            @include flex(row, center, space-between);
+            padding: $content-padding;
+            background-color: $light-gray;
+            border-right: 1px solid $border-gray;
+            color: $label-gray;
+
+            &:first-child {
+                flex: 0 0 70%;
+            }
+
+            &:last-child {
+                border: none;
+            }
+    
+            * {
+                font-size: $small-size;
+            }
+        }
+    }
+    .title {
+        font-size: $small-size;
+        color: $label-gray;
+        border-bottom: 1px solid $button-hover-gray;
+        padding-left: 20px;
+    }
+    .table--body {
+        padding: 0;
+        margin-left: 0;
+        height: 100%;
+
+        &__column {
+            width: 15%;
+            padding: $content-padding;
+            border-right: 1px solid $button-hover-gray;
+            @include flex(true, center, space-between);
+            border-bottom: 1px solid $button-hover-gray;
+            &:first-child {
+                width: 70%;
+                line-break: anywhere;
+            }  
+            &.action {
+                border-right: none;
+                .tr__button {
+                    padding: 5px 22px;
+                    span {
+                        margin: 0;
+                    }
+                }
+            }        
+        }
+
+        &.sub {
+            .table--body__column {
+                &:first-child {
+                    padding-left: 40px;
+                }
+            }
+        }
+    }
+}
