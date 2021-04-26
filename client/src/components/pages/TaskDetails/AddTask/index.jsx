@@ -6,14 +6,13 @@ import {HomeContext, MemberContext, ModalContext} from 'contexts';
 import {useForm} from 'react-hook-form';
 import {dueDateOptions, dueDates} from 'utils';
 import moment from 'moment';
-import {ALL, MEMBER_PAGE_SIZE, MYTASK} from 'actions';
+import {ALL, MEMBER_PAGE_SIZE, MYTASK, TASK_PAGE_SIZE} from 'actions';
 import {useLocation, useParams} from 'react-router-dom';
 import {TaskContext} from "../../../../contexts/TaskContext";
 import {ItemCard} from '../ItemCard';
 import {AssigneeList} from "../AssigneeList";
 
 export const AddTask = ({open = false, onCancel}) => {
-  const {teamId} = useParams();
   const {
     isTemplate,
     isEditTask,
@@ -48,19 +47,15 @@ export const AddTask = ({open = false, onCancel}) => {
   const [dateType, setDateType] = useState(dueDates[0]);
   const [eventBasedDate, setEventBasedDate] = useState(dueDateOptions[0]);
   const [date, setDate] = useState(moment(new Date()).format('DD MMM YYYY'));
-  const location = useLocation();
-  const pathnameArr = location.pathname.split('/');
-  const shipmentId = pathnameArr[pathnameArr.length - 1];
   const [assigneeSearched, setAssigneeSearched] = useState(assignees);
   const [searchAssignee, setSearchAssignee] = useState(false);
+ 
+  const location = useLocation();
+  const pathname = location.pathname.split('/');
+  const teamId = pathname[pathname.length - 1];
+  /*eslint-disable */
 
-  useEffect(() => {
-    // doGetTeamMembers({
-    //   page: 0,
-    //   teamId: teamId,
-    //   isSearching: true
-    // })
-  },[])
+  /* eslint-enable */
 
   const handleAddTask = (data) => {
     const {taskName, description, dueDate} = data;
@@ -71,14 +66,21 @@ export const AddTask = ({open = false, onCancel}) => {
     const payload = {
       name: taskName.trim(),
       description: description,
-      dueDate: selectedDueDate
+      dueDate: new Date(dueDate).getTime(),
+      assignee: assignees[0].id,
+      teamId: teamId,
+      status: "PENDING"
     };
 
 
     doCreateTask(payload, () => {
       reset();
       setAddTask(false);
-      setCurrentTabManagement(ALL);
+      doGetTeamTasks({page: 0,
+          limit: TASK_PAGE_SIZE,
+          isSearching: true
+        });
+        // doGetUserInfo();
       setNotificationMessage(`
                 <p> Task has been added successfully!</p>
                 `);
@@ -94,26 +96,26 @@ export const AddTask = ({open = false, onCancel}) => {
       dueDate: dueDate
     };
 
-      doUpdateTask(shipmentId, eventTask.id, payload, () => {
-        setAddTask(false);
-        setAddTask(false);
-        setIsEditTask(false);
-        if (currentTabManagement === ALL) {
-          doGetMyTasks(shipmentId, {
-            page: 0,
-            tab: ALL
-          })
-        } else {
-          doGetTeamTasks(shipmentId, {
-            page: 0,
-            tab: MYTASK
-          })
-        }
-        // setCurrentTabManagement(ALL);
-        setNotificationMessage(`
-                    <p> Task has been updated successfully!</p>
-                `);
-      })
+      // doUpdateTask(shipmentId, eventTask.id, payload, () => {
+      //   setAddTask(false);
+      //   setAddTask(false);
+      //   setIsEditTask(false);
+      //   if (currentTabManagement === ALL) {
+      //     doGetMyTasks(shipmentId, {
+      //       page: 0,
+      //       tab: ALL
+      //     })
+      //   } else {
+      //     doGetTeamTasks(shipmentId, {
+      //       page: 0,
+      //       tab: MYTASK
+      //     })
+      //   }
+      //   // setCurrentTabManagement(ALL);
+      //   setNotificationMessage(`
+      //               <p> Task has been updated successfully!</p>
+      //           `);
+      // })
 
   }
 
@@ -130,11 +132,7 @@ export const AddTask = ({open = false, onCancel}) => {
   }
 
   const handleChange = items => {
-    setAssignees(oldValue => [...oldValue, ...items.map(item => {
-      return {
-        ...item,
-      }
-    })]);
+    setAssignees(items);
   }
 
   const handleRemove = item => {
@@ -142,8 +140,7 @@ export const AddTask = ({open = false, onCancel}) => {
   }
 
   const handleSearchMembers = (value) => {
-    const pathname = location.pathname.split('/');
-    const teamId = pathname[pathname.length - 1];
+    
     const params = {
       query: value.trim(),
       limit: MEMBER_PAGE_SIZE,
@@ -222,8 +219,8 @@ export const AddTask = ({open = false, onCancel}) => {
                 description: item.email
               }
             }) : []}
-          value={members}
-          addButton={true}
+          value={assignees}
+          addButton={assignees.length > 0 ? false : true}
           addButtonLabel="Select"
           label={`Assign to task`}
           placeholder='You can search by name or email...'
@@ -231,24 +228,25 @@ export const AddTask = ({open = false, onCancel}) => {
           onRemove={handleRemove}
           // onInputChange={handleSearchMembers}
           searchLoading={searchLoading}
+          // single={true}
           renderList={members => members.length > 0 && (
             <div className='tr__partners d-flex flex-wrap mtx1'>
-              {members && members.length > 0 && members.map((member, memberIndex) => (
-                <ItemCard
-                  key={memberIndex}
-                  item={member}
-                  onRemove={handleRemove}
-                  cardOnly={true}
-                />
-              ))}
+                {members && members.length > 0 && members.map((member, memberIndex) => (
+                    <ItemCard
+                        key={memberIndex}
+                        item={member}
+                        onRemove={handleRemove}
+                        cardOnly={true}
+                    />
+                ))}
             </div>
-          )}
+        )}
         />
       </div>
       <div className="tr__assign-modal--list">
         <AssigneeList
           title="Assigned"
-          assignee={task ? task.assignee : null}
+          assignees={task ? task.assignee : null}
           onRemove={handleRemovePartner}
         />
       </div>

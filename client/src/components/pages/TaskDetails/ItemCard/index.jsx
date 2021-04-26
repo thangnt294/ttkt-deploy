@@ -59,11 +59,11 @@ export const ItemCard = ({
                         </>
                     )}
 
-                    {item.icon && (item.icon.indexOf('icon') > -1 ? (
+                    {/* {item.icon && (item.icon > -1 ? (
                         <i className={item.icon} />
-                    ) : (
+                    ) : ( */}
                         <img src={item.icon} alt={item.title} />
-                    ))}
+                    {/* ))} */}
                 </div>
                 {item.title && (
                     <div className="info-member">

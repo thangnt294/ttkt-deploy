@@ -156,14 +156,14 @@ export const MemberContextProvider = ({children}) => {
         const {data, status} = response;
 
         if (status === 200) {
-          for (let member of data.items) {
-            if (member.avatar) {
+          // for (let member of data.items) {
+            // if (member.avatar) {
               // let signedLogo = await getUploadedSignedFileUrl(member.avatar, loggedInUser);
               // member.avatar = signedLogo.data.ret.downloadSignedURI.itemURI;
 
-              member.avatar = GET_FILE + member.avatar;
-            }
-          }
+              // member.avatar = GET_FILE + member.avatar;
+            // }
+          // }
           setMembers(data.items || []);
           setTotalPages(data.totalPage);
           setCurrentPage(data.currentPage);

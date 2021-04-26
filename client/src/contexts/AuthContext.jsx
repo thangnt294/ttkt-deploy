@@ -22,6 +22,7 @@ import {GET_FILE} from 'actions/constants';
 import {HomeContext} from './HomeContext';
 import {createCookie, dateTimestampConverter, getToken} from 'utils';
 import {UploadFileContextProvider} from "./UploadFileContext";
+import { TaskContextProvider } from './TaskContext';
 
 export const AuthContext = createContext();
 
@@ -182,11 +183,15 @@ export const AuthContextProvider = ({children}) => {
     >
       <UploadFileContextProvider>
         <TeamContextProvider>
+
           <MemberContextProvider>
+
             <ModalContextProvider>
               {children}
             </ModalContextProvider>
+
           </MemberContextProvider>
+
         </TeamContextProvider>
       </UploadFileContextProvider>
     </AuthContext.Provider>

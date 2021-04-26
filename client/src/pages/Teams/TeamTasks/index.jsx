@@ -16,10 +16,10 @@ import {
   Tab
 } from 'components';
 import {ALL_TEAMS_URL, MINE, TASK_DETAILS, TASK_PAGE_SIZE} from 'actions';
-import {useHistory} from "react-router-dom";
+import {useHistory, useParams} from "react-router-dom";
 import {TaskContext} from "../../../contexts/TaskContext";
 import {tasksHeader} from "../../../utils";
-import {ModalContext} from "../../../contexts";
+import {MemberContext, ModalContext} from "../../../contexts";
 
 export const TeamTasks = ({backUrl = ALL_TEAMS_URL}) => {
   const [tabs] = useState([ 
@@ -47,7 +47,12 @@ export const TeamTasks = ({backUrl = ALL_TEAMS_URL}) => {
   const {
     setAddTask
   } = useContext(ModalContext);
+
+  const {
+    doGetTeamMembers
+  } = useContext(MemberContext);
   const history = useHistory();
+  const { teamId } = useParams();
   const columns = [
     {
       dataIndex: 'name,description',
@@ -202,7 +207,14 @@ export const TeamTasks = ({backUrl = ALL_TEAMS_URL}) => {
                 <TableHeader
                   count={totalTasks}
                   items={tasksHeader}
-                  onAddButtonClick={() => setAddTask(true)}
+                  onAddButtonClick={() => {
+                    setAddTask(true)
+                    doGetTeamMembers({
+                      page: 0,
+                      teamId: teamId,
+                      isSearching: true
+                    })
+                  }}
                   title=""
                   labelButton="Add New Task"
                   onSearch={onTaskSearch}

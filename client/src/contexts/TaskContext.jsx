@@ -94,15 +94,6 @@ export const TaskContextProvider = ({children}) => {
       const {status} = response;
 
       if (status === 200) {
-        const params = {
-          page: currentPage,
-          limit: TASK_PAGE_SIZE,
-          isSearching: true
-        };
-
-        await doGetTeamTasks(params);
-        doGetUserInfo();
-
         if (callback) callback();
       }
 
