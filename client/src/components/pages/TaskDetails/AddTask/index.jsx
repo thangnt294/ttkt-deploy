@@ -75,10 +75,12 @@ export const AddTask = ({open = false, onCancel}) => {
 
     doCreateTask(payload, () => {
       reset();
+      setAssignees([])
       setAddTask(false);
       doGetTeamTasks({page: 0,
           limit: TASK_PAGE_SIZE,
-          isSearching: true
+          isSearching: true,
+          teamId: teamId
         });
         // doGetUserInfo();
       setNotificationMessage(`
