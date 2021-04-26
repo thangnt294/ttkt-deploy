@@ -152,9 +152,6 @@ export const TeamTasks = ({backUrl = ALL_TEAMS_URL}) => {
     }
   }
 
-  
-
-
   const onTaskSearch = value => {
     const newParams = {
       page: 0,
@@ -179,8 +176,6 @@ export const TeamTasks = ({backUrl = ALL_TEAMS_URL}) => {
 
   return (
     <div className="tr__team--task box d-flex flex-column page-box">
-      <TopHeader title="Tasks"/>
-
       <div className="wrapper">
         <Tab
           className="minimal"
@@ -209,7 +204,7 @@ export const TeamTasks = ({backUrl = ALL_TEAMS_URL}) => {
                   items={tasksHeader}
                   onAddButtonClick={() => setAddTask(true)}
                   title=""
-                  labelButton="Add New Organization"
+                  labelButton="Add New Task"
                   onSearch={onTaskSearch}
                   searchLoading={searchLoading}
                 />

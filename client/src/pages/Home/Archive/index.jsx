@@ -4,7 +4,7 @@ import './index.scss';
 import {Datepicker, Dropdown, Input, Pie, ShipmentTaskHeader, Tooltip} from 'components';
 import {statusOptions} from "../../../utils";
 import {HomeContext, ModalContext} from "../../../contexts";
-import {DONE, MINE, TASK_PAGE_SIZE, TEAM_PAGE_SIZE} from "../../../actions";
+import {DONE, MINE, TASK_PAGE_SIZE} from "../../../actions";
 import {TaskContext} from "../../../contexts/TaskContext";
 import {Collaborators} from "../../../components/pages/TaskDetails/Collaborators";
 

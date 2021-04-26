@@ -112,7 +112,7 @@ export const TaskContextProvider = ({children}) => {
     }
   }
 
-  const doGetTask = async (taskId, callback, isSearching = false) => {
+  const doGetTask = async (taskId, callback) => {
     if (taskId) {
       try {
         setLoading(true);
@@ -130,7 +130,6 @@ export const TaskContextProvider = ({children}) => {
       } catch (error) {
         handleException(error);
       }
-      // }
     }
   }
 

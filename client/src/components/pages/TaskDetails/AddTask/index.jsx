@@ -1,14 +1,16 @@
 import React, {useContext, useState} from 'react';
 
 import './index.scss';
-import {AddDueDate, Modal, TaskDetails} from 'components';
-import {HomeContext, ModalContext} from 'contexts';
+import {AddDueDate, Modal, MultiSelect, TaskDetails} from 'components';
+import {HomeContext, MemberContext, ModalContext} from 'contexts';
 import {useForm} from 'react-hook-form';
 import {dueDateOptions, dueDates} from 'utils';
 import moment from 'moment';
-import {ALL, MYTASK} from 'actions';
+import {ALL, MEMBER_PAGE_SIZE, MYTASK} from 'actions';
 import {useLocation} from 'react-router-dom';
 import {TaskContext} from "../../../../contexts/TaskContext";
+import {ItemCard} from '../ItemCard';
+import {AssigneeList} from "../AssigneeList";
 
 export const AddTask = ({open = false, onCancel}) => {
   const {
@@ -16,7 +18,6 @@ export const AddTask = ({open = false, onCancel}) => {
     isEditTask,
     sectionId,
     setNotificationMessage,
-    sectionName,
     eventTask,
     documentTask,
     selectTask,
@@ -29,13 +30,19 @@ export const AddTask = ({open = false, onCancel}) => {
     doCreateTask,
     doUpdateTask,
     doGetMyTasks,
-    doGetTeamTasks
+    doGetTeamTasks,
+    task
   } = useContext(TaskContext);
 
+  const {
+    members,
+    doGetTeamMembers
+  } = useContext(MemberContext);
+
+  const [assignees, setAssignees] = useState([]);
+  const [searchLoading, setSearchLoading] = useState(false);
   const {setAddTask, setDeleteTask} = useContext(ModalContext);
   const {handleSubmit, register, errors, reset} = useForm();
-  const [dayAdjust, setDayAdjust] = useState(1);
-  const [roles, setRoles] = useState('');
   const [sectionType, setSectionType] = useState('')
   const [dateType, setDateType] = useState(dueDates[0]);
   const [eventBasedDate, setEventBasedDate] = useState(dueDateOptions[0]);
@@ -43,25 +50,19 @@ export const AddTask = ({open = false, onCancel}) => {
   const location = useLocation();
   const pathnameArr = location.pathname.split('/');
   const shipmentId = pathnameArr[pathnameArr.length - 1];
+  const [assigneeSearched, setAssigneeSearched] = useState(assignees);
+  const [searchAssignee, setSearchAssignee] = useState(false);
 
   const handleAddTask = (data) => {
-    const {taskName, typeOfTask, dueDate} = data;
-    let selectedRole = [];
-    roles.forEach(role => {
-      selectedRole = [
-        ...selectedRole,
-        role.id.toUpperCase().replace('-', '_')
-      ]
-    })
+    const {taskName, description, dueDate} = data;
     let selectedDueDate = {
       specificDate: new Date(dueDate).getTime(),
     }
 
     const payload = {
-      taskName: taskName.trim(),
-      type: typeOfTask.toUpperCase(),
-      dueDate: selectedDueDate,
-      roles: selectedRole,
+      name: taskName.trim(),
+      description: description,
+      dueDate: selectedDueDate
     };
 
 
@@ -76,12 +77,11 @@ export const AddTask = ({open = false, onCancel}) => {
   }
 
   const handleEditTask = (data) => {
-    const {taskName, typeOfTask, dueDate} = data;
+    const {taskName, description, dueDate} = data;
 
     const payload = {
-      sectionId: sectionType.key,
       taskName: taskName.trim(),
-      type: typeOfTask.toUpperCase(),
+      description: description,
       dueDate: dueDate
     };
 
@@ -120,6 +120,37 @@ export const AddTask = ({open = false, onCancel}) => {
     setDateType(dueDates[0]);
   }
 
+  const handleChange = items => {
+    setAssignees(oldValue => [...oldValue, ...items.map(item => {
+      return {
+        ...item,
+      }
+    })]);
+  }
+
+  const handleRemove = item => {
+    setAssignees(oldValue => [...oldValue.filter(val => val.id !== item.id)]);
+  }
+
+  const handleSearchMembers = (value) => {
+    const pathname = location.pathname.split('/');
+    const teamId = pathname[pathname.length - 1];
+    const params = {
+      query: value.trim(),
+      limit: MEMBER_PAGE_SIZE,
+      page: 0,
+      teamId: teamId
+    };
+
+    setSearchLoading(true);
+    doGetTeamMembers(shipmentId, params, () => {
+      setSearchLoading(false);
+    })
+  }
+
+  const handleRemovePartner = () => {
+
+  }
 
   return (
     <Modal
@@ -147,7 +178,7 @@ export const AddTask = ({open = false, onCancel}) => {
         title="Task Details"
         register={register}
         errors={errors}
-        eventTask={eventTask}
+        eventTask={task}
         documentTask={documentTask ? documentTask : ''}
         isEditTask={isEditTask}
         setSectionType={setSectionType}
@@ -156,11 +187,10 @@ export const AddTask = ({open = false, onCancel}) => {
         selectTask={selectTask}
       />
       <AddDueDate
-        title="Add Due Date"
+        title="Due Date"
         register={register}
         errors={errors}
-        eventTask={eventTask}
-        setDateType={setDateType}
+        eventTask={task}
         dateType={dateType}
         date={date}
         setDate={setDate}
@@ -168,6 +198,50 @@ export const AddTask = ({open = false, onCancel}) => {
         eventBasedDate={eventBasedDate}
         setEventBasedDate={setEventBasedDate}
       />
+      <div className="tr__assign-modal--form">
+        <MultiSelect
+          className="mbx2"
+          options={members && members.length > 0 ? members
+            // .filter(collaborator => taskPartners.every(m => m.id !== collaborator._id))
+            // .filter(collaborator => assignees.every(m => m.id !== collaborator._id) && !collaborator.base?.delete)
+            .map(item => {
+              return {
+                id: item._id,
+                icon: item.avatar,
+                title: item.name,
+                description: item.email
+              }
+            }) : []}
+          value={members}
+          addButton={true}
+          addButtonLabel="Select"
+          label={`Assign to task`}
+          placeholder='You can search by name or email...'
+          onChange={handleChange}
+          onRemove={handleRemove}
+          onInputChange={handleSearchMembers}
+          searchLoading={searchLoading}
+          renderList={members => members.length > 0 && (
+            <div className='tr__partners d-flex flex-wrap mtx1'>
+              {members && members.length > 0 && members.map((member, memberIndex) => (
+                <ItemCard
+                  key={memberIndex}
+                  item={member}
+                  onRemove={handleRemove}
+                  cardOnly={true}
+                />
+              ))}
+            </div>
+          )}
+        />
+      </div>
+      <div className="tr__assign-modal--list">
+        <AssigneeList
+          title="Assigned"
+          assignee={task ? task.assignee : null}
+          onRemove={handleRemovePartner}
+        />
+      </div>
     </Modal>
   )
 };

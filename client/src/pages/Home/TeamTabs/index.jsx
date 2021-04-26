@@ -73,15 +73,6 @@ const TeamTab = () => {
     }
   ];
 
-  /*eslint-disable */
-  // useEffect(() => {
-  //   doGetTeams({
-  //     page: 0,
-  //     limit: TEAM_PAGE_SIZE,
-  //     isSearching: true
-  //   });
-  // }, [])
-
   useEffect(() => {
     doGetTeams({
       page: 0,
@@ -90,7 +81,6 @@ const TeamTab = () => {
       isSearching: true
     });
   }, [])
-
   /*eslint-enable */
 
   const showTeamDetails = team => {
@@ -102,13 +92,13 @@ const TeamTab = () => {
       doGetTeams({
         page: 0,
         limit: TEAM_PAGE_SIZE,
-        memberId: userInfo?._id,
         isSearching: true
       });
     } else {
       doGetTeams({
         page: 0,
         limit: TEAM_PAGE_SIZE,
+        memberId: userInfo?._id,
         isSearching: true
       });
     }

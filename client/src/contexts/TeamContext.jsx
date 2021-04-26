@@ -49,8 +49,6 @@ export const TeamContextProvider = ({ children }) => {
 
     const doGetTeams = async (params, callback, errorCallBack, hasLoading = true) => {
         setTeam(null);
-
-        if (teams.length === 0 || currentPage !== params.page || params.isSearching) {
             try {
                 if (hasLoading) setLoading(true);
                 delete params.isSearching;
@@ -77,7 +75,6 @@ export const TeamContextProvider = ({ children }) => {
             } catch (error) {
                 handleException(error);
             }
-        }
     }
 
     const doCreateTeam = async (payload, callback) => {

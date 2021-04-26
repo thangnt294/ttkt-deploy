@@ -1,0 +1,38 @@
+@import 'styles/extends/_generics';
+
+$list-height: 290px;
+$border-radius: 5px;
+
+.tr__assignee-list {
+    .list {
+        height: $list-height;
+        overflow: hidden;
+        overflow-y: visible;
+        border: 1px solid $bottom-border-gray;
+        border-bottom-left-radius: $border-radius;
+        border-bottom-right-radius: $border-radius;
+        background-color: $white;
+    }
+
+    .search {
+        padding: 0 10px 10px 10px;
+        border: 10px solid $bottom-border-gray;
+        border-top-left-radius: $border-radius;
+        border-top-right-radius: $border-radius;
+        background-color: $white;
+
+        i {
+            font-size: $medium-size;
+            color: $pink;
+            right: 5px;
+        }
+    }
+
+    .tr__member {
+        padding: 10px;
+
+        &:last-child {
+            border-bottom: 0;
+        }
+    }
+}

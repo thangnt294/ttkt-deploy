@@ -1,0 +1,43 @@
+@import 'styles/extends/_generics';
+
+$avatar-size: 35px;
+$title-width: 50%;
+
+.tr__member {
+    padding: 10px 0;
+    border-bottom: 1px solid $bottom-border-gray;
+    > img {
+        width: $avatar-size;
+        margin-right: 15px;
+    }
+
+    > .h5 {
+        width: $title-width;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+        margin-right: 15px;
+    }
+
+    &--roles {
+        flex-grow: 1;
+        @include flex(row, center, flex-start);
+        i {
+            margin-right: 15px;
+            font-size: $medium-size;
+            color: $grey;
+        }
+    }
+
+    .tr__button {
+        @extend %close-icon;
+        padding: 0;
+        margin-right: 15px;
+    }
+
+    &.minimal {
+        .h5 {
+            flex-grow: 1;
+        }
+    }
+}
