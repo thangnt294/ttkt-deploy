@@ -54,7 +54,7 @@ export const AddTeam = ({open = false, onCancel}) => {
       description: teamDescription,
       members: members.map(member => ({
           memberId: member.id,
-          role: member.role
+          role: data[`teamRole${member.id}`]
       }))
     };
 
