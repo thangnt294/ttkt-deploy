@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 
 import './index.scss';
 import {AddDueDate, Modal, MultiSelect, TaskDetails} from 'components';
@@ -7,12 +7,13 @@ import {useForm} from 'react-hook-form';
 import {dueDateOptions, dueDates} from 'utils';
 import moment from 'moment';
 import {ALL, MEMBER_PAGE_SIZE, MYTASK} from 'actions';
-import {useLocation} from 'react-router-dom';
+import {useLocation, useParams} from 'react-router-dom';
 import {TaskContext} from "../../../../contexts/TaskContext";
 import {ItemCard} from '../ItemCard';
 import {AssigneeList} from "../AssigneeList";
 
 export const AddTask = ({open = false, onCancel}) => {
+  const {teamId} = useParams();
   const {
     isTemplate,
     isEditTask,
@@ -52,6 +53,14 @@ export const AddTask = ({open = false, onCancel}) => {
   const shipmentId = pathnameArr[pathnameArr.length - 1];
   const [assigneeSearched, setAssigneeSearched] = useState(assignees);
   const [searchAssignee, setSearchAssignee] = useState(false);
+
+  useEffect(() => {
+    // doGetTeamMembers({
+    //   page: 0,
+    //   teamId: teamId,
+    //   isSearching: true
+    // })
+  },[])
 
   const handleAddTask = (data) => {
     const {taskName, description, dueDate} = data;
@@ -139,11 +148,12 @@ export const AddTask = ({open = false, onCancel}) => {
       query: value.trim(),
       limit: MEMBER_PAGE_SIZE,
       page: 0,
-      teamId: teamId
+      teamId: teamId,
+      isSearching: true
     };
 
     setSearchLoading(true);
-    doGetTeamMembers(shipmentId, params, () => {
+    doGetTeamMembers(params, () => {
       setSearchLoading(false);
     })
   }
@@ -219,7 +229,7 @@ export const AddTask = ({open = false, onCancel}) => {
           placeholder='You can search by name or email...'
           onChange={handleChange}
           onRemove={handleRemove}
-          onInputChange={handleSearchMembers}
+          // onInputChange={handleSearchMembers}
           searchLoading={searchLoading}
           renderList={members => members.length > 0 && (
             <div className='tr__partners d-flex flex-wrap mtx1'>
