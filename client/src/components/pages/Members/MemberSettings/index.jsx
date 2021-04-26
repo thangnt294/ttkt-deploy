@@ -53,15 +53,6 @@ export const MemberSettings = ({ open = false, onCancel }) => {
             })
         }
 
-        if (team) {
-            const { _id } = team.organization;
-            // const orgRole = orgTeam ? orgTeam.roleName : '';
-
-            payload.orgId = _id
-            // payload.orgRole = orgRole;
-            payload.type = TEAM;
-        }
-
         updateMember(payload);
     }
 
