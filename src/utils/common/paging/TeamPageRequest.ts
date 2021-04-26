@@ -43,7 +43,8 @@ class TeamPageRequest {
         avatar: 1,
         _id: 1,
         role: 1
-      }
+      },
+      currentMemberRole: 1
     };
   }
 

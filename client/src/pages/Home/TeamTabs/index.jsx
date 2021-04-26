@@ -47,6 +47,11 @@ const TeamTab = () => {
       render: members => <MembersAvatar skip={5} members={members} />
     },
     {
+      dataIndex: 'currentMemberRole',
+      render: currentMemberRole =>
+        <h6 className="h6 text-capitalize">{currentMemberRole.charAt(0).toUpperCase() + currentMemberRole.slice(1).toLowerCase()}</h6>
+    },
+    {
       dataIndex: 'members',
       render: members => {
         const memberCount = members ? members.length : 0;
@@ -65,11 +70,6 @@ const TeamTab = () => {
           <h6 className="h6">{label}</h6>
         )
       }
-    },
-    {
-      dataIndex: 'currentMemberRole',
-      render: currentMemberRole =>
-        <h6 className="h6 text-capitalize">{currentMemberRole}</h6>
     }
   ];
 
