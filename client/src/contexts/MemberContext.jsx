@@ -7,7 +7,7 @@ import {
   getMembers,
   getOrgMembers,
   getTeamMembers,
-  leaveOrgsTeams,
+  leaveOrgsTeams, leaveTeams,
   OPERATION_FAILED_MESSAGE,
   removeMember,
   TEAM,
@@ -212,7 +212,6 @@ export const MemberContextProvider = ({children}) => {
           setMember(data);
           if (callback) callback();
         }
-
         setLoading(false);
       } catch (error) {
         handleException(error);
@@ -305,14 +304,10 @@ export const MemberContextProvider = ({children}) => {
     try {
       setLoading(true);
 
-      const avatarUrl = payload.avatarUrl;
-      delete payload.avatarUrl;
       payload.name = payload.name.trim();
 
       const response = await updatePersonalSettings(payload, loggedInUser);
       const {status} = response;
-
-      if (avatarUrl) payload.avatar = avatarUrl;
 
       if (status === 200) {
         setMember(oldMember => {
@@ -336,11 +331,11 @@ export const MemberContextProvider = ({children}) => {
     }
   }
 
-  const doLeaveOrgsTeams = async (payload, callback) => {
+  const doLeaveTeams = async (payload, callback) => {
     try {
       setLoading(true);
 
-      const response = await leaveOrgsTeams(payload, loggedInUser);
+      const response = await leaveTeams(payload, loggedInUser);
       const {status} = response;
 
       if (status === 200) {
@@ -388,7 +383,7 @@ export const MemberContextProvider = ({children}) => {
         doGetMember,
         doDeleteMe,
         doUpdatePersonalSettings,
-        doLeaveOrgsTeams,
+        doLeaveTeams,
         setAllMembers
       }}
     >

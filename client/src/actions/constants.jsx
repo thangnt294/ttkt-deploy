@@ -68,7 +68,7 @@ export const TASK_DETAILS                   = `${API_BASE_URL}/tasks/:taskId`;
 
 export const GET_TEAM_MEMBERS               = `${API_BASE_URL}/teams/:teamId/members`;
 export const GET_ORG_MEMBERS                = `${API_BASE_URL}/organizations/:orgId/members`;
-export const GET_MEMBER                     = `${API_BASE_URL}/members/:memId`;
+export const GET_MEMBER                     = `${API_BASE_URL}/members/:memberId`;
 export const MEMBERS                        = `${API_BASE_URL}/members`;
 export const DELETE_ME                      = `${API_BASE_URL}/members/delete-me`;
 

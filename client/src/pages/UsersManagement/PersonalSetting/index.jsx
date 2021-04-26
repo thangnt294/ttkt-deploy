@@ -6,7 +6,6 @@ import './index.scss';
 import { AuthContext, HomeContext, MemberContext, ModalContext, UploadFileContext } from 'contexts';
 import {
     DeleteBlock,
-    OganizationsInfo,
     UserInfo,
     DeleteConfirmation
 } from 'components';
@@ -18,14 +17,13 @@ import {
     getUnixTimestamp,
 } from 'utils';
 import { LOGIN_URL, OWNER, FILE_SUBTYPE_USER_AVATAR, FILE_TYPE_USER_FILES } from 'actions';
+import {TeamsInfo} from "../../../components";
 
 const PersonalSetting = () => {
     const history = useHistory();
     const { userInfo, loggedInUser } = useContext(AuthContext);
     const { setNotificationMessage } = useContext(HomeContext);
     const {
-        leaveOwnerOrg,
-        leaveOrg,
         leaveTeam,
         deleteMe,
         setDeleteMe,
@@ -47,18 +45,9 @@ const PersonalSetting = () => {
 
     /*eslint-disable */
     useEffect(() => {
-        // if (member) {
-        //     setTempMember(member);
-        // }
-        if ((userInfo && !member) || (userInfo && member && member._id !== userInfo._id)) {
-            const { _id } = userInfo;
-            doGetMember(_id);
-        }
+      const { _id } = userInfo;
+      doGetMember(_id);
     }, [])
-
-    useEffect(() => {
-        
-    }, [userInfo, member])
 
     useEffect(() => {
         if (!isEdit && member) {
@@ -79,45 +68,29 @@ const PersonalSetting = () => {
     const handleUpdatePersonalSettings = async data => {
         if (!isEdit) return;
         const {
-            fullName
+            name
         } = data;
-        const contactNumber = tempMember.contactNumber && tempMember.contactNumber.length > 0
-            ? tempMember.contactNumber.map((mem, memIndex) => data[`phoneNumber${memIndex}`])
-            : [];
-        const primaryNumber = contactNumber && contactNumber.length > 0
-            ? contactNumber.find((mem, memIndex) => {
-                return data[`primaryNumber${memIndex}`];
-            })
-            : null;
-
         let avatarId = member.avatar;
         let avatarUrl = null;
         
         /**
          * Upload new avatar if have change...
          */
-        if (avatar) {
-            const uploadedAvatar = await doUploadFile({
-                type: FILE_TYPE_USER_FILES,
-                subType: FILE_SUBTYPE_USER_AVATAR,
-                fileName: `avatar_${member._id}_${getUnixTimestamp()}`,
-                fileExtension: getMimeFileExtension(getBase64Mime(avatar)),
-            }, avatar, loggedInUser);
-
-            avatarId = uploadedAvatar.id;
-            avatarUrl = uploadedAvatar.url;
-        }
+        // if (avatar) {
+        //     const uploadedAvatar = await doUploadFile({
+        //         type: FILE_TYPE_USER_FILES,
+        //         subType: FILE_SUBTYPE_USER_AVATAR,
+        //         fileName: `avatar_${member._id}_${getUnixTimestamp()}`,
+        //         fileExtension: getMimeFileExtension(getBase64Mime(avatar)),
+        //     }, avatar, loggedInUser);
+        //
+        //     avatarId = uploadedAvatar.id;
+        //     avatarUrl = uploadedAvatar.url;
+        // }
 
         const payload = {
-            name: fullName,
-            email: member.email,
-            contactNumber,
-            avatar: avatarId,
-            avatarUrl,
-        }
-
-        if (primaryNumber) {
-            payload.primaryContactNumber = primaryNumber
+            name: name,
+            email: member.email
         }
 
         doUpdatePersonalSettings(payload, () => {
@@ -201,7 +174,7 @@ const PersonalSetting = () => {
                         setMember={setTempMember}
                         setAvatar={setAvatar}
                     />
-                    <OganizationsInfo
+                    <TeamsInfo
                         handleLeave={handleLeave}
                         isEdit={isEdit}
                     />
@@ -233,24 +206,6 @@ const PersonalSetting = () => {
                 title="Delete own account"
                 cancelButtonClassNames="primary"
                 message="Please transfer your organization ownership or delete your organization before deleting your own account."
-            />
-            <DeleteConfirmation
-                open={leaveOwnerOrg}
-                onCancel={() => setLeaveOwnerOrg(false)}
-                submitButton={false}
-                title={`Leave ${current ? current.orgName : ''}`}
-                cancelButtonLabel="OK"
-                cancelButtonClassNames="primary"
-                message="Please transfer your organization ownership before leaving your organization."
-            />
-            <DeleteConfirmation
-                open={leaveOrg}
-                onCancel={() => setLeaveOrg(false)}
-                title={`Leave ${current ? current.orgName : ''}`}
-                submitButtonLabel="Confirm"
-                cancelButtonLabel="Cancel"
-                onSubmit={handleConfirmLeave}
-                message="Once leave the organization, you will be removed from related collaborator list, assigned tasks and shipment issues. Are you sure you want to leave?"
             />
             <DeleteConfirmation
                 open={leaveTeam}

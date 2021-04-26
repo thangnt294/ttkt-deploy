@@ -102,13 +102,13 @@ const TeamTab = () => {
       doGetTeams({
         page: 0,
         limit: TEAM_PAGE_SIZE,
+        memberId: userInfo?._id,
         isSearching: true
       });
     } else {
       doGetTeams({
         page: 0,
         limit: TEAM_PAGE_SIZE,
-        memberId: userInfo._id,
         isSearching: true
       });
     }
@@ -122,7 +122,7 @@ const TeamTab = () => {
     };
 
     if (searchValue) {
-      params.name = searchValue
+      params.term = searchValue
     }
 
     if (isMyTeamTab) {
