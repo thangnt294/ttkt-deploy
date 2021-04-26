@@ -29,20 +29,7 @@ export const MemberSettings = ({ open = false, onCancel }) => {
     const { member, doUpdateMember } = useContext(MemberContext);
 
     const { handleSubmit, register, errors, formState } = useForm();
-    const [orgTeam, setOrgTeam] = useState(null);
     const [tempPayload, setTempPayload] = useState();
-
-    useEffect(() => {
-        if (team && team.organization && member) {
-            setOrgTeam(member.orgTeams ? member.orgTeams.find(org => org.orgId === team.organization._id) : null);
-        }
-    }, [team, member])
-
-    const getMemberTeams = () => {
-        if (orgTeam && team) return orgTeam.teams.filter(t => t.teamId === team._id);
-        const teamOrgs = team && member && member.orgTeams ? member.orgTeams.filter(org => org.teams.some(t => t.teamId === team._id)) : []
-        return (teamOrgs.length > 0 && team ? teamOrgs[0].teams : []);
-    }
 
     const updateMember = payload => doUpdateMember(payload, () => {
         setMemberSettings(false);
@@ -52,9 +39,9 @@ export const MemberSettings = ({ open = false, onCancel }) => {
     })
 
     const handleUpdateMember = data => {
-        const memberTeams = getMemberTeams();
+        const memberTeams = member.teams;
         const payload = {
-            memId: member._id
+            memberId: member._id
         }
         
         if (memberTeams.length > 0) {
@@ -74,13 +61,8 @@ export const MemberSettings = ({ open = false, onCancel }) => {
             // payload.orgRole = orgRole;
             payload.type = TEAM;
         }
-        
-        if (payload.orgRole && getRole(payload.orgRole) === OWNER && userInfo._id !== payload.memId) {
-            setTempPayload(payload);
-            setChangeOwner(true);
-        } else {
-            updateMember(payload);
-        }
+
+        updateMember(payload);
     }
 
     const confirmUpdateMember = () => {
@@ -111,11 +93,11 @@ export const MemberSettings = ({ open = false, onCancel }) => {
                     title="User details"
                     member={member}
                 />
-                {getMemberTeams().length > 0 && (
+                {member.teams.length > 0 && (
                     <RoleList
                         title="Teams"
                         note="Change role in teams"
-                        items={getMemberTeams().map(team => {
+                        items={member.teams.map(team => {
                             const currentUserInTeam = userOrg ? userOrg.teams.find(t => t.teamId === team.teamId) : null;
                             return {
                                 id: team.teamId,

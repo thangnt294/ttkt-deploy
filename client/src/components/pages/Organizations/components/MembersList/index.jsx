@@ -47,12 +47,12 @@ export const MembersList = ({
 
   const columns = [
     {
-      dataIndex: '_id,name,avatar,base',
-      render: (_id, name, avatar, base) => <Brand
+      dataIndex: '_id,name,avatar',
+      render: (_id, name, avatar) => <Brand
         brand={{
           _id,
           logo: avatar ? avatar : defaultAvatar,
-          name: base?.delete ? 'deleted_' + _id : name
+          name: name
         }}
         isSelectable={true}
         disabled={!hasPermission(_id) || isMember()}
@@ -165,7 +165,7 @@ export const MembersList = ({
             }
             className='members border'
             dataSource={members}
-            columns={columns.slice(0, columns.length - 1)}
+            columns={columns}
             onRowClick={getMemberSettings}
             emptyMessage={searchMessage ? searchMessage : 'No member found'}
           />

@@ -33,8 +33,8 @@ export const TaskContextProvider = ({children}) => {
 
         const response = await getMyTasks(params, loggedInUser);
         const {data, status} = response;
-
         if (status === 200) {
+          console.log(data.items)
           setTasks(data.items || []);
           setTotalPages(data.totalPage);
           setCurrentPage(data.currentPage);
@@ -42,7 +42,7 @@ export const TaskContextProvider = ({children}) => {
           if (!data.items.length) {
             if (errorCallBack) errorCallBack();
           }
-          if (params.name) setSearchMessage('No search result');
+          if (params.name) setSearchMessage('No search result')
           else {
             setTotalTasks(data.totalItems);
             setSearchMessage('');
@@ -184,7 +184,8 @@ export const TaskContextProvider = ({children}) => {
         doGetMyTasks,
         doUpdateTask,
         doGetTask,
-        setIsDone
+        setIsDone,
+        tasks
       }}
     >
       {children}

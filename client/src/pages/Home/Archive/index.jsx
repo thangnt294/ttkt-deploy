@@ -7,13 +7,9 @@ import {HomeContext, ModalContext} from "../../../contexts";
 import {DONE, MINE, TASK_PAGE_SIZE} from "../../../actions";
 import {TaskContext} from "../../../contexts/TaskContext";
 import {Collaborators} from "../../../components/pages/TaskDetails/Collaborators";
+import moment from "moment";
 
 const Archive = () => {
-
-  const {
-    setAddTask,
-    setAssignCollaborators,
-  } = useContext(ModalContext);
   const {
     setIsEditTask,
     setTaskId,
@@ -23,64 +19,35 @@ const Archive = () => {
   const {
     setIsDone,
     doGetMyTasks,
+    doUpdateTask,
     tasks,
     currentPage,
     totalPages
   } = useContext(TaskContext);
-
-  const truePayload = [
-    {
-      _id: "659321yu4h421052",
-      name: "Task 1",
-      description: "This is task 1",
-      status: "DONE",
-      assignee: {
-        name: "Assignee 1",
-        avatar: "ABC"
-      },
-      dueDate: 945829572981,
-      base: {
-        "createdBy": "safasfags",
-        "updatedBy": "agdjkldhglads"
-      },
-      team: {
-        _id: '8590371501',
-        name: "Team 1",
-        description: "This is team 1"
-      }
-    },
-    {
-      _id: "659321yu4h421052",
-      name: "Task 2",
-      description: "This is task 2",
-      status: "DONE",
-      assignee: {
-        name: "Assignee 2",
-        avatar: "ABC"
-      },
-      dueDate: 945829572981,
-      base: {
-        "createdBy": "safasfags",
-        "updatedBy": "agdjkldhglads"
-      },
-      team: {
-        _id: '8590371501',
-        name: "Team 2",
-        description: "This is team 2"
-      }
-    }
-  ]
 
   /*eslint-disabled*/
   useEffect(() => {
     doGetMyTasks({
       page: 0,
       limit: TASK_PAGE_SIZE,
-      isSearching: true,
-      tab: MINE
+      isSearching: true
     });
   }, [])
   /*eslint-enabled*/
+
+  const handleChangeStatus = (task, option) => {
+    const {_id, base, team, ...taskClone} = task
+    doUpdateTask(task._id, {
+      ...taskClone,
+      assignee: task.assignee._id,
+      status: option.value
+    }, () => doGetMyTasks({
+        page: 0,
+        limit: TASK_PAGE_SIZE,
+        isSearching: true
+      }
+    ));
+  }
 
   return (
     <div className="tr__all-issues page-box">
@@ -149,7 +116,7 @@ const Archive = () => {
                       )}
                       render={(options, handleChange, selectedValue) => (
                         <>
-                          {(task.status !== "Done") ? (
+                          {(task.status !== "DONE") ? (
                             <div
                               className={`tr__status-dropdown`}>
                               {options.map((option, optionIndex) => (
@@ -157,9 +124,7 @@ const Archive = () => {
                                   className={`status-option ${task.status === option.key ? 'active' : ''}`}
                                   key={optionIndex}
                                   onClick={() => {
-                                    // handleChangeStatus(option, event.id)
-                                    alert('CHANGE STATUS')
-                                    handleChange(option)
+                                    handleChangeStatus(task, option)
                                   }}
                                 >
                                   <p
@@ -209,7 +174,7 @@ const Archive = () => {
                           <Input
                             iconPosition="right"
                             placeholder="Booking Date"
-                            value={task.dueDate}
+                            value={moment(task.dueDate).format('DD/MM/YYYY')}
                             disabled={true}
                           />
                         </div>

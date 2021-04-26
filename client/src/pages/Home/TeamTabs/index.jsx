@@ -49,7 +49,7 @@ const TeamTab = () => {
     {
       dataIndex: 'currentMemberRole',
       render: currentMemberRole =>
-        <h6 className="h6 text-capitalize">{currentMemberRole.charAt(0).toUpperCase() + currentMemberRole.slice(1).toLowerCase()}</h6>
+        <h6 className="h6 text-capitalize">{currentMemberRole && currentMemberRole.charAt(0).toUpperCase() + currentMemberRole.slice(1).toLowerCase()}</h6>
     },
     {
       dataIndex: 'members',

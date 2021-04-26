@@ -35,17 +35,17 @@ const HomeLayout = () => {
     const location = useLocation();
     const { setIsArchive } = useContext(HomeContext);
     const { doGetUserInfo } = useContext(AuthContext);
-    const [isBreadcrum, setIsBreadcrum] = useState(false);
+    const [isBreadcrumb, setIsBreadcrumb] = useState(false);
     useEffect(() => {
         setIsArchive(location && location.pathname.indexOf('archive') > -1);
-        setIsBreadcrum(checkBreadcrumAvailable());
+        setIsBreadcrumb(checkBreadcrumbAvailable());
     }, [location]);
 
     useEffect(() => {
         if (!userInfo) doGetUserInfo(null);
     }, [userInfo])
 
-    const checkBreadcrumAvailable = () => {
+    const checkBreadcrumbAvailable = () => {
         const exceptions = [
             VESSEL_SCHEDULE_BASE_URL,
             ACTIVE_SHIPMENTS_URL,
@@ -61,9 +61,9 @@ const HomeLayout = () => {
     }
 
     return (
-        <div className={`tr__home-layout ${isBreadcrum ? 'having-breadcrum' : ''}`}>
+        <div className={`tr__home-layout ${isBreadcrumb ? 'having-breadcrumb' : ''}`}>
             <Header />
-            {isBreadcrum && (
+            {isBreadcrumb && (
                 <Breadcrum />
             )}
             <div className="col-12">

@@ -183,15 +183,11 @@ export const AuthContextProvider = ({children}) => {
     >
       <UploadFileContextProvider>
         <TeamContextProvider>
-
           <MemberContextProvider>
-
             <ModalContextProvider>
               {children}
             </ModalContextProvider>
-
           </MemberContextProvider>
-
         </TeamContextProvider>
       </UploadFileContextProvider>
     </AuthContext.Provider>
