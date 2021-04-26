@@ -34,42 +34,42 @@ const removeExpiredSS = (expiredKey, mainKey) => {
 }
 
 export const assignToken = async callback => {
-    console.log("ádasdasd")
-    removeExpiredSS(ACCESS_TOKEN_EXPIRY, ACCESS_TOKEN);
-    removeExpiredSS(REFRESH_TOKEN_EXPIRY, REFRESH_TOKEN);
+    // console.log("ádasdasd")
+    // removeExpiredSS(ACCESS_TOKEN_EXPIRY, ACCESS_TOKEN);
+    // removeExpiredSS(REFRESH_TOKEN_EXPIRY, REFRESH_TOKEN);
 
-    const accessToken = getCookie(ACCESS_TOKEN);
-    const refreshToken = getCookie(REFRESH_TOKEN);
+    // const accessToken = getCookie(ACCESS_TOKEN);
+    // const refreshToken = getCookie(REFRESH_TOKEN);
 
-    const ssAccessToken = sessionStorage.getItem(ACCESS_TOKEN);
-    const ssRefreshToken = sessionStorage.getItem(REFRESH_TOKEN);
+    // const ssAccessToken = sessionStorage.getItem(ACCESS_TOKEN);
+    // const ssRefreshToken = sessionStorage.getItem(REFRESH_TOKEN);
 
-    if ((!accessToken && refreshToken) || (!ssAccessToken && ssRefreshToken)) {
-        try {
-            const response = await generateToken({
-                refreshToken: refreshToken || ssRefreshToken
-            });
-            const { data, status } = response;
+    // if ((!accessToken && refreshToken) || (!ssAccessToken && ssRefreshToken)) {
+    //     try {
+    //         const response = await generateToken({
+    //             refreshToken: refreshToken || ssRefreshToken
+    //         });
+    //         const { data, status } = response;
     
-            if (status === 200) {
-                const { accessToken } = data;
+    //         if (status === 200) {
+    //             const { accessToken } = data;
 
-                if (refreshToken) createCookie(ACCESS_TOKEN, accessToken, 1);
-                else {
-                    sessionStorage.setItem(ACCESS_TOKEN, accessToken);
-                    sessionStorage.setItem(ACCESS_TOKEN_EXPIRY, new Date().getTime() + dateTimestampConverter);
-                }
+    //             if (refreshToken) createCookie(ACCESS_TOKEN, accessToken, 1);
+    //             else {
+    //                 sessionStorage.setItem(ACCESS_TOKEN, accessToken);
+    //                 sessionStorage.setItem(ACCESS_TOKEN_EXPIRY, new Date().getTime() + dateTimestampConverter);
+    //             }
                 if (callback) callback()
-            }
+    //         }
     
-            return null;
-        } catch (error) {
-            console.log(error);
-            if (callback) callback()
-        }
-    } else {
-        if (callback) callback()
-    }
+    //         return null;
+    //     } catch (error) {
+    //         console.log(error);
+    //         if (callback) callback()
+    //     }
+    // } else {
+    //     if (callback) callback()
+    // }
 }
 
 export const createCookie = (name, value, days = 1) => {
