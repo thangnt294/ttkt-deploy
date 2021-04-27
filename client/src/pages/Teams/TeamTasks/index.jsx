@@ -16,7 +16,7 @@ import {
   Tab
 } from 'components';
 import {ALL_TEAMS_URL, MINE, TASK_DETAILS, TASK_PAGE_SIZE} from 'actions';
-import {useHistory, useParams} from "react-router-dom";
+import {useHistory, useLocation, useParams} from "react-router-dom";
 import {TaskContext} from "../../../contexts/TaskContext";
 import {tasksHeader} from "../../../utils";
 import {MemberContext, ModalContext} from "../../../contexts";
@@ -31,7 +31,6 @@ export const TeamTasks = ({backUrl = ALL_TEAMS_URL}) => {
     id: 'All',
     name: 'All Task'
   }]);
-  const [isMyTasksTab, setIsMyTasksTab] = useState(true);
   const [searchValue, setSearchValue] = useState();
   const [searchLoading, setSearchLoading] = useState(false);
   const [status, setStatus] = useState(MINE);
@@ -63,7 +62,7 @@ export const TeamTasks = ({backUrl = ALL_TEAMS_URL}) => {
     },
     {
       dataIndex: 'team-name',
-      render: team => <h6 className="h6">{team.name}</h6>
+      render: team => <h6 className="h6">{team?.name}</h6>
     },
     {
       dataIndex: 'assignee',
@@ -128,10 +127,11 @@ export const TeamTasks = ({backUrl = ALL_TEAMS_URL}) => {
 
  	/*eslint-disable */
    useEffect(() => {
-    doGetMyTasks( {
+    doGetTeamTasks({
       page: 0,
       limit: TASK_PAGE_SIZE,
-      tab: status
+      tab: status,
+      teamId: teamId
     });
 	}, [status])
   /*eslint-enable */
@@ -141,42 +141,29 @@ export const TeamTasks = ({backUrl = ALL_TEAMS_URL}) => {
   }
 
   const handlePageChange = page => {
-    const params = {
-      page,
-      limit: TASK_PAGE_SIZE
-    };
-
-    if (searchValue) {
-      params.name = searchValue;
-    }
-
-    if (isMyTasksTab) {
-      doGetMyTasks(params);
-    } else {
-      doGetTeamTasks(params);
-    }
+    doGetTeamTasks({
+      page: page,
+      limit: TASK_PAGE_SIZE,
+      tab: status,
+      teamId: teamId
+    });
   }
 
   const onTaskSearch = value => {
     const newParams = {
       page: 0,
       limit: TASK_PAGE_SIZE,
-      isSearching: true
+      isSearching: true,
+      teamId: teamId
     };
     if (value) newParams.term = value.trim();
 
     setSearchLoading(true);
     setSearchValue(value);
 
-    if (isMyTasksTab) {
-      doGetMyTasks(newParams, () => {
-        setSearchLoading(false);
-      }, false)
-    } else {
-      doGetTeamTasks(newParams, () => {
-        setSearchLoading(false);
-      }, false);
-    }
+    doGetTeamTasks(newParams, () => {
+      setSearchLoading(false);},
+      false);
   };
 
   return (
@@ -186,6 +173,7 @@ export const TeamTasks = ({backUrl = ALL_TEAMS_URL}) => {
           className="minimal"
           initialTab={0}
           onTabClick={tab => {
+            console.log(status);
             setStatus(tab.toUpperCase());
 						setCurrentPage(0);
           }}

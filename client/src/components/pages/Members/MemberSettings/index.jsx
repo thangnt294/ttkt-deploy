@@ -84,7 +84,7 @@ export const MemberSettings = ({ open = false, onCancel }) => {
                     title="User details"
                     member={member}
                 />
-                {member?.teams.length > 0 && (
+                {member?.teams?.length > 0 && (
                     <RoleList
                         title="Teams"
                         note="Change role in teams"
