@@ -80,7 +80,7 @@ export const InviteMembers = ({
                                 item={member}
                                 name={`${name}${member.id}`}
                                 onRemove={handleRemove}
-                                dropdownOptions={getRoleList()}
+                                dropdownOptions={getRoleList().filter(role => role.key !== 'OWNER')}
                                 teamOptions={member.teamOptions}
                                 getValues={getValues}
                                 isMember={isMember}

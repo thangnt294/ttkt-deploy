@@ -19,19 +19,24 @@ import {
     getRole,
     getRoleList
 } from 'utils';
-import { ADMIN, MEMBER, ORGANIZATION, OWNER, TEAM } from 'actions';
+import {ADMIN, MEMBER, ORGANIZATION, OWNER, removeMember, TEAM} from 'actions';
+import {useLocation, useParams} from "react-router-dom";
 
 export const MemberSettings = ({ open = false, onCancel }) => {
     const { userOrg, userInfo } = useContext(AuthContext);
     const { setNotificationMessage } = useContext(HomeContext);
-    const { setMemberSettings, changeOwner, setChangeOwner } = useContext(ModalContext);
-    const { team, userTeamRole } = useContext(TeamContext);
+    const { setMemberSettings, changeOwner, setChangeOwner, removeMemberFromTeam, setRemoveMemberFromTeam } = useContext(ModalContext);
+    const { team, userTeamRole, doUpdateMemberRole, doRemoveMemberFromTeam } = useContext(TeamContext);
     const { member, doUpdateMember } = useContext(MemberContext);
 
     const { handleSubmit, register, errors, formState } = useForm();
     const [tempPayload, setTempPayload] = useState();
 
-    const updateMember = payload => doUpdateMember(payload, () => {
+    const location = useLocation();
+    const pathname = location.pathname.split("/")
+    const teamId = pathname[pathname.length - 1]
+
+    const updateMember = payload => doUpdateMemberRole(teamId, payload, () => {
         setMemberSettings(false);
         setNotificationMessage(`
             <p>Member settings updated successfully!</p>
@@ -39,21 +44,17 @@ export const MemberSettings = ({ open = false, onCancel }) => {
     })
 
     const handleUpdateMember = data => {
-        const memberTeams = member.teams;
-        const payload = {
-            memberId: member._id
-        }
-        
-        if (memberTeams.length > 0) {
-            payload.teamRoles = memberTeams.map(team => {
-                return {
-                    teamId: team.teamId,
-                    roleName: data[`teamRole${team.teamId}`]
-                }
-            })
-        }
-
+      const memberRole = currentTeam.role;
+      const payload = {
+        memberId: member._id,
+        role: data[`teamRole${teamId}`]
+      }
+      if (memberRole.toUpperCase() === 'OWNER' && data[`teamRole${teamId}`] === 'OWNER') {
+        setTempPayload(payload)
+        setChangeOwner(true)
+      } else {
         updateMember(payload);
+      }
     }
 
     const confirmUpdateMember = () => {
@@ -61,6 +62,15 @@ export const MemberSettings = ({ open = false, onCancel }) => {
         setChangeOwner(false);
         updateMember(tempPayload);
     }
+
+  const confirmRemoveMember = () => {
+    setRemoveMemberFromTeam(false);
+    doRemoveMemberFromTeam(teamId, {
+      memberIds: [member._id]
+    });
+  }
+
+  const currentTeam = member?.teams?.find(team => team._id.toString() === teamId);
 
     return (
         <>
@@ -84,22 +94,20 @@ export const MemberSettings = ({ open = false, onCancel }) => {
                     title="User details"
                     member={member}
                 />
-                {member?.teams?.length > 0 && (
+                {currentTeam && (
                     <RoleList
-                        title="Teams"
-                        note="Change role in teams"
-                        items={member.teams.map(team => {
-                            const currentUserInTeam = userOrg ? userOrg.teams.find(t => t.teamId === team.teamId) : null;
-                            return {
-                                id: team.teamId,
-                                title: team.teamName,
-                                role: getRole(team.roleName),
-                                disabled: (!(currentUserInTeam && getRole(currentUserInTeam.roleName) !== MEMBER)) || (getRole(userTeamRole) === MEMBER && team),
-                                options: true ? getRoleList(ADMIN) : (currentUserInTeam ? getRoleList(currentUserInTeam.roleName) : getRoleList(team.roleName, false))
-                            }
-                        })}
+                        title="Team"
+                        note="Change role in team"
+                        items={[{
+                          id: currentTeam._id,
+                          title: currentTeam.name,
+                          role: currentTeam.role,
+                          disabled: currentTeam.role === 'MEMBER',
+                          options: getRoleList()
+                        }]}
                         register={register}
                         errors={errors}
+                        onRemove={() => setRemoveMemberFromTeam(true)}
                     /> 
                 )}
             </Modal>
@@ -108,7 +116,14 @@ export const MemberSettings = ({ open = false, onCancel }) => {
                 onCancel={() => setChangeOwner(false)}
                 onSubmit={confirmUpdateMember}
                 title="Change role"
-                message={`You are making ${member ? member.name : ''} the owner of your organization. Your role will be changed to admin. Do you want to continue?`}
+                message={`You are making ${member ? member.name : ''} the owner of your team. Your role will be changed to admin. Do you want to continue?`}
+            />
+            <DeleteConfirmation
+              open={removeMemberFromTeam}
+              onCancel={() => setRemoveMemberFromTeam(false)}
+              onSubmit={confirmRemoveMember}
+              title="Change role"
+              message={`Are you sure you want to remove ${member ? member.name : ''} from this team?`}
             />
         </>
     )

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { authHeaders } from 'actions';
+import {authHeaders, REMOVE_MEMBERS, UPDATE_MEMBERS} from 'actions';
 import {
     GET_TEAM_MEMBERS,
     GET_ORG_MEMBERS,
@@ -73,3 +73,13 @@ export const leaveTeams = (payload, token) => {
     if (!payload) return;
     return axios.put(PERSONAL_LEAVE, payload, authHeaders(token));
 };
+
+export const updateMemberRole = (teamId, payload, token) => {
+  if (!payload || !teamId) return;
+  return axios.put(UPDATE_MEMBERS.replace(':teamId', teamId), payload, authHeaders(token));
+}
+export const removeMemberFromTeam = (teamId, memberIds, token) => {
+  if (!memberIds || !teamId) return;
+  return axios.put(REMOVE_MEMBERS.replace(':teamId', teamId), memberIds, authHeaders(token));
+}
+

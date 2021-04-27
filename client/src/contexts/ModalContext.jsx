@@ -10,6 +10,7 @@ export const ModalContextProvider = ({ children }) => {
     const [addOrganization, setAddOrganization] = useState(false);
     const [addTeam, setAddTeam] = useState(false);
     const [addMember, setAddMember] = useState(false);
+    const [removeMemberFromTeam, setRemoveMemberFromTeam] = useState(false);
     const [memberSettings, setMemberSettings] = useState(false);
     const [editSection, setEditSection] = useState(false);
     const [addSection, setAddSection] = useState(false);
@@ -179,7 +180,9 @@ export const ModalContextProvider = ({ children }) => {
                 setAddBRCollaborators,
                 setConfirmSaveTemplate,
                 setEditTemplate,
-                setJoinOrg
+                setJoinOrg,
+                setRemoveMemberFromTeam,
+                removeMemberFromTeam
             }}
         >
             { children }

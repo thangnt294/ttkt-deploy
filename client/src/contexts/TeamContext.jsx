@@ -1,15 +1,15 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
 import {
-    getTeams,
-    getTeam,
-    getOrgTeams,
-    createTeam,
-    updateTeam,
-    removeTeam,
-    OPERATION_FAILED_MESSAGE,
-    TEAM_PAGE_SIZE, 
-    // getUploadedSignedFileUrl
+  getTeams,
+  getTeam,
+  getOrgTeams,
+  createTeam,
+  updateTeam,
+  removeTeam,
+  OPERATION_FAILED_MESSAGE,
+  TEAM_PAGE_SIZE, updateMember, TEAM, updateMemberRole, removeMemberFromTeam,
+  // getUploadedSignedFileUrl
 } from 'actions';
 import { GET_FILE } from 'actions/constants';
 import { HomeContext, AuthContext } from 'contexts';
@@ -177,6 +177,38 @@ export const TeamContextProvider = ({ children }) => {
         }
     }
 
+  const doUpdateMemberRole = async (teamId, payload, callback) => {
+    try {
+      setLoading(true);
+
+      const response = await updateMemberRole(teamId, payload, loggedInUser);
+      const {status} = response;
+
+      if (status === 200) {
+        setLoading(false);
+        if (callback) callback();
+      }
+    } catch (error) {
+      handleException(error);
+    }
+  }
+
+  const doRemoveMemberFromTeam = async (teamId, payload, callback) => {
+    try {
+      setLoading(true);
+
+      const response = await removeMemberFromTeam(teamId, payload, loggedInUser);
+      const {status} = response;
+
+      if (status === 200) {
+        setLoading(false);
+        if (callback) callback();
+      }
+    } catch (error) {
+      handleException(error);
+    }
+  }
+
     return(
         <TeamContext.Provider
             value={{
@@ -194,6 +226,8 @@ export const TeamContextProvider = ({ children }) => {
                 doGetTeam,
                 doUpdateTeam,
                 doDeleteTeam,
+                doUpdateMemberRole,
+                doRemoveMemberFromTeam
             }}
         >
             { children }

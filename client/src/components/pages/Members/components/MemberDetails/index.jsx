@@ -41,24 +41,24 @@ export const MemberDetails = ({ title, member }) => {
                             <p className="item-value">{member.email}</p>
                         </div>
                     </div>
-                    <div className="tr__member-details--info__item mbx3 d-flex">
-                        <div className="col-4">
-                            <label className="f-medium">Contact number</label>
-                        </div>
-                        <div className="col-8">
-                            <p className="item-value ">{member.primaryContactNumber}</p>
-                        </div>
-                    </div>
-                    <div className="tr__member-details--info__item d-flex align-items-center">
-                        <div className="col-4">
-                            <label className="f-medium">User status</label>
-                        </div>
-                        <div className="col-8">
-                            {getMemberTeam() && (
-                                <p className={`tr__tag ${getMemberStatus()}`}>{getMemberStatus()}</p>
-                            )}
-                        </div> 
-                    </div>
+                    {/*<div className="tr__member-details--info__item mbx3 d-flex">*/}
+                    {/*    <div className="col-4">*/}
+                    {/*        <label className="f-medium">Contact number</label>*/}
+                    {/*    </div>*/}
+                    {/*    <div className="col-8">*/}
+                    {/*        <p className="item-value ">{member.primaryContactNumber}</p>*/}
+                    {/*    </div>*/}
+                    {/*</div>*/}
+                    {/*<div className="tr__member-details--info__item d-flex align-items-center">*/}
+                    {/*    <div className="col-4">*/}
+                    {/*        <label className="f-medium">User status</label>*/}
+                    {/*    </div>*/}
+                    {/*    <div className="col-8">*/}
+                    {/*        {getMemberTeam() && (*/}
+                    {/*            <p className={`tr__tag ${getMemberStatus()}`}>{getMemberStatus()}</p>*/}
+                    {/*        )}*/}
+                    {/*    </div> */}
+                    {/*</div>*/}
                 </div>
             )}
         </div>
