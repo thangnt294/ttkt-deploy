@@ -19,10 +19,10 @@ import {ALL_TEAMS_URL, MINE, TASK_DETAILS, TASK_PAGE_SIZE} from 'actions';
 import {useHistory, useLocation, useParams} from "react-router-dom";
 import {TaskContext} from "../../../contexts/TaskContext";
 import {tasksHeader} from "../../../utils";
-import {MemberContext, ModalContext} from "../../../contexts";
+import { HomeContext, MemberContext, ModalContext } from '../../../contexts';
 
 export const TeamTasks = ({backUrl = ALL_TEAMS_URL}) => {
-  const [tabs] = useState([ 
+  const [tabs] = useState([
     {
     id: 'Mine',
     name: 'My Task'
@@ -36,21 +36,23 @@ export const TeamTasks = ({backUrl = ALL_TEAMS_URL}) => {
   const [status, setStatus] = useState(MINE);
   const {
     doGetTeamTasks,
-    doGetMyTasks,
     currentPage,
     setCurrentPage,
     totalPages,
     totalTasks,
-    tasks
+    tasks,
+    setTask
   } = useContext(TaskContext);
   const {
-    setAddTask
+    setAddTask,
   } = useContext(ModalContext);
+  const {
+    setIsEditTask
+  } = useContext(HomeContext);
 
   const {
     doGetTeamMembers
   } = useContext(MemberContext);
-  const history = useHistory();
   const { teamId } = useParams();
   const columns = [
     {
@@ -136,8 +138,10 @@ export const TeamTasks = ({backUrl = ALL_TEAMS_URL}) => {
 	}, [status])
   /*eslint-enable */
 
-  const showTaskDetails = task => {
-    history.push(TASK_DETAILS.replace(':taskId', task._id));
+  const showTaskDetails = (task) => {
+    setIsEditTask(true);
+    // setTask(task);
+    setAddTask(true);
   }
 
   const handlePageChange = page => {

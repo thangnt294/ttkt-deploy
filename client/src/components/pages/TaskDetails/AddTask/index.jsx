@@ -49,7 +49,7 @@ export const AddTask = ({open = false, onCancel}) => {
   const [date, setDate] = useState(moment(new Date()).format('DD MMM YYYY'));
   const [assigneeSearched, setAssigneeSearched] = useState(assignees);
   const [searchAssignee, setSearchAssignee] = useState(false);
- 
+
   const location = useLocation();
   const pathname = location.pathname.split('/');
   const teamId = pathname[pathname.length - 1];
@@ -142,7 +142,7 @@ export const AddTask = ({open = false, onCancel}) => {
   }
 
   const handleSearchMembers = (value) => {
-    
+
     const params = {
       query: value.trim(),
       limit: MEMBER_PAGE_SIZE,
@@ -166,15 +166,15 @@ export const AddTask = ({open = false, onCancel}) => {
       open={open}
       className="tr__add-task no-padding"
       onCancel={handleCloseModal}
-      title={isTemplate ? 'Task Settings' : (isEditTask ? 'Edit task' : 'Add New Task')}
+      title={isEditTask ? 'Edit task' : 'Add New Task'}
       cancelButton={isEditTask}
       onCancelClick={handleDeleteTask}
       cancelButtonLabel="Delete Task"
       cancelButtonClassNames="outline"
       cancelButtonType="primary"
-      btnClasses={isTemplate || isEditTask ? 'justify-content-between' : 'justify-content-end'}
+      btnClasses={isEditTask ? 'justify-content-between' : 'justify-content-end'}
       submitButton
-      submitButtonLabel={isTemplate || isEditTask ? 'Save Changes' : "Save Task"}
+      submitButtonLabel={isEditTask ? 'Save Changes' : "Save Task"}
       onSubmitClick={isEditTask ? handleSubmit(handleEditTask) : handleSubmit(handleAddTask)}
       isBackDropClickable={false}
       renderForm={children => (

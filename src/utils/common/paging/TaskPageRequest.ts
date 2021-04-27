@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import { BasePageRequest, PageRequest } from './BasePageRequest';
 import { getVal, isEmpty, isEqual } from '../../ObjectUtils';
 import { getCurrentUserId } from '../../RequestUtils';
+import { toUpperCase } from '../../StringUtils';
 
 class TaskPageRequest {
   public static getPageRequest(req: Request, taskIds: string[] = null): PageRequest {
@@ -27,7 +28,7 @@ class TaskPageRequest {
         $in: taskIds
       };
       const reqTab: string = getVal(req.query, '', 'tab');
-      if (isEqual(reqTab, 'MINE')) {
+      if (isEqual(toUpperCase(reqTab), 'MINE')) {
         query['base.createdBy'] = mongoose.Types.ObjectId(reqUserId);
       }
     } else {

@@ -8,7 +8,7 @@ export const TaskContext = createContext();
 
 export const TaskContextProvider = ({children}) => {
   const {setLoading, setNotificationMessage, setSearchMessage, setNotificationType} = useContext(HomeContext);
-  const {loggedInUser, userInfo, setUserOrg, doGetUserInfo} = useContext(AuthContext);
+  const {loggedInUser, userInfo, doGetUserInfo} = useContext(AuthContext);
   const [tasks, setTasks] = useState([]);
   const [task, setTask] = useState();
   const [currentPage, setCurrentPage] = useState(0);
@@ -185,7 +185,11 @@ export const TaskContextProvider = ({children}) => {
         doUpdateTask,
         doGetTask,
         setIsDone,
-        tasks
+        tasks,
+        setTask,
+        task,
+        totalTasks,
+        isDone
       }}
     >
       {children}
