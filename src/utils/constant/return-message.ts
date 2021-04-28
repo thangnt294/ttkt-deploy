@@ -5,6 +5,7 @@ export enum ReturnMessage {
   DELETED_ACCOUNT = 'This account has been deleted.',
   CANNOT_DELETE_OWNER = 'This account cannot be deleted because they are still the owner of a team.',
   CANNOT_ADD_OWNER = 'You cannot add owner to a team',
+  CANNOT_LEAVE_OWNER = 'You cannot leave a team in which you are the owner',
   CANNOT_CHANGE_ROLE_OWNER = 'You cannot change role of owner',
   CANNOT_MAKE_ANOTHER_MEMBER_OWNER = 'You do not have permission to make another member owner',
   NO_PERMISSION = 'You do not have permission to perform this action.',

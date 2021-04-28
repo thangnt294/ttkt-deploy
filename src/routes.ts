@@ -11,6 +11,7 @@ import AddMemberValidationMiddleware from './middleware/add-member-validation-mi
 import UpdateMemberRolesValidationMiddleware from './middleware/update-member-roles-validation-middleware';
 import UpdateDeleteTeamValidationMiddleware from './middleware/update-delete-team-validation-middleware';
 import AuthMiddleware from './middleware/auth-middleware';
+import MemberLeaveValidationMiddleware from './middleware/member-leave-team-validation-middleware';
 import DeleteMemberCheckMiddleware from './middleware/delete-member-check-middleware';
 
 const router = Router();
@@ -64,6 +65,7 @@ authorizeRouter.put(
 
 authorizeRouter.delete(
   '/personal/leaveTeam',
+  MemberLeaveValidationMiddleware.throwIfInvalidRequest,
   MemberController.leaveTeam
 );
 
