@@ -142,7 +142,6 @@ export const TeamTasks = ({backUrl = ALL_TEAMS_URL}) => {
 
  	/*eslint-disable */
    useEffect(() => {
-     console.log(status)
     doGetTeamTasks({
       page: 0,
       limit: TASK_PAGE_SIZE,

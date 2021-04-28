@@ -64,10 +64,10 @@ export const AddTask = ({open = false, onCancel}) => {
     }
 
     const payload = {
-      name: taskName.trim(),
+      name: taskName?.trim(),
       description: description,
       dueDate: new Date(dueDate).getTime(),
-      assignee: assignees[0].id,
+      assignee: assignees[0]?.id,
       teamId: teamId,
       status: "PENDING"
     };
