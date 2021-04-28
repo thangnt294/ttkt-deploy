@@ -108,21 +108,6 @@ const PersonalSetting = () => {
         return currentOrg ? getRole(currentOrg.roleName) === OWNER : false;
     }
 
-    const getSelectedTeam = teamId => {
-        let selectedTeam = null;
-        if (userInfo && userInfo.orgTeams) {
-            for (let i = 0; i < userInfo.orgTeams.length; i++) {
-                for (let j = 0; j < userInfo.orgTeams[i].teams.length; j++) {
-                    if (userInfo.orgTeams[i].teams[j].teamId === teamId) {
-                        selectedTeam = userInfo.orgTeams[i].teams[j];
-                        break;
-                    }
-                }
-            }
-        }
-        return selectedTeam;
-    }
-
     const handleLeave = (teamId, teamName) => {
         setTempPayload({
           teamId,

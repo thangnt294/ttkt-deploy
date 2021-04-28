@@ -3,10 +3,10 @@ import {NavLink, useHistory} from 'react-router-dom';
 
 import './index.scss';
 import {AuthContext, HomeContext, MemberContext, ModalContext} from 'contexts';
-import avatar from 'assets/images/avatar.png';
 import {DeleteConfirmation, Dropdown, Sidebar, UserDropdown} from 'components';
 import {homeLinks, removeAll, userOptions,} from 'utils';
 import {ACTIVE_SHIPMENTS_URL, LOGIN_URL} from 'actions';
+import avatar from 'assets/images/avatar.png';
 
 export const Header = () => {
   const history = useHistory();
@@ -53,7 +53,7 @@ export const Header = () => {
       <div className="tr__header">
         <div className="tr__header--logo text-center">
           <NavLink to="/teams">
-            {/*<img src={"AA"} alt="Logo here" />*/}
+            <img src={avatar} alt="Logo here" />
           </NavLink>
         </div>
         <div className="tr__header--menu">

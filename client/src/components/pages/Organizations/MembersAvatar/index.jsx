@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-
+import avatar from 'assets/images/avatar.png';
 import './index.scss';
 import { TEAM } from 'actions';
 
@@ -14,7 +14,7 @@ export const MembersAvatar = ({ className = '', members = [], skip, onClick = ()
                     {member.type && member.type === TEAM.toUpperCase() ? (
                         <i className="icon icon-users" />
                     ) : (
-                        <img src={member.avatar} alt={member.name} />
+                        <img src={member.avatar || avatar} alt={member.name} />
                     )}
                 </div>
             ))}

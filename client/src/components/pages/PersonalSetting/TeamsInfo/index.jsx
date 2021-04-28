@@ -49,7 +49,7 @@ export const TeamsInfo = ({
                 className="outline icon"
                 type="secondary"
                 onClick={() => !isEdit && handleLeave(team._id, team.name)}
-                disabled={isEdit}
+                disabled={isEdit || team.role === 'OWNER'}
               >
                 Leave
               </Button>
