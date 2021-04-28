@@ -90,10 +90,9 @@ const TeamList = () => {
 		const newParams = {
 			page: 0,
 			limit: TEAM_PAGE_SIZE,
-			name: value,
 			isSearching: true
 		};
-		if (value) newParams.name = value.trim();
+		if (value) newParams.term = value.trim();
 		
 		setSearchLoading(true);
 
@@ -115,7 +114,7 @@ const TeamList = () => {
 					<TableHeader
 						items={teamsHeader}
 						count={totalTeams}
-						title='Teams List'
+						title='All Teams List'
 						onAddButtonClick={() => setAddTeam(true)}
 						labelButton="Add New Team"
 						onSearch={onTeamSearch}

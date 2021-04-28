@@ -20,6 +20,7 @@ import {useHistory, useLocation, useParams} from "react-router-dom";
 import {TaskContext} from "../../../contexts/TaskContext";
 import {tasksHeader} from "../../../utils";
 import { HomeContext, MemberContext, ModalContext } from '../../../contexts';
+import moment from "moment";
 
 export const TeamTasks = ({backUrl = ALL_TEAMS_URL}) => {
   const [tabs] = useState([
@@ -72,10 +73,22 @@ export const TeamTasks = ({backUrl = ALL_TEAMS_URL}) => {
     },
     {
       dataIndex: 'status',
-      render: status => <div className="status-option">
+      render: (status, assignee) => <div className="status-option">
         <p className={`task-status text-capitalize ${status.toLowerCase().replace(" ", '')}`}>
           {status.toLowerCase()}
         </p>
+        <Tooltip
+          renderContent={() => (
+            <div className="tags d-flex flex-column">
+              <span>{assignee?.name}</span>
+              <small>Task Assignee</small>
+            </div>
+          )}
+        >
+          <img
+            src="https://image.shutterstock.com/image-vector/some-bunny-loves-you-somebody-260nw-1903989307.jpg"
+            alt={assignee?.name}/>
+        </Tooltip>
       </div>
     },
     {
@@ -117,7 +130,7 @@ export const TeamTasks = ({backUrl = ALL_TEAMS_URL}) => {
                 <Input
                   iconPosition="right"
                   placeholder="Booking Date"
-                  value={dueDate}
+                  value={moment(dueDate).format('DD/MM/YYYY')}
                   disabled={true}
                 />
               </div>
@@ -158,7 +171,8 @@ export const TeamTasks = ({backUrl = ALL_TEAMS_URL}) => {
       page: 0,
       limit: TASK_PAGE_SIZE,
       isSearching: true,
-      teamId: teamId
+      teamId: teamId,
+      tab: status
     };
     if (value) newParams.term = value.trim();
 
@@ -177,7 +191,6 @@ export const TeamTasks = ({backUrl = ALL_TEAMS_URL}) => {
           className="minimal"
           initialTab={0}
           onTabClick={tab => {
-            console.log(status);
             setStatus(tab.toUpperCase());
 						setCurrentPage(0);
           }}

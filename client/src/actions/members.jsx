@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {authHeaders, REMOVE_MEMBERS, UPDATE_MEMBERS} from 'actions';
+import {ADD_MEMBERS, authHeaders, REMOVE_MEMBERS, UPDATE_MEMBERS} from 'actions';
 import {
     GET_TEAM_MEMBERS,
     GET_ORG_MEMBERS,
@@ -78,8 +78,14 @@ export const updateMemberRole = (teamId, payload, token) => {
   if (!payload || !teamId) return;
   return axios.put(UPDATE_MEMBERS.replace(':teamId', teamId), payload, authHeaders(token));
 }
+
 export const removeMemberFromTeam = (teamId, memberIds, token) => {
   if (!memberIds || !teamId) return;
   return axios.put(REMOVE_MEMBERS.replace(':teamId', teamId), memberIds, authHeaders(token));
+}
+
+export const addMembersToTeam = (teamId, members, token) => {
+  if (!members || !teamId) return;
+  return axios.put(ADD_MEMBERS.replace(':teamId', teamId), members, authHeaders(token));
 }
 

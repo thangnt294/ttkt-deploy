@@ -13,12 +13,13 @@ import {
     TeamContext
 } from 'contexts';
 import { MEMBER_PAGE_SIZE } from 'actions';
+import {useParams} from "react-router-dom";
 
 export const AddMember = ({ open = false, onCancel }) => {
     const { setNotificationMessage } = useContext(HomeContext);
     const { setAddMember } = useContext(ModalContext);
-    const { team } = useContext(TeamContext);
-    const { members, allMembers, doGetMembers, doAddMember, setAllMembers } = useContext(MemberContext);
+    const { team, doAddMembersToTeam } = useContext(TeamContext);
+    const { members, allMembers, doGetMembers, setAllMembers } = useContext(MemberContext);
 
     const { handleSubmit, register, errors, formState, reset, getValues } = useForm();
     const [mems, setMems] = useState([]);
@@ -47,74 +48,20 @@ export const AddMember = ({ open = false, onCancel }) => {
     }, [mems])
     /*eslint-enable */
 
-    const handleAddTeam = memId => {
-        setMems(oldMems => [...oldMems.map(mem => {
-            if (mem.id === memId) {
-                return {
-                    ...mem,
-                    teams: [
-                        ...mem.teams,
-                        {
-                            id: null,
-                            role: null
-                        }
-                    ]
-                }
-            }
-            return mem;
-        })]);
-    }
-
     const addMember = data => {
         if (!mems.length) return;
-
-        if (!team) {
-            const payload = {
-                members: mems.map(mem => {
-                    const newMem = {
-                        memberId: mem.id,
-                        email: mem.id ? mem.description : mem.title,
-                        orgRole: data[`orgRole${mem.id}`]
-                    }
-                    if (mem.teams && mem.teams.length > 0) {
-                        newMem.teamRoles = mem.teams.map((team, teamIndex) => {
-                            return {
-                                teamId: data[`team${teamIndex}${mem.id}`],
-                                roleName: data[`teamRole${teamIndex}${mem.id}`]
-                            }
-                        })
-                    }
-                    return newMem
-                })
-            }
-    
-            doAddMember(payload, () => {
-                reset();
-                setAddMember(false);
-                setMems([]);
-                setNotificationMessage(`
-                    <p>Members have been added successfully!</p>
-                `);
-            });
-        }
 
         if (team) {
             const payload = {
                 members: mems.map(mem => {
                     return {
                         memberId: mem.id,
-                        email: mem.id ? mem.description : mem.title,
-                        teamRoles: [
-                            {
-                                teamId: team._id,
-                                roleName: data[`teamRole${mem.id}`]
-                            }
-                        ]
+                        role: data[`teamRole${mem.id}`]
                     }
                 })
             }
-    
-            doAddMember(payload, () => {
+
+          doAddMembersToTeam(team._id, payload, () => {
                 reset();
                 setAddMember(false);
                 setMems([]);
@@ -178,7 +125,6 @@ export const AddMember = ({ open = false, onCancel }) => {
                 onAddItem={handleAddItem}
                 searchLoading={memberLoading}
                 formState={formState}
-                handleAddTeam={handleAddTeam}
                 getValues={getValues}
             />
         </Modal>

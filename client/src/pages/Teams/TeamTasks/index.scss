@@ -116,3 +116,519 @@ $space: 20px;
         @extend %border-double-line-top;
     }
 }
+
+.tr__shipment-task-header {
+  .column {
+    padding: $content-padding;
+    width: 200px;
+    flex: inherit;
+
+    &.assignee,
+    &.date {
+      width: 250px;
+    }
+
+    &.status {
+      width: 150px;
+    }
+
+    &.name {
+      flex-grow: 1;
+    }
+
+    &.actions {
+      width: 100px;
+    }
+  }
+}
+
+.tr__completed {
+  .tr__tabs {
+    @extend %top-right-tabs;
+
+    .tr__tabs--nav {
+      right: 0 !important;
+      width: 240px;
+    }
+  }
+}
+
+$icon-size: 35px;
+$border-btn-size: 22px;
+$settings-btn-size: 40px;
+$statuses-width: 170px;
+
+.tr__shipment-task-item {
+
+  &.active {
+    .tr__collapse--title {
+      border-radius: 5px 5px 0 0;
+      border-bottom: 1px solid $bottom-border-gray;
+      span {
+        width: 80%;
+        @extend %ellipse-text;
+      }
+      .toggle-btn {
+        .tr__statuses--list {
+          > span {
+            overflow: visible;
+          }
+        }
+      }
+    }
+
+    .tr__collapse--content {
+      max-height: 100% !important;
+    }
+  }
+
+  .tr__collapse {
+    &--title {
+      background-color: $button-hover-gray;
+      border: 1px solid $bottom-border-gray;
+      border-radius: 5px;
+
+      > span {
+        font-size: $h5;
+        width: 80%;
+        @extend %ellipse-text;
+      }
+
+      .tr__statuses {
+        min-width: $statuses-width;
+        margin-right: 20px;
+      }
+    }
+
+    &--content {
+      background-color: $white;
+      padding: 0 !important;
+      height: 100% !important;
+
+      .tr__shipment-task-item--body{
+        border: 1px solid $bottom-border-gray;
+        border-top: none;
+        padding: 20px;
+        border-radius: 0 0 5px 5px;
+      }
+    }
+  }
+
+
+  &--table {
+    position: relative;
+
+    .table--header {
+      padding: 10px 0 20px 0;
+      @extend %task-table-row;
+      @extend %border-double-line;
+      color: $main-blue;
+      margin-bottom: 1px;
+    }
+
+    .table--body {
+      .column {
+        width: 200px;
+        flex: inherit;
+
+        .tr__datepicker {
+          position: relative;
+          flex-grow: 1;
+
+          .tr__field-input {
+            border: none;
+            border-radius: 0;
+            padding: 15px;
+            cursor: pointer;
+          }
+
+          .tr__badge {
+            @include centered-position(false, true);
+            padding: 6px 10px;
+            border-radius: 3px;
+            right: 15px;
+            background-color: $grey-button-date;
+            font-size: $tiny-size;
+            color: $white;
+          }
+        }
+
+        &.partner {
+          padding: 10px 15px;
+
+          .partners {
+            font-size: $h1;
+            width: 100%;
+            @include flex(row, center, space-between);
+            i {
+              &:last-child {
+                margin-right: 0;
+              }
+            }
+
+            span {
+              font-size: $base-size;
+            }
+
+            .more {
+              color: $label-gray;
+            }
+
+            .tr__tooltip {
+              .tr__tooltip--popup {
+                div {
+                  text-transform: capitalize;
+                }
+              }
+            }
+          }
+        }
+
+        &.assignee {
+          padding: 10px 15px;
+          width: 250px;
+
+          .tr__collaborators {
+            width: 100%;
+            justify-content: space-between;
+          }
+        }
+
+        &.name {
+          position: relative;
+          flex-grow: 1;
+          padding-right: 16px;
+
+          &:before {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: $icon-size;
+            height: 2px;
+            background-color: $white;
+          }
+
+          .h4 {
+            @include flex(row, center, flex-start);
+            width: 80%;
+
+            i {
+              margin-right: 10px;
+              width: $icon-size - 10px;
+              height: $icon-size - 10px;
+              border: 2px solid $bottom-border-gray;
+              background-color: $bottom-border-gray;
+              color: $white;
+              border-radius: $icon-size - 10px;
+              @include flex(row, center, center);
+              font-size: $base-size + 5px;
+            }
+            .tr__tooltip {
+              width: 100%;
+              span {
+                display: inline-block;
+                @extend %ellipse-text;
+                max-width: calc(100% - #{$icon-size} - 10px) ;
+              }
+
+              &:before {
+                left: 2%;
+              }
+            }
+          }
+          .tr__link-task-pin {
+            top: 0;
+            right: 0;
+            width: 20px;
+            height: 20px;
+            font-size: $tiny-size;
+            position: relative;
+            cursor: pointer;
+          }
+
+          .tr__link-issue__done {
+            filter: grayscale(100%);
+          }
+          .short-name {
+            @extend %ellipse-text;
+          }
+        }
+
+        &.date {
+          width: 250px;
+
+          .tr__tooltip {
+            margin-left: 15px;
+          }
+
+          i {
+            color: $orange;
+            font-size: $medium-size;
+          }
+
+          .tr__field {
+            &-input {
+              font-size: $base-size;
+            }
+          }
+        }
+
+        &.actions {
+          width: 100px;
+
+          .tr__datepicker {
+            flex-grow: 1;
+            .tr__field-input {
+              padding: 10px 0;
+              border-bottom: 1px solid $border-gray;
+            }
+
+            .react-datepicker__tab-loop {
+              .react-datepicker-popper {
+                transform: translate3d(-110px, -393px, 0px) !important;
+              }
+            }
+
+            .tr__field {
+              padding: 0 15px;
+            }
+          }
+
+          > .tr__link {
+            font-size: $base-size;
+          }
+
+          .upload-doc {
+            width: 100%;
+
+            .tr__dropdown__label {
+              border: none;
+              padding-left: 30px;
+
+              i {
+                left: 15px;
+              }
+
+              i, span {
+                color: $main-pink;
+              }
+
+              span {
+                @extend %f-medium;
+              }
+            }
+
+            .tr__dropdown__items {
+              right: -30px;
+            }
+          }
+        }
+
+        &.status {
+          position: relative;
+          width: 150px;
+          padding: 0 15px;
+          .tr__dropdown {
+            width: 100%;
+            height: 100%;
+
+            > &__label {
+              border-radius: 0;
+              border: 0;
+              @include flex(row, center);
+              padding: 10px 15px;
+              z-index: 2;
+
+              &.select {
+                border-bottom: 0px solid !important;
+              }
+
+              i {
+                right: 15px;
+              }
+
+              .status-option {
+                z-index: 0;
+              }
+            }
+
+            img {
+              display: inline-block;
+            }
+
+
+            &__items {
+              z-index: 2 !important;
+            }
+          }
+
+          .tr__statuses {
+            position: absolute;
+            width: 100%;
+            top: calc(100% + 12px);
+          }
+          .tr__tooltip--popup {
+            width: 200px;
+            span {
+              @extend %ellipse-text;
+            }
+            small {
+              text-transform: capitalize;
+            }
+          }
+        }
+      }
+
+      &.done {
+        position: relative;
+
+        &:before {
+          content: '';
+          position: absolute;
+          width: calc(100% + 20px);
+          height: 80%;
+          background-color: $collapse-blue;
+          @include centered-position(true, true);
+          border-radius: 3px;
+          z-index: 0;
+        }
+
+        .column {
+          &.name {
+            .h4 {
+              i {
+                border-color: $main-blue;
+                background-color: $main-blue;
+                color: $white;
+              }
+            }
+          }
+
+          &.date {
+            .tr__datepicker {
+              pointer-events: none;
+              user-select: none;
+
+              .tr__field {
+                &-input {
+                  background-color: transparent;
+                }
+              }
+            }
+
+            .icon-check {
+              color: $bonus-blue;
+            }
+          }
+
+          &.actions {
+            .tr__field-input {
+              background-color: transparent !important;
+            }
+
+            .upload-doc {
+              .tr__upload-documents {
+                display: none;
+              }
+            }
+          }
+
+          &.status {
+            position: relative;
+            width: 150px;
+            .tr__dropdown {
+              // width: 100%;
+              // height: 100%;
+
+              > &__label {
+                z-index: 2;
+              }
+            }
+          }
+
+          &.assignee {
+            .tr__collaborators {
+              .tr__organization-members-avatar {
+                z-index: 1;
+              }
+            }
+          }
+
+        }
+      }
+    }
+
+    .table--footer {
+      padding: 15px 0;
+
+      .tr__link {
+        font-size: $h4;
+
+        i {
+          width: $icon-size;
+          margin: 0;
+          text-align: center;
+        }
+
+        span {
+          border-bottom: 1px dashed $main-pink;
+          line-height: 1.25;
+        }
+      }
+    }
+  }
+
+  &-btns {
+    .tr__button {
+      padding-top: 11px;
+      padding-bottom: 11px;
+    }
+  }
+}
+
+.tr__status-dropdown {
+  .status-option {
+    padding: 10px 15px;
+    cursor: pointer;
+    @extend %enable-transition;
+    border-bottom: 1px dashed $light-gray;
+
+    &:hover {
+      background-color: $light-gray;
+    }
+
+    i {
+      display: none;
+      color: $blue;
+    }
+
+    &.active {
+      @include flex(row, center, space-between);
+
+      i {
+        display: inline-block;
+      }
+    }
+  }
+}
+
+.status-option {
+  @include flex(row, center);
+  .task-status {
+    padding: 5px 10px;
+    border-radius: 3px;
+    display: inline-block;
+    font-size: $tiny-size;
+  }
+
+  img {
+    width: 35px;
+    height: 35px;
+    overflow: hidden;
+    border: 1px solid $white;
+    margin-left: -5px;
+    border-radius: 35px;
+    background-color: $white;
+  }
+}

@@ -166,7 +166,7 @@ const TeamTab = () => {
                     <TableHeader
                       items={teamsHeader}
                       count={totalTeams}
-                      title='Teams List'
+                      title='My Teams List'
                       onAddButtonClick={() => setAddTeam(true)}
                       labelButton="Add New Team"
                       onSearch={onTeamSearch}

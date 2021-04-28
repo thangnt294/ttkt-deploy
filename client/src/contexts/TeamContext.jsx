@@ -8,7 +8,7 @@ import {
   updateTeam,
   removeTeam,
   OPERATION_FAILED_MESSAGE,
-  TEAM_PAGE_SIZE, updateMember, TEAM, updateMemberRole, removeMemberFromTeam,
+  TEAM_PAGE_SIZE, updateMember, TEAM, updateMemberRole, removeMemberFromTeam, addMembersToTeam,
   // getUploadedSignedFileUrl
 } from 'actions';
 import { GET_FILE } from 'actions/constants';
@@ -209,6 +209,22 @@ export const TeamContextProvider = ({ children }) => {
     }
   }
 
+  const doAddMembersToTeam = async (teamId, payload, callback) => {
+    try {
+      setLoading(true);
+
+      const response = await addMembersToTeam(teamId, payload, loggedInUser);
+      const {status} = response;
+
+      if (status === 200) {
+        setLoading(false);
+        if (callback) callback();
+      }
+    } catch (error) {
+      handleException(error);
+    }
+  }
+
     return(
         <TeamContext.Provider
             value={{
@@ -227,7 +243,8 @@ export const TeamContextProvider = ({ children }) => {
                 doUpdateTeam,
                 doDeleteTeam,
                 doUpdateMemberRole,
-                doRemoveMemberFromTeam
+                doRemoveMemberFromTeam,
+                doAddMembersToTeam
             }}
         >
             { children }

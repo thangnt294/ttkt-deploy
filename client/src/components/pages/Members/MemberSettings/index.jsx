@@ -67,6 +67,11 @@ export const MemberSettings = ({ open = false, onCancel }) => {
     setRemoveMemberFromTeam(false);
     doRemoveMemberFromTeam(teamId, {
       memberIds: [member._id]
+    }, () => {
+      setMemberSettings(false);
+      setNotificationMessage(`
+            <p>Member removed successfully!</p>
+        `)
     });
   }
 
@@ -102,7 +107,7 @@ export const MemberSettings = ({ open = false, onCancel }) => {
                           id: currentTeam._id,
                           title: currentTeam.name,
                           role: currentTeam.role,
-                          disabled: currentTeam.role === 'MEMBER',
+                          disabled: currentTeam.role === 'OWNER',
                           options: getRoleList()
                         }]}
                         register={register}
