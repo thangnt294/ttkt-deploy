@@ -19,7 +19,7 @@ import {
     getRole,
     getRoleList
 } from 'utils';
-import {ADMIN, MEMBER, ORGANIZATION, OWNER, removeMember, TEAM} from 'actions';
+import {ADMIN, MEMBER, MEMBER_PAGE_SIZE, ORGANIZATION, OWNER, removeMember, TEAM} from 'actions';
 import {useLocation, useParams} from "react-router-dom";
 
 export const MemberSettings = ({ open = false, onCancel }) => {
@@ -28,6 +28,7 @@ export const MemberSettings = ({ open = false, onCancel }) => {
     const { setMemberSettings, changeOwner, setChangeOwner, removeMemberFromTeam, setRemoveMemberFromTeam } = useContext(ModalContext);
     const { team, userTeamRole, doUpdateMemberRole, doRemoveMemberFromTeam } = useContext(TeamContext);
     const { member, doUpdateMember } = useContext(MemberContext);
+    const { doGetTeamMembers } = useContext(MemberContext);
 
     const { handleSubmit, register, errors, formState } = useForm();
     const [tempPayload, setTempPayload] = useState();
@@ -38,6 +39,12 @@ export const MemberSettings = ({ open = false, onCancel }) => {
 
     const updateMember = payload => doUpdateMemberRole(teamId, payload, () => {
         setMemberSettings(false);
+        doGetTeamMembers({
+          teamId: team?._id,
+          page: 0,
+          limit: MEMBER_PAGE_SIZE,
+          isSearching: true
+        });
         setNotificationMessage(`
             <p>Member settings updated successfully!</p>
         `)
@@ -68,6 +75,12 @@ export const MemberSettings = ({ open = false, onCancel }) => {
     doRemoveMemberFromTeam(teamId, {
       memberIds: [member._id]
     }, () => {
+      doGetTeamMembers({
+        teamId: team?._id,
+        page: 0,
+        limit: MEMBER_PAGE_SIZE,
+        isSearching: true
+      });
       setMemberSettings(false);
       setNotificationMessage(`
             <p>Member removed successfully!</p>

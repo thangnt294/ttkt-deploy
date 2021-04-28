@@ -59,10 +59,9 @@ export const TaskContextProvider = ({children}) => {
   const doGetTeamTasks = async (params, callback, hasLoading = true) => {
     setTask(null);
 
-    if (tasks.length === 0 || currentPage !== params.page || params.isSearching) {
+    // if () {
       try {
         if (hasLoading) setLoading(true);
-        delete params.isSearching;
 
         const response = await getTeamTasks(params, loggedInUser);
         const {data, status} = response;
@@ -83,7 +82,7 @@ export const TaskContextProvider = ({children}) => {
       } catch (error) {
         handleException(error);
       }
-    }
+    // }
   }
 
   const doCreateTask = async (payload, callback) => {

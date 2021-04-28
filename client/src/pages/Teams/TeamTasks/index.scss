@@ -45,7 +45,7 @@ $space: 20px;
             }
 
             &--content {
-                margin-top: $space;
+                margin-top: $space !important;
                 .tr__organization-brand img {
                     overflow: hidden;
                 }

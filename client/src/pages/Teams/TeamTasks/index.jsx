@@ -34,7 +34,7 @@ export const TeamTasks = ({backUrl = ALL_TEAMS_URL}) => {
   }]);
   const [searchValue, setSearchValue] = useState();
   const [searchLoading, setSearchLoading] = useState(false);
-  const [status, setStatus] = useState(MINE);
+  const [status, setStatus] = useState(MINE.toUpperCase());
   const {
     doGetTeamTasks,
     currentPage,
@@ -142,6 +142,7 @@ export const TeamTasks = ({backUrl = ALL_TEAMS_URL}) => {
 
  	/*eslint-disable */
    useEffect(() => {
+     console.log(status)
     doGetTeamTasks({
       page: 0,
       limit: TASK_PAGE_SIZE,
@@ -185,7 +186,7 @@ export const TeamTasks = ({backUrl = ALL_TEAMS_URL}) => {
   };
 
   return (
-    <div className="tr__team--task box d-flex flex-column page-box">
+    <div className="tr__team--task box d-flex flex-column">
       <div className="wrapper">
         <Tab
           className="minimal"

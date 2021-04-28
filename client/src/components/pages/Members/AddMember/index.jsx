@@ -19,7 +19,7 @@ export const AddMember = ({ open = false, onCancel }) => {
     const { setNotificationMessage } = useContext(HomeContext);
     const { setAddMember } = useContext(ModalContext);
     const { team, doAddMembersToTeam } = useContext(TeamContext);
-    const { members, allMembers, doGetMembers, setAllMembers } = useContext(MemberContext);
+    const { members, allMembers, doGetMembers, setAllMembers,doGetTeamMembers } = useContext(MemberContext);
 
     const { handleSubmit, register, errors, formState, reset, getValues } = useForm();
     const [mems, setMems] = useState([]);
@@ -65,6 +65,12 @@ export const AddMember = ({ open = false, onCancel }) => {
                 reset();
                 setAddMember(false);
                 setMems([]);
+                doGetTeamMembers({
+                    teamId: team._id,
+                    page: 0,
+                    limit: MEMBER_PAGE_SIZE,
+                    isSearching: true
+                  });
                 setNotificationMessage(`
                     <p>Members have been added successfully!</p>
                 `);
