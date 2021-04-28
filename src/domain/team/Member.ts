@@ -53,7 +53,8 @@ export const FindMemberInfo = async (memberId: mongoose.Types.ObjectId): Promise
     teams: {
       _id: 1,
       name: 1,
-      description: 1
+      description: 1,
+      members: 1
     }
   });
 export const UpdateMember = async (

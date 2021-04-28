@@ -3,11 +3,12 @@ import { PageRequest } from '../../../utils/common/paging/BasePageRequest';
 import Member, {
   ChangePassword, DeleteAccount, FindMemberInfo, FindMembers, MemberDocument, UpdateMember
 } from '../Member';
-import { MemberInfo } from '../payload/MemberInfo';
+import {MemberInfo, TeamOfMemberInfo} from '../payload/MemberInfo';
 import { UserRegister } from '../../auth/payload/UserRegister';
 import { MemberLeaveTeam } from '../Team';
 import { DeleteTasksCreatedByUser, FindTasksAssignedToMember, RemoveTaskAssignees } from '../../task/Task';
 import TeamService from './team-service';
+import {isEqual} from "../../../utils/ObjectUtils";
 
 class MemberService {
   public findMembers = async (pageRequest: PageRequest): Promise<any> => Promise.all([
@@ -15,7 +16,15 @@ class MemberService {
     Member.countDocuments(pageRequest.query)
   ]);
 
-  public findMemberInfo = async (memberId: mongoose.Types.ObjectId): Promise<MemberInfo> => FindMemberInfo(memberId);
+  public findMemberInfo = async (memberId: mongoose.Types.ObjectId): Promise<MemberInfo> => {
+    const memberInfo: MemberInfo[] = await FindMemberInfo(memberId);
+    memberInfo[0].teams = memberInfo[0].teams.map(({members, ...team}) => ({
+      ...team,
+      role: members.find(member => isEqual(member.memberId.toString(), memberInfo[0]._id.toString()))?.role
+    } as TeamOfMemberInfo))
+
+    return memberInfo[0];
+  }
 
   public findMemberByEmail = async (email: string): Promise<MemberDocument> => Member.findOne({
     email
