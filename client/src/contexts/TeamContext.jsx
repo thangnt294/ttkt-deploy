@@ -89,7 +89,9 @@ export const TeamContextProvider = ({ children }) => {
                 const params = {
                     page: currentPage,
                     limit: TEAM_PAGE_SIZE,
-                    isSearching: true
+                    isSearching: true,
+                    memberId: userInfo._id
+
                 };
 
                 await doGetTeams(params);

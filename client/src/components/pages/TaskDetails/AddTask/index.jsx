@@ -207,7 +207,7 @@ export const AddTask = ({open = false, onCancel}) => {
         eventBasedDate={eventBasedDate}
         setEventBasedDate={setEventBasedDate}
       />
-      <div className="tr__assign-modal--form">
+      <div className="tr__assign-modal--form px2">
         <MultiSelect
           className="mbx2"
           options={members && members.length > 0 ? members
@@ -245,7 +245,7 @@ export const AddTask = ({open = false, onCancel}) => {
         )}
         />
       </div>
-      <div className="tr__assign-modal--list">
+      <div className="tr__assign-modal--list px2">
         <AssigneeList
           title="Assigned"
           assignees={task ? task.assignee : null}
