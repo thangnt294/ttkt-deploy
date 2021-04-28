@@ -39,7 +39,7 @@ export const TeamsInfo = ({
         <React.Fragment key={teamIndex}>
           <div className="table--body sub d-flex justify-content-between" key={teamIndex}>
             <div className="table--body__column name">
-              {team.teamName}
+              {team.name}
             </div>
             <div className="table--body__column role text-capitalize">
               {(team.role || '').toLowerCase()}
@@ -48,10 +48,7 @@ export const TeamsInfo = ({
               <Button
                 className="outline icon"
                 type="secondary"
-                onClick={() => !isEdit && handleLeave({
-                  teamIds: [team._id],
-                  teamNames: [team.name]
-                })}
+                onClick={() => !isEdit && handleLeave(team._id, team.name)}
                 disabled={isEdit}
               >
                 Leave

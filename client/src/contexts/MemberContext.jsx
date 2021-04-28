@@ -18,13 +18,14 @@ import {AuthContext, HomeContext} from 'contexts';
 import {GET_FILE} from 'actions/constants';
 import {TeamContext} from './TeamContext';
 import {isEmail} from 'utils';
+import {userInfo} from "os";
 
 export const MemberContext = createContext();
 
 export const MemberContextProvider = ({children}) => {
   const {setLoading, setNotificationMessage, setSearchMessage, setNotificationType} = useContext(HomeContext);
   const {team, doGetTeam} = useContext(TeamContext);
-  const {loggedInUser, doGetUserInfo, setUserInfo} = useContext(AuthContext);
+  const {loggedInUser, doGetUserInfo, setUserInfo, userInfo} = useContext(AuthContext);
   const [members, setMembers] = useState([]);
   const [allMembers, setAllMembers] = useState([]);
   const [member, setMember] = useState();
@@ -331,28 +332,18 @@ export const MemberContextProvider = ({children}) => {
     }
   }
 
-  const doLeaveTeams = async (payload, callback) => {
+  const doLeaveTeam = async (teamId, callback) => {
     try {
       setLoading(true);
 
-      const response = await leaveTeams(payload, loggedInUser);
+      const response = await leaveTeams(teamId, loggedInUser);
       const {status} = response;
 
       if (status === 200) {
-        setMember(oldMember => {
-          return {
-            ...oldMember,
-            orgTeams: payload.orgIds ? oldMember.orgTeams.filter(org => !payload.orgIds.some(id => id === org.orgId)) : oldMember.orgTeams.map(org => {
-              return {
-                ...org,
-                teams: org.teams.filter(team => !payload.teamIds.some(t => t === team.teamId))
-              }
-            })
-          }
-        });
         doGetUserInfo(() => {
           if (callback) callback();
         });
+        await doGetMember(userInfo?._id);
       }
 
       setLoading(false);
@@ -383,7 +374,7 @@ export const MemberContextProvider = ({children}) => {
         doGetMember,
         doDeleteMe,
         doUpdatePersonalSettings,
-        doLeaveTeams,
+        doLeaveTeam,
         setAllMembers
       }}
     >

@@ -33,7 +33,7 @@ const PersonalSetting = () => {
         setLeaveOrg,
         setLeaveTeam
     } = useContext(ModalContext);
-    const { doGetMember, doDeleteMe, member, doUpdatePersonalSettings, doLeaveOrgsTeams } = useContext(MemberContext);
+    const { doGetMember, doDeleteMe, member, doUpdatePersonalSettings, doLeaveTeam } = useContext(MemberContext);
     const { doUploadFile } = useContext(UploadFileContext);
 
     const { handleSubmit, register, errors, reset } = useForm();
@@ -123,30 +123,21 @@ const PersonalSetting = () => {
         return selectedTeam;
     }
 
-    const handleLeave = payload => {
-        let newPayload = {};
-        const { teamIds, orgIds } = payload;
-        setTempPayload(payload);
-        if (teamIds && teamIds.length > 0) {
-            newPayload.teamIds = teamIds;
-            setCurrent(getSelectedTeam(teamIds[0]));
-            setLeaveTeam(true);
-        }
-        if (orgIds && orgIds.length > 0) {
-            newPayload.orgIds = orgIds;
-            if (isOwnerRole(orgIds[0])) setLeaveOwnerOrg(true);
-            else setLeaveOrg(true);
-        }
+    const handleLeave = (teamId, teamName) => {
+        setTempPayload({
+          teamId,
+          teamName
+        });
+        setLeaveTeam(true);
     }
 
     const handleConfirmLeave = () => {
         if (tempPayload) {
-            const { teamNames, orgNames } = tempPayload;
-            doLeaveOrgsTeams(tempPayload, () => {
+            const { teamId, teamName } = tempPayload;
+            doLeaveTeam(teamId, () => {
                 setLeaveTeam(false);
-                setLeaveOrg(false);
                 setNotificationMessage(`
-                    <p>You've left ${teamNames ? `${teamNames[0]} team` : `${orgNames[0]} organization`} successfully!</p>
+                    <p>You've left ${teamName} team successfully!</p>
                 `);
             })
         }
@@ -205,7 +196,7 @@ const PersonalSetting = () => {
                 cancelButtonLabel="OK"
                 title="Delete own account"
                 cancelButtonClassNames="primary"
-                message="Please transfer your organization ownership or delete your organization before deleting your own account."
+                message="Please transfer your team ownerships or delete all your teams before deleting your own account."
             />
             <DeleteConfirmation
                 open={leaveTeam}
@@ -214,7 +205,7 @@ const PersonalSetting = () => {
                 submitButtonLabel="Confirm"
                 cancelButtonLabel="Cancel"
                 onSubmit={handleConfirmLeave}
-                message="Once leave the organization, you will be removed from related collaborator list, assigned tasks and shipment issues. Are you sure you want to leave?"
+                message="Once leave the team, you will be removed from related tasks. Are you sure you want to leave?"
             />
         </form>
     )

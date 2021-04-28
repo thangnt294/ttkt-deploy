@@ -69,9 +69,9 @@ export const updatePersonalSettings = (payload, token) => {
     return axios.put(PERSONAL_UPDATE, payload, authHeaders(token));
 };
 
-export const leaveTeams = (payload, token) => {
-    if (!payload) return;
-    return axios.put(PERSONAL_LEAVE, payload, authHeaders(token));
+export const leaveTeams = (teamId, token) => {
+    if (!teamId) return;
+    return axios.delete(PERSONAL_LEAVE + `?teamId=${teamId}`, authHeaders(token));
 };
 
 export const updateMemberRole = (teamId, payload, token) => {

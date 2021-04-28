@@ -5,7 +5,7 @@ import MemberService from '../../domain/team/service/member-service';
 
 export const leaveTeam: RequestHandler = async (req: Request, res: Response, next) => {
   try {
-    const reqTeamId: string = getVal(req.params, '', 'teamId');
+    const reqTeamId: string = getVal(req.query, '', 'teamId');
     const reqMemberId: string = getCurrentUserId(req);
     res.send(await MemberService.leaveTeam(reqTeamId, reqMemberId));
   } catch (e) {

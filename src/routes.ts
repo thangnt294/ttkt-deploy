@@ -62,7 +62,7 @@ authorizeRouter.put(
   MemberController.update
 );
 
-authorizeRouter.put(
+authorizeRouter.delete(
   '/personal/leaveTeam',
   MemberController.leaveTeam
 );
