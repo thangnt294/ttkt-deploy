@@ -6,6 +6,7 @@ import {AuthContext, HomeContext, MemberContext, ModalContext} from 'contexts';
 import {DeleteConfirmation, Dropdown, Sidebar, UserDropdown} from 'components';
 import {homeLinks, removeAll, userOptions,} from 'utils';
 import {ACTIVE_SHIPMENTS_URL, LOGIN_URL} from 'actions';
+import bg from 'assets/images/authentication-bg.png';
 import avatar from 'assets/images/avatar.png';
 
 export const Header = () => {
@@ -53,7 +54,7 @@ export const Header = () => {
       <div className="tr__header">
         <div className="tr__header--logo text-center">
           <NavLink to="/teams">
-            <img src={avatar} alt="Logo here" />
+            <img src={bg} alt="Logo here" />
           </NavLink>
         </div>
         <div className="tr__header--menu">
