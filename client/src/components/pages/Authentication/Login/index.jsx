@@ -74,17 +74,17 @@ export const Login = () => {
                 </div>
                 <div className="tr__authentication--login__footer mtx4 mbx4">
                     <div className="d-flex justify-content-between align-items-center">
-                        <Checkbox 
-                            label="Remember me" 
-                            checked={checkRemember}
-                            onChange={() => setCheckRemember(!checkRemember)} 
-                        />
-                        <p 
-                            className="tr__link"
-                            onClick={handleForgot}
-                        >
-                            Forgot password ?
-                        </p>
+                        {/*<Checkbox */}
+                        {/*    label="Remember me" */}
+                        {/*    checked={checkRemember}*/}
+                        {/*    onChange={() => setCheckRemember(!checkRemember)} */}
+                        {/*/>*/}
+                        {/*<p */}
+                        {/*    className="tr__link"*/}
+                        {/*    onClick={handleForgot}*/}
+                        {/*>*/}
+                        {/*    Forgot password ?*/}
+                        {/*</p>*/}
                     </div>
                     <Button
                         isSubmitBtn={true}
