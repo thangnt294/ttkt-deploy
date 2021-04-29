@@ -6,18 +6,12 @@ import {Member} from '../Member';
 
 export const AssigneeList = ({
                                className = '',
-                               assignees = [],
                                isClosed,
                                characters,
                                onRemove = () => {
                                },
                                assignee
                              }) => {
-  const [assigneeSearched, setAssigneeSearched] = useState(assignees);
-
-  useEffect(() => {
-    setAssigneeSearched(assignees)
-  }, [assignees])
 
   return (
     <div className={`tr__assignee-list ${className}`}>

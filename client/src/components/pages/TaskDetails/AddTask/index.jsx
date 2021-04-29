@@ -254,7 +254,7 @@ export const AddTask = ({open = false, onCancel}) => {
       <div className="tr__assign-modal--list px2">
         <AssigneeList
           title="Assigned"
-          assignees={task ? task.assignee : null}
+          assignee={task ? task.assignee : null}
           onRemove={handleRemovePartner}
         />
       </div>
