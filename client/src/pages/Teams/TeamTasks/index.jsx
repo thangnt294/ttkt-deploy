@@ -152,8 +152,8 @@ export const TeamTasks = ({backUrl = ALL_TEAMS_URL}) => {
   /*eslint-enable */
 
   const showTaskDetails = (task) => {
+    setTask(task);
     setIsEditTask(true);
-    // setTask(task);
     setAddTask(true);
   }
 

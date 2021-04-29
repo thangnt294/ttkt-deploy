@@ -86,7 +86,7 @@ export const AddTask = ({open = false, onCancel}) => {
       setNotificationMessage(`
                 <p> Task has been added successfully!</p>
                 `);
-    });
+      });
   }
 
   const handleEditTask = (data) => {
@@ -201,7 +201,7 @@ export const AddTask = ({open = false, onCancel}) => {
         errors={errors}
         eventTask={task}
         dateType={dateType}
-        date={date}
+        date={task ? task.dueDate : date}
         setDate={setDate}
         isEditTask={isEditTask}
         eventBasedDate={eventBasedDate}
@@ -222,7 +222,7 @@ export const AddTask = ({open = false, onCancel}) => {
               }
             }) : []}
           value={assignees}
-          addButton={assignees.length > 0 ? false : true}
+          addButton={assignees.length <= 0}
           addButtonLabel="Select"
           label={`Assign to task`}
           placeholder='You can search by name or email...'
@@ -241,6 +241,12 @@ export const AddTask = ({open = false, onCancel}) => {
                         cardOnly={true}
                     />
                 ))}
+                {task && task.assignee &&
+                <ItemCard
+                  item={task.assignee}
+                  onRemove={handleRemove}
+                  cardOnly={true}
+                />}
             </div>
         )}
         />
