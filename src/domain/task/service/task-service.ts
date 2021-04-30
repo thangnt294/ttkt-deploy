@@ -1,9 +1,10 @@
 import Task, {
-  DeleteTasks, FindTasks, TaskDocument, UpdateTask
+  DeleteTasks, FindTasks, TaskDocument
 } from '../Task';
 import TeamService from '../../team/service/team-service';
 import { AuditDocument } from '../../../models/common.schema/BaseSchema';
 import { PageRequest } from '../../../utils/common/paging/BasePageRequest';
+import { isEmpty } from '../../../utils/ObjectUtils';
 
 class TaskService {
   public deleteTasks = async (taskIds: string[]) => DeleteTasks(taskIds);
@@ -19,7 +20,18 @@ class TaskService {
     return TeamService.addTaskToTeam(reqTeamId, newTaskId);
   }
 
-  public updateTask = async (reqTaskId: string, reqTaskInfo: TaskDocument) => UpdateTask(reqTaskId, reqTaskInfo)
+  public updateTask = async (reqTaskId: string, reqTaskInfo: TaskDocument) => {
+    const task: TaskDocument = await Task.findById(reqTaskId);
+    task.name = reqTaskInfo.name;
+    task.assignee = reqTaskInfo.assignee;
+    task.description = reqTaskInfo.description;
+    task.dueDate = reqTaskInfo.dueDate;
+    if (!isEmpty(reqTaskInfo.status)) {
+      task.status = reqTaskInfo.status;
+    }
+
+    await task.save();
+  }
 
   public findTasks = async (pageRequest: PageRequest) => Promise.all([FindTasks(pageRequest), Task.countDocuments(pageRequest.query)])
 }

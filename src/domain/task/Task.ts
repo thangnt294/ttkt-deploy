@@ -22,7 +22,7 @@ export class TaskDocument extends Document {
 const schema = new Schema({
   name: { type: String, required: true },
   description: { type: String, required: true },
-  assignee: { type: Schema.Types.ObjectId, required: true },
+  assignee: { type: Schema.Types.ObjectId, required: false },
   status: { type: String, required: true },
   dueDate: { type: Number, required: true },
   base: { type: BaseSchema }
@@ -40,10 +40,6 @@ export const FindTasks = async (pageRequest: PageRequest) => Task.aggregate()
   .sort(pageRequest.sort)
   .skip(pageRequest.skip)
   .limit(pageRequest.limit);
-
-export const UpdateTask = async (reqTaskId: string, reqTaskInfo: TaskDocument) => Task.findByIdAndUpdate(reqTaskId, {
-  $set: reqTaskInfo
-});
 
 export const DeleteTasks = async (taskIds: string[]) => Task.deleteMany({
   _id: {

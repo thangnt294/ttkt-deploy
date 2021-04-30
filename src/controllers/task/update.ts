@@ -3,7 +3,7 @@ import {
 } from 'express';
 import { TaskDocument } from '../../domain/task/Task';
 import TaskService from '../../domain/task/service/task-service';
-import { getVal } from '../../utils/ObjectUtils';
+import { getVal, isEmpty } from '../../utils/ObjectUtils';
 
 const update: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -11,7 +11,7 @@ const update: RequestHandler = async (req: Request, res: Response, next: NextFun
     const reqTaskInfo: TaskDocument = {
       name: getVal(req.body, '', 'name'),
       description: getVal(req.body, '', 'description'),
-      assignee: getVal(req.body, '', 'assignee'),
+      assignee: req.body.assignee,
       status: getVal(req.body, '', 'status'),
       dueDate: getVal(req.body, '', 'dueDate')
     } as TaskDocument;

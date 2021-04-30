@@ -56,7 +56,7 @@ export const Member = ({ createdDate, minimal, member, skip, onRemove, roles, is
             ) : (
                 <img src={member.avatar || avatar} alt={member.name} />
             )}
-            {member && member.name.length > characters ? (
+            {member && member?.name?.length > characters ? (
                 <Tooltip content= {member.name}>
                      <h5 className="h5 f-medium has-tooltip">{member.name}</h5>
                 </Tooltip>

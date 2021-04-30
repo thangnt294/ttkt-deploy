@@ -29,9 +29,10 @@ export const AddTask = ({open = false, onCancel}) => {
   const {
     doCreateTask,
     doUpdateTask,
-    doGetMyTasks,
     doGetTeamTasks,
-    task
+    task,
+    setTask,
+    doDeleteTask
   } = useContext(TaskContext);
 
   const {
@@ -44,24 +45,14 @@ export const AddTask = ({open = false, onCancel}) => {
   const {setAddTask, setDeleteTask} = useContext(ModalContext);
   const {handleSubmit, register, errors, reset} = useForm();
   const [sectionType, setSectionType] = useState('')
-  const [dateType, setDateType] = useState(dueDates[0]);
-  const [eventBasedDate, setEventBasedDate] = useState(dueDateOptions[0]);
   const [date, setDate] = useState(moment(new Date()).format('DD MMM YYYY'));
-  const [assigneeSearched, setAssigneeSearched] = useState(assignees);
-  const [searchAssignee, setSearchAssignee] = useState(false);
 
   const location = useLocation();
   const pathname = location.pathname.split('/');
   const teamId = pathname[pathname.length - 1];
-  /*eslint-disable */
-
-  /* eslint-enable */
 
   const handleAddTask = (data) => {
     const {taskName, description, dueDate} = data;
-    let selectedDueDate = {
-      specificDate: new Date(dueDate).getTime(),
-    }
 
     const payload = {
       name: taskName?.trim(),
@@ -91,46 +82,55 @@ export const AddTask = ({open = false, onCancel}) => {
 
   const handleEditTask = (data) => {
     const {taskName, description, dueDate} = data;
-
     const payload = {
-      taskName: taskName.trim(),
+      name: taskName.trim(),
       description: description,
-      dueDate: dueDate
+      dueDate: new Date(dueDate).getTime(),
+      assignee: task?.assignee?._id || null
     };
 
-      // doUpdateTask(shipmentId, eventTask.id, payload, () => {
-      //   setAddTask(false);
-      //   setAddTask(false);
-      //   setIsEditTask(false);
-      //   if (currentTabManagement === ALL) {
-      //     doGetMyTasks(shipmentId, {
-      //       page: 0,
-      //       tab: ALL
-      //     })
-      //   } else {
-      //     doGetTeamTasks(shipmentId, {
-      //       page: 0,
-      //       tab: MYTASK
-      //     })
-      //   }
-      //   // setCurrentTabManagement(ALL);
-      //   setNotificationMessage(`
-      //               <p> Task has been updated successfully!</p>
-      //           `);
-      // })
+      doUpdateTask(task._id, payload, () => {
+        setAddTask(false);
+        setAddTask(false);
+        setIsEditTask(false);
+        if (currentTabManagement === ALL) {
+          doGetTeamTasks({
+            page: 0,
+            tab: ALL,
+            limit: TASK_PAGE_SIZE,
+            isSearching: true,
+            teamId: teamId
+          })
+        } else {
+          doGetTeamTasks({
+            page: 0,
+            tab: MYTASK,
+            limit: TASK_PAGE_SIZE,
+            isSearching: true,
+            teamId: teamId
+          })
+        }
+        setCurrentTabManagement(ALL);
+        setNotificationMessage(`
+                    <p> Task has been updated successfully!</p>
+                `);
+      })
 
   }
 
   const handleDeleteTask = () => {
     setAddTask(false);
-    setDeleteTask(true);
+    doDeleteTask(task._id, teamId, () => {
+      setNotificationMessage(`
+                    <p> Task has been deleted!</p>
+                `);
+    })
   }
 
   const handleCloseModal = () => {
     reset();
     onCancel();
     setIsEditTask(false);
-    setDateType(dueDates[0]);
   }
 
   const handleChange = items => {
@@ -158,7 +158,10 @@ export const AddTask = ({open = false, onCancel}) => {
   }
 
   const handleRemovePartner = () => {
-
+    setTask({
+      ...task,
+      assignee: null
+    })
   }
 
   return (
@@ -200,12 +203,9 @@ export const AddTask = ({open = false, onCancel}) => {
         register={register}
         errors={errors}
         eventTask={task}
-        dateType={dateType}
-        date={task ? task.dueDate : date}
+        date={date}
         setDate={setDate}
         isEditTask={isEditTask}
-        eventBasedDate={eventBasedDate}
-        setEventBasedDate={setEventBasedDate}
       />
       <div className="tr__assign-modal--form px2">
         <MultiSelect
@@ -228,7 +228,7 @@ export const AddTask = ({open = false, onCancel}) => {
           placeholder='You can search by name or email...'
           onChange={handleChange}
           onRemove={handleRemove}
-          // onInputChange={handleSearchMembers}
+          onInputChange={handleSearchMembers}
           searchLoading={searchLoading}
           // single={true}
           renderList={members => members.length > 0 && (

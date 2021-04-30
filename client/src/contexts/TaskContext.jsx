@@ -1,6 +1,6 @@
 import React, {createContext, useContext, useState} from 'react';
 
-import {OPERATION_FAILED_MESSAGE, TASK_PAGE_SIZE, TEAM_PAGE_SIZE,} from 'actions';
+import { MINE, OPERATION_FAILED_MESSAGE, TASK_PAGE_SIZE, TEAM_PAGE_SIZE } from 'actions';
 import {AuthContext, HomeContext} from 'contexts';
 import {createTask, deleteTask, getMyTasks, getTask, getTeamTasks, updateTask} from "../actions/tasks";
 
@@ -15,6 +15,7 @@ export const TaskContextProvider = ({children}) => {
   const [totalPages, setTotalPages] = useState(1);
   const [totalTasks, setTotalTasks] = useState(0);
   const [isDone, setIsDone] = useState(false);
+  const [status, setStatus] = useState(MINE.toUpperCase());
 
   const handleException = error => {
     const {data} = (error.response || {});
@@ -146,7 +147,7 @@ export const TaskContextProvider = ({children}) => {
     }
   }
 
-  const doDeleteTask = async (taskId, callback) => {
+  const doDeleteTask = async (taskId, teamId, callback) => {
     if (taskId) {
       try {
         setLoading(true);
@@ -158,7 +159,9 @@ export const TaskContextProvider = ({children}) => {
           const params = {
             page: currentPage,
             limit: TEAM_PAGE_SIZE,
-            isSearching: true
+            isSearching: true,
+            status: status,
+            teamId: teamId
           };
           await doGetTeamTasks(params);
           if (callback) callback();
@@ -188,7 +191,9 @@ export const TaskContextProvider = ({children}) => {
         setTask,
         task,
         totalTasks,
-        isDone
+        isDone,
+        status,
+        setStatus
       }}
     >
       {children}

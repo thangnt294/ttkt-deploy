@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import PropTypes from 'prop-types';
 
 import {Datepicker} from 'components';
-import {dueDates, getErrorMessage} from 'utils';
+import {getErrorMessage} from 'utils';
 import moment from 'moment';
 
 export const AddDueDate = ({
@@ -10,9 +10,8 @@ export const AddDueDate = ({
   }, errors = [], eventTask, date, setDate, isEditTask
                            }) => {
   const defaultDate = isEditTask ?
-    (eventTask && eventTask.dueDate && eventTask.dueDate.specificDate && moment(eventTask.dueDate.specificDate).format('DD MMM YYYY'))
+    (eventTask && eventTask.dueDate && moment(eventTask.dueDate).format('DD MMM YYYY'))
     : moment(new Date()).format('DD MMM YYYY')
-
   useEffect(() => {
     setDate(defaultDate)
   }, [eventTask])

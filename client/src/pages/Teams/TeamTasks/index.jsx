@@ -34,7 +34,6 @@ export const TeamTasks = ({backUrl = ALL_TEAMS_URL}) => {
   }]);
   const [searchValue, setSearchValue] = useState();
   const [searchLoading, setSearchLoading] = useState(false);
-  const [status, setStatus] = useState(MINE.toUpperCase());
   const {
     doGetTeamTasks,
     currentPage,
@@ -42,7 +41,9 @@ export const TeamTasks = ({backUrl = ALL_TEAMS_URL}) => {
     totalPages,
     totalTasks,
     tasks,
-    setTask
+    setTask,
+    status,
+    setStatus
   } = useContext(TaskContext);
   const {
     setAddTask,
@@ -74,8 +75,8 @@ export const TeamTasks = ({backUrl = ALL_TEAMS_URL}) => {
     {
       dataIndex: 'status',
       render: (status, assignee) => <div className="status-option">
-        <p className={`task-status text-capitalize ${status.toLowerCase().replace(" ", '')}`}>
-          {status.toLowerCase()}
+        <p className={`task-status text-capitalize ${status?.toLowerCase().replace(" ", '')}`}>
+          {status?.toLowerCase()}
         </p>
         <Tooltip
           renderContent={() => (
